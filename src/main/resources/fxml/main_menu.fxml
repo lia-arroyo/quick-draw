@@ -13,15 +13,15 @@
             <Font name="Proxima Nova" size="48.0" />
          </font>
       </Label>
-      <Button fx:id="speechButton" layoutX="793.0" layoutY="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#playSound" prefHeight="40.0" prefWidth="40.0" />
+      <Button fx:id="speechButton" layoutX="793.0" layoutY="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlaySound" prefHeight="40.0" prefWidth="40.0" />
       <VBox alignment="CENTER" layoutX="300.0" layoutY="130.0" prefHeight="200.0" prefWidth="240.0" spacing="20.0">
          <children>
-            <Button fx:id="startButton" defaultButton="true" mnemonicParsing="false" onAction="#moveToWaiting" prefHeight="35.0" prefWidth="202.0" text="Start a new game">
+            <Button fx:id="startButton" defaultButton="true" mnemonicParsing="false" onAction="#onMoveToWaiting" prefHeight="35.0" prefWidth="202.0" text="Start a new game">
                <font>
                   <Font name="Proxima Nova" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="exitButton" focusTraversable="false" mnemonicParsing="false" onAction="#exitGame" prefHeight="35.0" prefWidth="202.0" text="Exit game">
+            <Button fx:id="exitButton" focusTraversable="false" mnemonicParsing="false" onAction="#onExitGame" prefHeight="35.0" prefWidth="202.0" text="Exit game">
                <font>
                   <Font name="Proxima Nova" size="18.0" />
                </font>

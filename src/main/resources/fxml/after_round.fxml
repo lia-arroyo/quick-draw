@@ -17,12 +17,12 @@
       <ImageView fx:id="playerImage" fitHeight="360.0" fitWidth="560.0" layoutX="140.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" />
       <HBox alignment="CENTER" layoutX="180.0" layoutY="540.0" prefHeight="100.0" prefWidth="480.0" spacing="40.0">
          <children>
-            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveImage" prefHeight="40.0" prefWidth="160.0" text="Save my artwork">
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSaveImage" prefHeight="40.0" prefWidth="160.0" text="Save my artwork">
                <font>
                   <Font name="Proxima Nova" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="restartButton" mnemonicParsing="false" onAction="#restartGame" prefHeight="40.0" prefWidth="160.0" text="Restart game">
+            <Button fx:id="restartButton" mnemonicParsing="false" onAction="#onRestartGame" prefHeight="40.0" prefWidth="160.0" text="Restart game">
                <font>
                   <Font name="Proxima Nova" size="18.0" />
                </font>
@@ -34,6 +34,6 @@
             <Font name="Proxima Nova" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="speechButton" layoutX="788.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#playSound" prefHeight="40.0" prefWidth="40.0" />
+      <Button fx:id="speechButton" layoutX="788.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlaySound" prefHeight="40.0" prefWidth="40.0" />
    </children>
 </Pane>

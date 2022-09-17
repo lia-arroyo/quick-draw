@@ -52,7 +52,7 @@ public class WaitingController {
 	 * @param event when the button is pressed
 	 */
 	@FXML
-	private void startGame(ActionEvent event) {
+	private void onStartGame(ActionEvent event) {
 		Button button = (Button) event.getSource();
 		Scene sceneButtonIsIn = button.getScene();
 
@@ -71,7 +71,7 @@ public class WaitingController {
 	 * clicks the sound button.
 	 */
 	@FXML
-	private void playSound() {
+	private void onPlaySound() {
 
 		// Making a thread for playing the sound
 		Task<Void> speechTask = new Task<Void>() {

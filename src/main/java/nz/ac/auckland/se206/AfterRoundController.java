@@ -69,7 +69,7 @@ public class AfterRoundController {
 	 * @throws IOException if the image cannot be saved in the file system
 	 */
 	@FXML
-	private void saveImage(ActionEvent event) throws IOException {
+	private void onSaveImage(ActionEvent event) throws IOException {
 		Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
 		BufferedImage buffImage = SwingFXUtils.fromFXImage(image, null);
 
@@ -94,7 +94,7 @@ public class AfterRoundController {
 	 * @param event when the button is pressed
 	 */
 	@FXML
-	private void restartGame(ActionEvent event) {
+	private void onRestartGame(ActionEvent event) {
 		Button button = (Button) event.getSource();
 		Scene sceneButtonIsIn = button.getScene();
 
@@ -111,7 +111,7 @@ public class AfterRoundController {
 	 * clicks the sound button.
 	 */
 	@FXML
-	private void playSound() {
+	private void onPlaySound() {
 
 		Task<Void> speechTask = new Task<Void>() {
 			@Override

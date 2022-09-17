@@ -110,9 +110,15 @@ public class CanvasController {
 			final double x = e.getX() - size / 2;
 			final double y = e.getY() - size / 2;
 
-			// This is the colour of the brush.
-			graphic.setFill(Color.BLACK);
-			graphic.setLineWidth(size);
+			if (eraser) {
+				graphic.setStroke(Color.WHITE);
+				graphic.setLineWidth(size * 3);
+
+			} else {
+				graphic.setStroke(Color.BLACK);
+				graphic.setLineWidth(size);
+
+			}
 
 			// Create a line that goes from the point (currentX, currentY) and (x,y)
 			graphic.strokeLine(currentX, currentY, x, y);
@@ -329,7 +335,7 @@ public class CanvasController {
 	 * eraser, and vice versa.
 	 */
 	@FXML
-	private void switchBrushEraser() {
+	private void onSwitchBrushEraser() {
 		if (eraser == true) {
 			eraser = false;
 			switchButton.setText("Switch to eraser");
@@ -345,7 +351,7 @@ public class CanvasController {
 	 * clicks the sound button.
 	 */
 	@FXML
-	private void playSound() {
+	private void onPlaySound() {
 
 		// Making a new thread for playing the sound
 		Task<Void> speechTask = new Task<Void>() {

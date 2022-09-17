@@ -32,7 +32,7 @@ public class MainMenuController {
 	 * @param event when the button is pressed
 	 */
 	@FXML
-	private void moveToWaiting(ActionEvent event) {
+	private void onMoveToWaiting(ActionEvent event) {
 
 		Button button = (Button) event.getSource();
 		Scene sceneButtonIsIn = button.getScene();
@@ -52,7 +52,7 @@ public class MainMenuController {
 	 * @param event when the button is pressed
 	 */
 	@FXML
-	private void exitGame(ActionEvent event) {
+	private void onExitGame(ActionEvent event) {
 		Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
 		currentStage.close();
 	}
@@ -62,7 +62,7 @@ public class MainMenuController {
 	 * clicks the sound button.
 	 */
 	@FXML
-	private void playSound() {
+	private void onPlaySound() {
 
 		// Making a new thread for playing the sound
 		Task<Void> speechTask = new Task<Void>() {
