@@ -39,7 +39,9 @@ public class App extends Application {
 	 */
 	@Override
 	public void start(final Stage stage) throws IOException {
-		final Scene scene = new Scene(loadFxml("choose_profile"), 840, 680);
+		final Scene scene = new Scene(loadFxml("create_profile"), 840, 680);
+
+		// Creating JSON file if it doesn't exist
 
 		stage.setScene(scene);
 		stage.show();
