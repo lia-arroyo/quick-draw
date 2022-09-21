@@ -15,9 +15,6 @@ public class CreateProfileController {
 
 	@FXML
 	private void onAddProfile() {
-		if (profileName.toString().length() > 0) {
-
-		}
 
 	}
 
