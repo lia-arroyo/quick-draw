@@ -1,4 +1,4 @@
-package nz.ac.auckland.profiles;
+package nz.ac.auckland.se206.profiles;
 
 public class UserProfile {
 
