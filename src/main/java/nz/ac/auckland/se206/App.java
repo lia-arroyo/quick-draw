@@ -39,7 +39,7 @@ public class App extends Application {
 	 */
 	@Override
 	public void start(final Stage stage) throws IOException {
-		final Scene scene = new Scene(loadFxml("main_menu"), 840, 680);
+		final Scene scene = new Scene(loadFxml("choose_profile"), 840, 680);
 
 		stage.setScene(scene);
 		stage.show();
