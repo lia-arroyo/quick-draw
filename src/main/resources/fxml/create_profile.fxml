@@ -6,11 +6,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.CreateProfileController">
    <children>
       <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="320.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true" />
-      <TextField fx:id="profileName" alignment="CENTER" layoutX="270.0" layoutY="400.0" prefHeight="40.0" prefWidth="300.0" text="dana">
+      <TextField fx:id="profileName" alignment="CENTER" layoutX="270.0" layoutY="400.0" prefHeight="40.0" prefWidth="300.0">
          <font>
             <Font name="Proxima Nova" size="24.0" />
          </font>

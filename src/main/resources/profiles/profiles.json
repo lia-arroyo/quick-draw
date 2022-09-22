@@ -1,17 +1,1 @@
-[
-  {
-    "id": "0",
-    "username": "dana",
-    "profileImage": "0"
-  },
-  {
-    "id": "1",
-    "username": "lia",
-    "profileImage": "0"
-  },
-  {
-    "id": "2",
-    "username": "terry",
-    "profileImage": "0"
-  }
-]
+[{"userName":"dana","profileID":0,"wins":0,"losses":0}]

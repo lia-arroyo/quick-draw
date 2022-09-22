@@ -1,14 +1,11 @@
 package nz.ac.auckland.se206;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,29 +27,16 @@ public class ChooseProfileController {
 	@FXML
 	private ImageView profileImage;
 
-	/** JavaFX calls this method once the GUI elements are loaded. */
-	public void initialize() {
-
-		JSONParser jsonParser = new JSONParser();
-
-		try {
-			FileReader reader = new FileReader(this.getClass().getResource("/profiles/profiles.json").toString());
-
-			Object obj = jsonParser.parse(reader);
-
-			JSONArray profileList = (JSONArray) obj;
-			System.out.println(profileList);
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			System.out.println("JSON file is empty; no user profiles exist");
-		}
+	/**
+	 * JavaFX calls this method once the GUI elements are loaded.
+	 * 
+	 * @throws URISyntaxException
+	 * @throws IOException
+	 */
+	public void initialize() throws IOException, URISyntaxException {
 
 		// Load the selected user image
-		Image userProfile = new Image(this.getClass().getResource("/images/profileImages/user0.jpg").toString());
+		Image userProfile = new Image(this.getClass().getResource("/images/profileImages/0.jpg").toString());
 		profileImage.setImage(userProfile);
 
 	}
@@ -71,7 +55,17 @@ public class ChooseProfileController {
 	 * user.
 	 */
 	@FXML
-	private void onAddUser() {
+	private void onAddUser(ActionEvent event) {
+
+		Button button = (Button) event.getSource();
+		Scene sceneButtonIsIn = button.getScene();
+
+		try {
+			sceneButtonIsIn.setRoot(App.loadFxml("create_profile"));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
