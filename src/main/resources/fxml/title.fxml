@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.TitleController">
+   <children>
+      <Label layoutX="220.0" layoutY="200.0" prefHeight="100.0" prefWidth="400.0" text="Quick, draw!">
+         <font>
+            <Font name="Proxima Nova" size="72.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="345.0" layoutY="480.0" prefHeight="40.0" prefWidth="150.0" text="Loading...">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="titleImage" fitHeight="170.0" fitWidth="170.0" layoutX="335.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</Pane>

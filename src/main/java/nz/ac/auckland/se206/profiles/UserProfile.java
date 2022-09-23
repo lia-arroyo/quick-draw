@@ -2,13 +2,18 @@ package nz.ac.auckland.se206.profiles;
 
 public class UserProfile {
 
-  private String username;
+	private String userName;
+	private int profileID;
+	private int wins = 0;
+	private int losses = 0;
 
-  public UserProfile(String username) {
-    this.username = username;
-  }
+	public UserProfile(String userName, int profileID) {
+		this.userName = userName;
+		this.profileID = profileID;
 
-  private String getUsername() {
-    return this.username;
-  }
+	}
+
+	public String getUserName() {
+		return this.userName;
+	}
 }

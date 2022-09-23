@@ -14,6 +14,9 @@ import javafx.stage.Stage;
  * class, it should remain as the class that runs the JavaFX application.
  */
 public class App extends Application {
+
+	public static String CURRENT_USER = "";
+
 	public static void main(final String[] args) {
 		launch();
 	}
@@ -39,7 +42,7 @@ public class App extends Application {
 	 */
 	@Override
 	public void start(final Stage stage) throws IOException {
-		final Scene scene = new Scene(loadFxml("choose_profile"), 840, 680);
+		final Scene scene = new Scene(loadFxml("title"), 840, 680);
 
 		stage.setScene(scene);
 		stage.show();

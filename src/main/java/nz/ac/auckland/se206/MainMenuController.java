@@ -1,5 +1,6 @@
 package nz.ac.auckland.se206;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javafx.concurrent.Task;
@@ -25,8 +26,12 @@ public class MainMenuController {
 
 	private Boolean loggedIn = false;
 
-	/** JavaFX calls this method once the GUI elements are loaded. */
-	public void initialize() {
+	/**
+	 * JavaFX calls this method once the GUI elements are loaded.
+	 * 
+	 * @throws FileNotFoundException
+	 */
+	public void initialize() throws FileNotFoundException {
 
 		// Setting speech button icon
 		Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
@@ -41,6 +46,7 @@ public class MainMenuController {
 			Image userProfile = new Image(this.getClass().getResource("/images/unknownUser.png").toString());
 			profileImage.setImage(userProfile);
 		}
+
 	}
 
 	/**

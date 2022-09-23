@@ -126,6 +126,11 @@
 	    <artifactId>opencsv</artifactId>
 	    <version>5.7.0</version>
 	</dependency>
+	<dependency>
+      <groupId>com.googlecode.json-simple</groupId>
+      <artifactId>json-simple</artifactId>
+      <version>1.1.1</version>
+   </dependency>
   </dependencies>
   <groupId>nz.ac.auckland.se206</groupId>
   <modelVersion>4.0.0</modelVersion>
