@@ -75,7 +75,7 @@ public class App extends Application {
     // Initialising the userProfileList
     if (jsonString != null) {
       UserProfile[] users = gson.fromJson(jsonString, UserProfile[].class);
-      userProfileList = Arrays.asList(users);
+      userProfileList = new ArrayList<>(Arrays.asList(users));
     } else {
       userProfileList = new ArrayList<>();
     }
