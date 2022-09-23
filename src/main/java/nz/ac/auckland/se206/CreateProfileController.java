@@ -25,6 +25,8 @@ public class CreateProfileController {
 
 	private List<UserProfile> profileList;
 
+	private Boolean fileEmpty = false;
+
 	/**
 	 * JavaFX calls this method once the GUI elements are loaded.
 	 * 
@@ -37,6 +39,7 @@ public class CreateProfileController {
 		// new ArrayList.
 		if (fr.read() == -1) {
 			profileList = new ArrayList<>();
+			fileEmpty = true;
 		}
 
 		fr.close();
@@ -94,16 +97,16 @@ public class CreateProfileController {
 		Gson gson = new Gson();
 		FileReader fr = new FileReader("./src/main/resources/profiles/profiles.json");
 
-		if (fr.read() != -1) {
+		if (!fileEmpty) {
+
 			profileList = Arrays.asList(gson.fromJson(fr, UserProfile[].class));
 
-			if (profileList != null) {
-				for (UserProfile user : profileList) {
-					if (user.getUserName().equals(userName)) {
-						return true;
-					}
+			for (UserProfile user : profileList) {
+				if (user.getUserName().equals(userName)) {
+					return true;
 				}
 			}
+
 		}
 
 		return false;
