@@ -28,7 +28,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Label fx:id="userNameLabel" alignment="CENTER" layoutX="305.0" layoutY="420.0" prefHeight="40.0" prefWidth="230.0" text="Dana">
+      <Label fx:id="userNameLabel" alignment="CENTER" layoutX="305.0" layoutY="420.0" prefHeight="40.0" prefWidth="230.0">
          <font>
             <Font name="Proxima Nova" size="24.0" />
          </font>
