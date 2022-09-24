@@ -52,6 +52,7 @@ public class CreateProfileController {
 
       // Set the current user to the profile that was just made.
       UserProfileManager.CURRENT_PROFILE = user;
+      UserProfileManager.CURRENT_PRROFILE_INDEX = UserProfileManager.USER_PROFILE_LIST.size() - 1;
 
       // User is redirected to the main menu
       sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));

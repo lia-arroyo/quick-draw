@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import nz.ac.auckland.se206.profiles.UserProfileManager;
 
 public class ChooseProfileController {
 
@@ -36,6 +37,16 @@ public class ChooseProfileController {
     Image userProfile =
         new Image(this.getClass().getResource("/images/profileImages/0.jpg").toString());
     profileImage.setImage(userProfile);
+
+    if (UserProfileManager.CURRENT_PRROFILE_INDEX == -1) {
+      UserProfileManager.CURRENT_PRROFILE_INDEX = 0;
+      this.userNameLabel.setText(UserProfileManager.USER_PROFILE_LIST.get(0).getUserName());
+    } else {
+      this.userNameLabel.setText(
+          UserProfileManager.USER_PROFILE_LIST
+              .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+              .getUserName());
+    }
   }
 
   /**

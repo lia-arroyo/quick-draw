@@ -14,7 +14,7 @@ public class UserProfileManager {
 
   public static UserProfile CURRENT_PROFILE;
 
-  public static int CURRENT_PRROFILE_INDEX;
+  public static int CURRENT_PRROFILE_INDEX = -1;
 
   public static void saveToFile() {
     try {
