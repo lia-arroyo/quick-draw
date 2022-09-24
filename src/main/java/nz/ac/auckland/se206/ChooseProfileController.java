@@ -53,7 +53,24 @@ public class ChooseProfileController {
    * This method is invoked when the user clicks on the delete button of the select user profile.
    */
   @FXML
-  private void onDeleteUser() {}
+  private void onDeleteUser() {
+    if (UserProfileManager.USER_PROFILE_LIST.size() > 1) {
+      UserProfileManager.USER_PROFILE_LIST.remove(UserProfileManager.CURRENT_PRROFILE_INDEX);
+      if (UserProfileManager.CURRENT_PRROFILE_INDEX
+          == UserProfileManager.USER_PROFILE_LIST.size()) {
+        UserProfileManager.CURRENT_PRROFILE_INDEX = UserProfileManager.USER_PROFILE_LIST.size() - 1;
+        this.userNameLabel.setText(
+            UserProfileManager.USER_PROFILE_LIST
+                .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+                .getUserName());
+      } else {
+        this.userNameLabel.setText(
+            UserProfileManager.USER_PROFILE_LIST
+                .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+                .getUserName());
+      }
+    }
+  }
 
   /** This method is invoked when the user clicks on the add button to add a new user. */
   @FXML
