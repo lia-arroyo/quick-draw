@@ -73,12 +73,37 @@ public class ChooseProfileController {
   /** This method is invoked when the user clicks on the left arrow. */
   @FXML
   private void onGoLeft() {
-    System.out.println("Go left");
+    if (UserProfileManager.CURRENT_PRROFILE_INDEX == 0) {
+      UserProfileManager.CURRENT_PRROFILE_INDEX = UserProfileManager.USER_PROFILE_LIST.size() - 1;
+      this.userNameLabel.setText(
+          UserProfileManager.USER_PROFILE_LIST
+              .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+              .getUserName());
+    } else {
+      UserProfileManager.CURRENT_PRROFILE_INDEX--;
+      this.userNameLabel.setText(
+          UserProfileManager.USER_PROFILE_LIST
+              .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+              .getUserName());
+    }
   }
 
   /** This method is invoked when the user clicks on the right arrow. */
   @FXML
   private void onGoRight() {
-    System.out.println("Go right");
+    if (UserProfileManager.CURRENT_PRROFILE_INDEX + 1
+        == UserProfileManager.USER_PROFILE_LIST.size()) {
+      UserProfileManager.CURRENT_PRROFILE_INDEX = 0;
+      this.userNameLabel.setText(
+          UserProfileManager.USER_PROFILE_LIST
+              .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+              .getUserName());
+    } else {
+      UserProfileManager.CURRENT_PRROFILE_INDEX++;
+      this.userNameLabel.setText(
+          UserProfileManager.USER_PROFILE_LIST
+              .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+              .getUserName());
+    }
   }
 }
