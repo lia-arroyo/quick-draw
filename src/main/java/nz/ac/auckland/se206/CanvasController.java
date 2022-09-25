@@ -325,6 +325,9 @@ public class CanvasController {
       currentProfile.incrementWinsCount();
     }
 
+    // Ensuring that statistics are saved to file after each round.
+    UserProfileManager.saveToFile();
+
     /*
      * Getting the snapshot of the current canvas so that the user can see their art
      * after the round and decide if they should save it or not. Also moving the
