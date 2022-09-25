@@ -35,6 +35,10 @@ public class UserProfile {
     this.losses++;
   }
 
+  public ArrayList<String> getWordHistory() {
+    return this.wordHistory;
+  }
+
   /**
    * This method adds to the user's existing word history arraylist.
    *

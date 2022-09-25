@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import nz.ac.auckland.se206.profiles.UserProfileManager;
 
 public class CategorySelector {
 
@@ -44,9 +45,15 @@ public class CategorySelector {
    * @return the chosen category
    */
   public String getRandomCategory(Difficulty difficulty) {
-    return difficulty2categories
-        .get(difficulty)
-        .get(new Random().nextInt(difficulty2categories.get(difficulty).size()));
+
+    // a clone of the word list
+    List<String> wordListCopy = difficulty2categories.get(difficulty);
+
+    // removing all played words from the cloned list
+    wordListCopy.removeAll(UserProfileManager.currentProfile.getWordHistory());
+
+    // Returns a random word from the updated word list without played words
+    return wordListCopy.get(new Random().nextInt(difficulty2categories.get(difficulty).size()));
   }
 
   /**

@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
@@ -30,6 +31,10 @@ public class WaitingController {
    * @throws URISyntaxException if a string cannot be used as a URI
    */
   public void initialize() throws IOException, CsvException, URISyntaxException {
+
+    // Setting current user to the first one
+    // TODO: REMOVE AND SET CURRENT USER IN THE CHOOSE USER PROFILE PAGE INSTEAD
+    UserProfileManager.currentProfile = UserProfileManager.userProfileList.get(0);
 
     // Setting speech button icon
     Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());

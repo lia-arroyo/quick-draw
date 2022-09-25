@@ -25,7 +25,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
-import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
@@ -43,21 +42,6 @@ import nz.ac.auckland.se206.words.CategorySelector;
  * the canvas and brush sizes, make sure that the prediction works fine.
  */
 public class CanvasController {
-
-  private static UserProfile currentProfile =
-      UserProfileManager.userProfileList.get(0); // by default, the current
-  // profile is the first
-  // one. use setter
-  // method to change
-
-  /**
-   * Setter method for current profile. Use this when wanting to select the current profile.
-   *
-   * @param profile the current profile we are working with.
-   */
-  public static void setCurrentProfile(UserProfile profile) {
-    currentProfile = profile;
-  }
 
   @FXML private Canvas canvas;
 
@@ -100,7 +84,7 @@ public class CanvasController {
     model = new DoodlePrediction();
 
     // Adding the chosen word to the history of current user
-    currentProfile.addWordToHistory(CategorySelector.chosenWord);
+    UserProfileManager.currentProfile.addWordToHistory(CategorySelector.chosenWord);
 
     graphic = canvas.getGraphicsContext2D();
 
@@ -321,12 +305,12 @@ public class CanvasController {
     if (result == 0) {
       // the user has lost
       AfterRoundController.END_MESSAGE = "You ran out of time  :(";
-      currentProfile.incrementLossesCount();
+      UserProfileManager.currentProfile.incrementLossesCount();
 
     } else if (result == 1) {
       // the user has won
       AfterRoundController.END_MESSAGE = "Congratulations! You won  :)";
-      currentProfile.incrementWinsCount();
+      UserProfileManager.currentProfile.incrementWinsCount();
     }
 
     // Ensuring that statistics are saved to file after each round.
