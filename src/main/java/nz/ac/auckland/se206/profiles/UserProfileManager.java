@@ -14,6 +14,9 @@ public class UserProfileManager {
 
   public static int currentProfileIndex = -1;
 
+  // this is a reference to the current profile.
+  public static UserProfile currentProfile;
+
   public static void saveToFile() {
     try {
       Gson gson = new Gson();

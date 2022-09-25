@@ -1,11 +1,14 @@
 package nz.ac.auckland.se206.profiles;
 
+import java.util.ArrayList;
+
 public class UserProfile {
 
   private String userName;
   private int profileID;
   private int wins = 0;
   private int losses = 0;
+  private ArrayList<String> wordHistory = new ArrayList<>();
 
   public UserProfile(String userName, int profileID) {
     this.userName = userName;
@@ -30,5 +33,18 @@ public class UserProfile {
 
   public void incrementLossesCount() {
     this.losses++;
+  }
+
+  public ArrayList<String> getWordHistory() {
+    return this.wordHistory;
+  }
+
+  /**
+   * This method adds to the user's existing word history arraylist.
+   *
+   * @param word the word the user has played
+   */
+  public void addWordToHistory(String word) {
+    this.wordHistory.add(word);
   }
 }

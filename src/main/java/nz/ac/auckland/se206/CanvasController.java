@@ -25,7 +25,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
-import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
@@ -43,21 +42,6 @@ import nz.ac.auckland.se206.words.CategorySelector;
  * the canvas and brush sizes, make sure that the prediction works fine.
  */
 public class CanvasController {
-
-  private static UserProfile currentProfile =
-      UserProfileManager.userProfileList.get(0); // by default, the current
-  // profile is the first
-  // one. use setter
-  // method to change
-
-  /**
-   * Setter method for current profile. Use this when wanting to select the current profile.
-   *
-   * @param profile the current profile we are working with.
-   */
-  public static void setCurrentProfile(UserProfile profile) {
-    currentProfile = profile;
-  }
 
   @FXML private Canvas canvas;
 
@@ -95,8 +79,12 @@ public class CanvasController {
     Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
     speechButton.setGraphic(new ImageView(icon));
 
-    chosenWord.setText("[ " + CategorySelector.CHOSEN_WORD + " ]");
+    // Displaying chosen word
+    chosenWord.setText("[ " + CategorySelector.chosenWord + " ]");
     model = new DoodlePrediction();
+
+    // Adding the chosen word to the history of current user
+    UserProfileManager.currentProfile.addWordToHistory(CategorySelector.chosenWord);
 
     graphic = canvas.getGraphicsContext2D();
 
@@ -292,7 +280,7 @@ public class CanvasController {
               // Removing underscores if they exist in the string
               String categoryName = predictions.get(j).getClassName().replaceAll("_", " ");
 
-              if (categoryName.equals(CategorySelector.CHOSEN_WORD) && !canvasIsEmpty) {
+              if (categoryName.equals(CategorySelector.chosenWord) && !canvasIsEmpty) {
                 finishRound(1);
                 timer.cancel();
               }
@@ -317,13 +305,16 @@ public class CanvasController {
     if (result == 0) {
       // the user has lost
       AfterRoundController.END_MESSAGE = "You ran out of time  :(";
-      currentProfile.incrementLossesCount();
+      UserProfileManager.currentProfile.incrementLossesCount();
 
     } else if (result == 1) {
       // the user has won
       AfterRoundController.END_MESSAGE = "Congratulations! You won  :)";
-      currentProfile.incrementWinsCount();
+      UserProfileManager.currentProfile.incrementWinsCount();
     }
+
+    // Ensuring that statistics are saved to file after each round.
+    UserProfileManager.saveToFile();
 
     /*
      * Getting the snapshot of the current canvas so that the user can see their art
@@ -373,7 +364,7 @@ public class CanvasController {
 
             // Telling the user what there word is, and notifying them that they can switch
             // between brush and pen, and also the remaining time.
-            textToSpeech.speak("Your word is", CategorySelector.CHOSEN_WORD);
+            textToSpeech.speak("Your word is", CategorySelector.chosenWord);
             textToSpeech.speak("You can switch between brush and pen, or clear the canvas");
             textToSpeech.speak("You have a total of one minute to draw");
 
