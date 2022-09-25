@@ -1,0 +1,29 @@
+.avatar-image-box {
+  -fx-border-color: #000;
+  -fx-border-width: 2px;
+}
+
+.edit-avatar {
+  -fx-background-color: #cdcdcd;
+  -fx-border-color: transparent;
+  -fx-background-radius: 15px;
+  -fx-graphic: url("../images/pencil.png");
+}
+
+.edit-avatar:hover {
+  -fx-background-color: #ababab;
+}
+
+.add-profile {
+  -fx-background-color: #cdcdcd;
+  -fx-border-color: transparent;
+}
+
+.add-profile:hover {
+  -fx-background-color: #ababab;
+}
+
+.username-textfield {
+  -fx-background-color: white;
+  -fx-border-color: transparent;
+}
