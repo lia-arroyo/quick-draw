@@ -9,6 +9,7 @@ public class UserProfile {
   private int wins = 0;
   private int losses = 0;
   private ArrayList<String> wordHistory = new ArrayList<>();
+  private double highestPredictionPercentage = 0;
 
   public UserProfile(String userName, int profileID) {
     this.userName = userName;
@@ -46,5 +47,13 @@ public class UserProfile {
    */
   public void addWordToHistory(String word) {
     this.wordHistory.add(word);
+  }
+
+  public double getHighestPrediction() {
+    return this.highestPredictionPercentage;
+  }
+
+  public void setHighestPredictionPercentage(double percentage) {
+    this.highestPredictionPercentage = percentage;
   }
 }
