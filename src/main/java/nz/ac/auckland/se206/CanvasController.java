@@ -95,8 +95,12 @@ public class CanvasController {
     Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
     speechButton.setGraphic(new ImageView(icon));
 
-    chosenWord.setText("[ " + CategorySelector.CHOSEN_WORD + " ]");
+    // Displaying chosen word
+    chosenWord.setText("[ " + CategorySelector.chosenWord + " ]");
     model = new DoodlePrediction();
+
+    // Adding the chosen word to the history of current user
+    currentProfile.addWordToHistory(CategorySelector.chosenWord);
 
     graphic = canvas.getGraphicsContext2D();
 
@@ -292,7 +296,7 @@ public class CanvasController {
               // Removing underscores if they exist in the string
               String categoryName = predictions.get(j).getClassName().replaceAll("_", " ");
 
-              if (categoryName.equals(CategorySelector.CHOSEN_WORD) && !canvasIsEmpty) {
+              if (categoryName.equals(CategorySelector.chosenWord) && !canvasIsEmpty) {
                 finishRound(1);
                 timer.cancel();
               }
@@ -376,7 +380,7 @@ public class CanvasController {
 
             // Telling the user what there word is, and notifying them that they can switch
             // between brush and pen, and also the remaining time.
-            textToSpeech.speak("Your word is", CategorySelector.CHOSEN_WORD);
+            textToSpeech.speak("Your word is", CategorySelector.chosenWord);
             textToSpeech.speak("You can switch between brush and pen, or clear the canvas");
             textToSpeech.speak("You have a total of one minute to draw");
 
