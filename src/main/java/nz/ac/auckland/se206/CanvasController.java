@@ -281,6 +281,16 @@ public class CanvasController {
               String categoryName = predictions.get(j).getClassName().replaceAll("_", " ");
 
               if (categoryName.equals(CategorySelector.chosenWord) && !canvasIsEmpty) {
+                double predictionPercentage = predictions.get(j).getProbability() * 100;
+
+                // Checking if prediction is the new highest prediction percentage
+                if (predictionPercentage
+                    > UserProfileManager.currentProfile.getHighestPrediction()) {
+                  UserProfileManager.currentProfile.setHighestPredictionPercentage(
+                      predictionPercentage);
+                }
+
+                // Finishing the round
                 finishRound(1);
                 timer.cancel();
               }
