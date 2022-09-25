@@ -11,6 +11,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import nz.ac.auckland.se206.profiles.UserProfile;
+import nz.ac.auckland.se206.profiles.UserProfileManager;
 
 public class CreateProfileController {
 
@@ -42,15 +43,15 @@ public class CreateProfileController {
       UserProfile user = new UserProfile(userName, 0);
 
       // Adding user to the profile list
-      App.userProfileList.add(user);
+      UserProfileManager.userProfileList.add(user);
 
       // Writing to the json file
       FileWriter fw = new FileWriter("./src/main/resources/profiles/profiles.json");
-      gson.toJson(App.userProfileList, fw);
+      gson.toJson(UserProfileManager.userProfileList, fw);
       fw.flush();
 
       // Set the current user to the profile that was just made.
-      App.CURRENT_USER = userName;
+      UserProfileManager.currentProfileIndex = UserProfileManager.userProfileList.size() - 1;
 
       // User is redirected to the main menu
       sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
@@ -67,9 +68,9 @@ public class CreateProfileController {
   }
 
   private Boolean checkUserNameTaken(String userName) throws IOException {
-    if (!App.userProfileList.isEmpty()) {
+    if (!UserProfileManager.userProfileList.isEmpty()) {
 
-      for (UserProfile user : App.userProfileList) {
+      for (UserProfile user : UserProfileManager.userProfileList) {
         if (user.getUserName().equals(userName)) {
           return true;
         }

@@ -26,6 +26,7 @@ import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.profiles.UserProfile;
+import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 
@@ -44,8 +45,10 @@ import nz.ac.auckland.se206.words.CategorySelector;
 public class CanvasController {
 
   private static UserProfile currentProfile =
-      App.userProfileList.get(
-          0); // by default, the current profile is the first one. use setter method to change
+      UserProfileManager.userProfileList.get(0); // by default, the current
+  // profile is the first
+  // one. use setter
+  // method to change
 
   /**
    * Setter method for current profile. Use this when wanting to select the current profile.

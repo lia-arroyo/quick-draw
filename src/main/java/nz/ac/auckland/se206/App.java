@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -14,16 +13,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.profiles.UserProfile;
+import nz.ac.auckland.se206.profiles.UserProfileManager;
 
 /**
  * This is the entry point of the JavaFX application, while you can change this class, it should
  * remain as the class that runs the JavaFX application.
  */
 public class App extends Application {
-
-  public static String CURRENT_USER = "";
-
-  public static List<UserProfile> userProfileList;
 
   public static void main(final String[] args) {
     launch();
@@ -75,9 +71,9 @@ public class App extends Application {
     // Initialising the userProfileList
     if (jsonString != null) {
       UserProfile[] users = gson.fromJson(jsonString, UserProfile[].class);
-      userProfileList = new ArrayList<>(Arrays.asList(users));
+      UserProfileManager.userProfileList = new ArrayList<>(Arrays.asList(users));
     } else {
-      userProfileList = new ArrayList<>();
+      UserProfileManager.userProfileList = new ArrayList<>();
     }
   }
 }
