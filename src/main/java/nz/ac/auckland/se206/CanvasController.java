@@ -45,7 +45,7 @@ import nz.ac.auckland.se206.words.CategorySelector;
 public class CanvasController {
 
   private static UserProfile currentProfile =
-      UserProfileManager.USER_PROFILE_LIST.get(0); // by default, the current
+      UserProfileManager.userProfileList.get(0); // by default, the current
   // profile is the first
   // one. use setter
   // method to change

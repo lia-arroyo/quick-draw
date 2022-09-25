@@ -38,13 +38,13 @@ public class ChooseProfileController {
         new Image(this.getClass().getResource("/images/profileImages/0.jpg").toString());
     profileImage.setImage(userProfile);
 
-    if (UserProfileManager.CURRENT_PRROFILE_INDEX == -1) {
-      UserProfileManager.CURRENT_PRROFILE_INDEX = 0;
-      this.userNameLabel.setText(UserProfileManager.USER_PROFILE_LIST.get(0).getUserName());
+    if (UserProfileManager.currentProfileIndex == -1) {
+      UserProfileManager.currentProfileIndex = 0;
+      this.userNameLabel.setText(UserProfileManager.userProfileList.get(0).getUserName());
     } else {
       this.userNameLabel.setText(
-          UserProfileManager.USER_PROFILE_LIST
-              .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+          UserProfileManager.userProfileList
+              .get(UserProfileManager.currentProfileIndex)
               .getUserName());
     }
   }
@@ -54,19 +54,18 @@ public class ChooseProfileController {
    */
   @FXML
   private void onDeleteUser() {
-    if (UserProfileManager.USER_PROFILE_LIST.size() > 1) {
-      UserProfileManager.USER_PROFILE_LIST.remove(UserProfileManager.CURRENT_PRROFILE_INDEX);
-      if (UserProfileManager.CURRENT_PRROFILE_INDEX
-          == UserProfileManager.USER_PROFILE_LIST.size()) {
-        UserProfileManager.CURRENT_PRROFILE_INDEX = UserProfileManager.USER_PROFILE_LIST.size() - 1;
+    if (UserProfileManager.userProfileList.size() > 1) {
+      UserProfileManager.userProfileList.remove(UserProfileManager.currentProfileIndex);
+      if (UserProfileManager.currentProfileIndex == UserProfileManager.userProfileList.size()) {
+        UserProfileManager.currentProfileIndex = UserProfileManager.userProfileList.size() - 1;
         this.userNameLabel.setText(
-            UserProfileManager.USER_PROFILE_LIST
-                .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+            UserProfileManager.userProfileList
+                .get(UserProfileManager.currentProfileIndex)
                 .getUserName());
       } else {
         this.userNameLabel.setText(
-            UserProfileManager.USER_PROFILE_LIST
-                .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+            UserProfileManager.userProfileList
+                .get(UserProfileManager.currentProfileIndex)
                 .getUserName());
       }
     }
@@ -90,17 +89,17 @@ public class ChooseProfileController {
   /** This method is invoked when the user clicks on the left arrow. */
   @FXML
   private void onGoLeft() {
-    if (UserProfileManager.CURRENT_PRROFILE_INDEX == 0) {
-      UserProfileManager.CURRENT_PRROFILE_INDEX = UserProfileManager.USER_PROFILE_LIST.size() - 1;
+    if (UserProfileManager.currentProfileIndex == 0) {
+      UserProfileManager.currentProfileIndex = UserProfileManager.userProfileList.size() - 1;
       this.userNameLabel.setText(
-          UserProfileManager.USER_PROFILE_LIST
-              .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+          UserProfileManager.userProfileList
+              .get(UserProfileManager.currentProfileIndex)
               .getUserName());
     } else {
-      UserProfileManager.CURRENT_PRROFILE_INDEX--;
+      UserProfileManager.currentProfileIndex--;
       this.userNameLabel.setText(
-          UserProfileManager.USER_PROFILE_LIST
-              .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+          UserProfileManager.userProfileList
+              .get(UserProfileManager.currentProfileIndex)
               .getUserName());
     }
   }
@@ -108,18 +107,17 @@ public class ChooseProfileController {
   /** This method is invoked when the user clicks on the right arrow. */
   @FXML
   private void onGoRight() {
-    if (UserProfileManager.CURRENT_PRROFILE_INDEX + 1
-        == UserProfileManager.USER_PROFILE_LIST.size()) {
-      UserProfileManager.CURRENT_PRROFILE_INDEX = 0;
+    if (UserProfileManager.currentProfileIndex + 1 == UserProfileManager.userProfileList.size()) {
+      UserProfileManager.currentProfileIndex = 0;
       this.userNameLabel.setText(
-          UserProfileManager.USER_PROFILE_LIST
-              .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+          UserProfileManager.userProfileList
+              .get(UserProfileManager.currentProfileIndex)
               .getUserName());
     } else {
-      UserProfileManager.CURRENT_PRROFILE_INDEX++;
+      UserProfileManager.currentProfileIndex++;
       this.userNameLabel.setText(
-          UserProfileManager.USER_PROFILE_LIST
-              .get(UserProfileManager.CURRENT_PRROFILE_INDEX)
+          UserProfileManager.userProfileList
+              .get(UserProfileManager.currentProfileIndex)
               .getUserName());
     }
   }

@@ -43,16 +43,15 @@ public class CreateProfileController {
       UserProfile user = new UserProfile(userName, 0);
 
       // Adding user to the profile list
-      UserProfileManager.USER_PROFILE_LIST.add(user);
+      UserProfileManager.userProfileList.add(user);
 
       // Writing to the json file
       FileWriter fw = new FileWriter("./src/main/resources/profiles/profiles.json");
-      gson.toJson(UserProfileManager.USER_PROFILE_LIST, fw);
+      gson.toJson(UserProfileManager.userProfileList, fw);
       fw.flush();
 
       // Set the current user to the profile that was just made.
-      UserProfileManager.CURRENT_PROFILE = user;
-      UserProfileManager.CURRENT_PRROFILE_INDEX = UserProfileManager.USER_PROFILE_LIST.size() - 1;
+      UserProfileManager.currentProfileIndex = UserProfileManager.userProfileList.size() - 1;
 
       // User is redirected to the main menu
       sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
@@ -69,9 +68,9 @@ public class CreateProfileController {
   }
 
   private Boolean checkUserNameTaken(String userName) throws IOException {
-    if (!UserProfileManager.USER_PROFILE_LIST.isEmpty()) {
+    if (!UserProfileManager.userProfileList.isEmpty()) {
 
-      for (UserProfile user : UserProfileManager.USER_PROFILE_LIST) {
+      for (UserProfile user : UserProfileManager.userProfileList) {
         if (user.getUserName().equals(userName)) {
           return true;
         }

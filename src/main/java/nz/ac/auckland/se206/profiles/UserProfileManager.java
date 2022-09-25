@@ -10,11 +10,9 @@ import java.util.ArrayList;
 
 public class UserProfileManager {
 
-  public static ArrayList<UserProfile> USER_PROFILE_LIST;
+  public static ArrayList<UserProfile> userProfileList;
 
-  public static UserProfile CURRENT_PROFILE;
-
-  public static int CURRENT_PRROFILE_INDEX = -1;
+  public static int currentProfileIndex = -1;
 
   public static void saveToFile() {
     try {
@@ -22,7 +20,7 @@ public class UserProfileManager {
       Writer writer =
           Files.newBufferedWriter(
               Paths.get("src/main/resources/profiles/profiles.json"), StandardCharsets.UTF_8);
-      gson.toJson(USER_PROFILE_LIST, writer);
+      gson.toJson(userProfileList, writer);
       writer.close();
     } catch (IOException e) {
       e.printStackTrace();
