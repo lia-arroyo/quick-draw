@@ -3,16 +3,19 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" stylesheets="@../css/LoginPage.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.ChooseProfileController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" stylesheets="@../css/ChooseProfile.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.ChooseProfileController">
    <children>
-      <HBox layoutX="320.0" layoutY="210.0" prefHeight="202.0" prefWidth="202.0" styleClass="profile-image-box">
+      <HBox layoutX="320.0" layoutY="210.0" maxHeight="202.0" maxWidth="202.0" prefHeight="202.0" prefWidth="202.0" styleClass="profile-image-box">
          <children>
-            <ImageView fx:id="profileImage" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="profileImageButton" contentDisplay="CENTER" graphicTextGap="0.0" minHeight="200.0" minWidth="200.0" mnemonicParsing="false" onAction="#onSelectProfile" prefHeight="200.0" prefWidth="200.0" styleClass="select-button">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </HBox>
       <Label alignment="CENTER" layoutX="220.0" layoutY="120.0" prefHeight="80.0" prefWidth="400.0" text="Choose user profile:">
