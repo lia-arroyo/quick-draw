@@ -74,8 +74,10 @@ public class AfterRoundController {
      * the image is automatically chosen depending on what word they had.
      */
     try {
+      // User chooses directory to save their image
       File selectedDirectory =
           new File(fileChooser.showSaveDialog(currentStage).toString() + ".png");
+      // Saves image to chosen directory
       ImageIO.write(buffImage, "PNG", selectedDirectory);
     } catch (NullPointerException e) {
       System.err.println("User did not save the file");
@@ -108,6 +110,7 @@ public class AfterRoundController {
   @FXML
   private void onPlaySound() {
 
+    // Creates a background task to play text-to-speech
     Task<Void> speechTask =
         new Task<Void>() {
           @Override
@@ -119,6 +122,7 @@ public class AfterRoundController {
           }
         };
 
+    // Creates a thread to run the background task
     Thread speechThread = new Thread(speechTask);
     speechThread.start();
   }

@@ -36,13 +36,18 @@ public class CreateProfileController {
    * @throws IOException
    */
   public void initialize() throws IOException {
+
+    
+    // A user can only return to the main menu if there is at least one profile in the profile list
     if (UserProfileManager.userProfileList.isEmpty()) {
       backButton.setVisible(false);
     }
 
+    // The usernametext is retained when switching to another scene
     profileName.setText(UserProfileManager.chosenUsername);
     profileName.setFocusTraversable(false);
 
+    // The first image is displayed by default
     Image initialAvatar =
         new Image(
             this.getClass()
@@ -133,6 +138,8 @@ public class CreateProfileController {
   }
 
   private Boolean checkUserNameTaken(String userName) throws IOException {
+    // Only checks if there is currently as least one user profile in the profile
+    // list
     if (!UserProfileManager.userProfileList.isEmpty()) {
 
       for (UserProfile user : UserProfileManager.userProfileList) {

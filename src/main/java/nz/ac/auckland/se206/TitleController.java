@@ -22,16 +22,19 @@ public class TitleController {
 
     File profiles = new File("./src/main/resources/profiles/profiles.json");
 
+    // Checks if a user profile file has been generated
     if (!profiles.exists()) {
       profiles.createNewFile();
       noProfiles = true;
-
+      
+    // Checks if the user profile file is empty or not
     } else {
       if (profiles.length() == 0) {
         noProfiles = true;
       }
     }
 
+    // Creates a timer for loading screen animation
     Timer timer = new Timer();
 
     timer.schedule(
@@ -39,17 +42,24 @@ public class TitleController {
           @Override
           public void run() {
 
+            // Displays the images for the loading animation
             if (imageIndex < 5) {
 
+              // Loads the current animation image
               Image image =
                   new Image(
                       this.getClass()
                           .getResource(String.format("/images/titleImages/%d.PNG", imageIndex))
                           .toString());
+                          
+              // Displays the current animation image
               titleImage.setImage(image);
+              // Sets the next image of the animation to be displayed
               imageIndex++;
             } else {
 
+              // When the timer is up, load the profile creation page if there is no current
+              // profiles, otherwise load the choose profile page
               if (noProfiles) {
                 moveToCreateProfile();
 
@@ -66,6 +76,8 @@ public class TitleController {
   }
 
   private void moveToCreateProfile() {
+
+    // Loads the scene for profile creation
     try {
       pane.getScene().setRoot(App.loadFxml("create_profile"));
 
@@ -75,6 +87,8 @@ public class TitleController {
   }
 
   private void moveToChooseProfile() {
+  
+    // Loads the scene for choosing profile
     try {
       pane.getScene().setRoot(App.loadFxml("choose_profile"));
 
