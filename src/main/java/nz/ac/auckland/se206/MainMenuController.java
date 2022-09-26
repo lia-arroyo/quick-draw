@@ -37,7 +37,7 @@ public class MainMenuController {
    */
   public void initialize() throws FileNotFoundException {
 
-    // Setting current user to the first one
+    // Setting current user to the current profile
     UserProfile currentUser = UserProfileManager.currentProfile;
 
     // Setting speech button icon
@@ -129,15 +129,24 @@ public class MainMenuController {
   }
 
   @FXML
-  private void onSwitchUser() {}
+  private void onSwitchUser(ActionEvent event) {
+    Button button = (Button) event.getSource();
+    Scene currentScene = button.getScene();
+
+    // Change to choose profile page
+    try {
+      currentScene.setRoot(App.loadFxml("choose_profile"));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
   private void setGreetingText(String username) {
     // Setting greeting text
     List<String> greetingList = Arrays.asList("Welcome,", "Hello", "Hey", "Hi", "What's up");
     Random random = new Random();
     greetingLabel.setText(
-        String.format(
-            "%s %s", greetingList.get(random.nextInt(greetingList.size() - 0)), username));
+        String.format("%s %s", greetingList.get(random.nextInt(greetingList.size())), username));
 
     // Setting emoji
     int emojiIndex = random.nextInt(8);

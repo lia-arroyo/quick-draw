@@ -1,3 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&display=swap");
+
+.label {
+  -fx-font-family: "Inter Tight", sans-serif;
+  -fx-font-weight: 700;
+}
+
+.button {
+  -fx-font-family: "Inter Tight", sans-serif;
+  -fx-font-weight: 600;
+}
+
 .avatar-image-box {
   -fx-border-color: #000;
   -fx-border-width: 2px;
@@ -26,4 +38,13 @@
 .username-textfield {
   -fx-background-color: white;
   -fx-border-color: transparent;
+}
+
+.back-button {
+  -fx-border-color: transparent;
+  -fx-background-color: transparent;
+}
+
+.back-button:hover {
+  -fx-underline: true;
 }
