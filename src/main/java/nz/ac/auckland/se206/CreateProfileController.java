@@ -24,13 +24,11 @@ public class CreateProfileController {
 
   @FXML private Button addProfileButton;
 
+  @FXML private Button backButton;
+
   @FXML private Pane pane;
 
   @FXML ImageView avatarImage;
-
-  private Boolean fileEmpty = false;
-
-  private Boolean avatarChosen = false;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded.
@@ -38,6 +36,10 @@ public class CreateProfileController {
    * @throws IOException
    */
   public void initialize() throws IOException {
+    if (UserProfileManager.userProfileList.isEmpty()) {
+      backButton.setVisible(false);
+    }
+
     profileName.setText(UserProfileManager.chosenUsername);
     profileName.setFocusTraversable(false);
 
@@ -80,6 +82,12 @@ public class CreateProfileController {
       // Set the current user to the profile that was just made.
       UserProfileManager.currentProfileIndex = UserProfileManager.userProfileList.size() - 1;
 
+      UserProfileManager.currentProfile =
+          UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex);
+
+      // User is redirected to the main menu
+      sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
+
     } else if (userName.length() > 0) {
       // If the username is already taken, then we alert the user.
       Alert alert = new Alert(AlertType.INFORMATION);
@@ -93,11 +101,18 @@ public class CreateProfileController {
     // Resetting chosen username string and profile index to default values
     UserProfileManager.chosenUsername = "";
     UserProfileManager.chosenProfileIndex = 1;
-    UserProfileManager.currentProfile =
-        UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex);
+  }
 
-    // User is redirected to the main menu
-    sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
+  @FXML
+  private void onGoBack(ActionEvent event) {
+    Button button = (Button) event.getSource();
+    Scene sceneButtonIsIn = button.getScene();
+
+    try {
+      sceneButtonIsIn.setRoot(App.loadFxml("choose_profile"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   @FXML
