@@ -35,6 +35,7 @@ public class WaitingController {
     Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
     speechButton.setGraphic(new ImageView(icon));
 
+    // Selecting a random word for user
     CategorySelector categorySelector = new CategorySelector();
     categorySelector.setNewChosenWord(Difficulty.E);
     chosenWord.setText(categorySelector.getChosenWord());
@@ -48,10 +49,11 @@ public class WaitingController {
    */
   @FXML
   private void onStartGame(ActionEvent event) {
+    // Getting scene information
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
-    // Loading the fxml file of the canvas
+    // Switching scenes to the canvas page.
     try {
       sceneButtonIsIn.setRoot(App.loadFxml("canvas"));
 
@@ -82,6 +84,7 @@ public class WaitingController {
           }
         };
 
+    // Starting the thread
     Thread speechThread = new Thread(speechTask);
     speechThread.start();
   }
