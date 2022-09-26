@@ -18,6 +18,25 @@ public class StatsController {
   private UserProfile currentProfile = UserProfileManager.currentProfile;
 
   public void initialize() {
+    // updating the title with the current profile's name
     statsTitleLabel.setText(currentProfile.getUserName() + "'s Stats");
+
+    // updating the statistics shown
+    updateStatistics();
+  }
+
+  /**
+   * This method will update the current statistics, based on the current user profile, and display
+   * it on screen.
+   */
+  public void updateStatistics() {
+    // updating win count
+    winsLabel.setText(currentProfile.getWinsCount() + "");
+
+    // updating the highest prediction
+    highestPredictionLabel.setText(Math.round(currentProfile.getHighestPrediction() * 100) + "%");
+
+    // updating loss count
+    lossesLabel.setText(currentProfile.getLossesCount() + "");
   }
 }

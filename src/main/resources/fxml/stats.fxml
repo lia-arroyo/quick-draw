@@ -8,7 +8,7 @@
 
 <Pane prefHeight="680.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.StatsController">
    <children>
-      <Label fx:id="statsTitleLabel" layoutX="264.0" layoutY="49.0" prefHeight="62.0" prefWidth="412.0" text="Lia's Stats">
+      <Label fx:id="statsTitleLabel" layoutX="287.0" layoutY="49.0" prefHeight="62.0" prefWidth="347.0" text="Lia's Stats">
          <font>
             <Font size="42.0" />
          </font>
@@ -30,12 +30,12 @@
                         <Font size="66.0" />
                      </font>
                   </Label>
-                  <Label fx:id="highestPredictionLabel" alignment="CENTER" prefHeight="96.0" prefWidth="205.0" text="43%">
+                  <Label fx:id="highestPredictionLabel" alignment="CENTER" prefHeight="96.0" prefWidth="189.0" text="43%">
                      <font>
                         <Font size="66.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lossesLabel" alignment="CENTER" prefHeight="96.0" prefWidth="144.0" text="0">
+                  <Label fx:id="lossesLabel" alignment="CENTER" prefHeight="96.0" prefWidth="177.0" text="0">
                      <font>
                         <Font size="66.0" />
                      </font>
@@ -49,7 +49,7 @@
                         <Font size="25.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="65.0" prefWidth="202.0" text="HIGHEST&#10;PREDICTION" textAlignment="CENTER">
+                  <Label alignment="CENTER" prefHeight="65.0" prefWidth="187.0" text="HIGHEST&#10;PREDICTION" textAlignment="CENTER">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -91,7 +91,7 @@
             </Accordion>
          </content>
       </ScrollPane>
-      <Button layoutX="680.0" layoutY="45.0" mnemonicParsing="false" prefWidth="91.0" text="Go Back">
+      <Button layoutX="721.0" layoutY="32.0" mnemonicParsing="false" prefWidth="91.0" text="Go Back">
          <font>
             <Font size="16.0" />
          </font>
