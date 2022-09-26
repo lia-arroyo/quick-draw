@@ -26,13 +26,14 @@ public class TitleController {
     if (!profiles.exists()) {
       profiles.createNewFile();
       noProfiles = true;
-      //
+      // Checks if the user profile file is empty or not
     } else {
       if (profiles.length() == 0) {
         noProfiles = true;
       }
     }
 
+    // Creates a timer for loading screen animation
     Timer timer = new Timer();
 
     timer.schedule(
@@ -51,6 +52,8 @@ public class TitleController {
               imageIndex++;
             } else {
 
+              // When the timer is up, load the profile creation page if there is no current
+              // profiles, otherwise load the choose profile page
               if (noProfiles) {
                 moveToCreateProfile();
 

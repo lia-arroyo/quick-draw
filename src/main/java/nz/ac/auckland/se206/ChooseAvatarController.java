@@ -28,6 +28,7 @@ public class ChooseAvatarController {
 
         Button avatar = (Button) avatarButton;
 
+        // Loads each available image to choose for the user profile image
         ImageView avatarImage =
             new ImageView(
                 new Image(
@@ -35,9 +36,11 @@ public class ChooseAvatarController {
                         .getResource(String.format("/images/profileImages/%d.PNG", imageIndex))
                         .toString()));
 
+        // Sets the image dimensions to the required dimensions
         avatarImage.setFitWidth(avatar.getPrefWidth());
         avatarImage.setFitHeight(avatar.getPrefHeight());
 
+        // Sets the available images for display
         avatar.setGraphic(avatarImage);
         avatar.setId(String.format("avatar_%d", imageIndex));
 
