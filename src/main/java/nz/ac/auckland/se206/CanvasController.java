@@ -233,6 +233,7 @@ public class CanvasController {
     if (timeLeft >= 0) {
       this.timeLeft.setText(String.format("%d s", timeLeft));
     } else {
+      // Displays if there is no time left
       this.timeLeft.setText("Time up");
     }
   }
@@ -348,6 +349,7 @@ public class CanvasController {
    */
   @FXML
   private void onSwitchBrushEraser() {
+    // Once eraser is pressed, button switches to "switch to brush" and vice versa
     if (eraser == true) {
       eraser = false;
       switchButton.setText("Switch to eraser");

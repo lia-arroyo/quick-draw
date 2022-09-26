@@ -17,6 +17,8 @@ public class ChooseAvatarController {
   @FXML private VBox avatarBox;
 
   public void initialize() {
+
+    // Displays the first image as the default image
     int imageIndex = 1;
 
     for (Node hbox : avatarBox.getChildren()) {
@@ -26,6 +28,7 @@ public class ChooseAvatarController {
 
         Button avatar = (Button) avatarButton;
 
+        // Loads each available image to choose for the user profile image
         ImageView avatarImage =
             new ImageView(
                 new Image(
@@ -33,9 +36,11 @@ public class ChooseAvatarController {
                         .getResource(String.format("/images/profileImages/%d.PNG", imageIndex))
                         .toString()));
 
+        // Sets the image dimensions to the required dimensions
         avatarImage.setFitWidth(avatar.getPrefWidth());
         avatarImage.setFitHeight(avatar.getPrefHeight());
 
+        // Sets the available images for display
         avatar.setGraphic(avatarImage);
         avatar.setId(String.format("avatar_%d", imageIndex));
 
@@ -64,6 +69,7 @@ public class ChooseAvatarController {
 
     UserProfileManager.chosenProfileIndex = Integer.valueOf(profileIndex);
 
+    // Loads the scene for profile creation
     goToCreateProfile(event);
   }
 
@@ -71,6 +77,7 @@ public class ChooseAvatarController {
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
+    // Loads the scene for profile creation
     try {
       sceneButtonIsIn.setRoot(App.loadFxml("create_profile"));
     } catch (IOException e) {

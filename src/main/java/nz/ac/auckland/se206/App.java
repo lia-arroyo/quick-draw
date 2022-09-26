@@ -38,6 +38,22 @@ public class App extends Application {
     return new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml")).load();
   }
 
+  private static void loadProfilesFromJson() throws IOException {
+    // Reading the JSON file
+    Gson gson = new Gson();
+    FileReader fr = new FileReader("./src/main/resources/profiles/profiles.json");
+    BufferedReader br = new BufferedReader(fr);
+    String jsonString = br.readLine();
+
+    // Initialising the userProfileList
+    if (jsonString != null) {
+      UserProfile[] users = gson.fromJson(jsonString, UserProfile[].class);
+      UserProfileManager.userProfileList = new ArrayList<>(Arrays.asList(users));
+    } else {
+      UserProfileManager.userProfileList = new ArrayList<>();
+    }
+  }
+
   /**
    * This method is invoked when the application starts. It loads and shows the "Canvas" scene.
    *
@@ -47,6 +63,7 @@ public class App extends Application {
   @Override
   public void start(final Stage stage) throws IOException {
 
+    // Generates the user profile file if none is currently present
     File userProfileFile = new File("./src/main/resources/profiles/profiles.json");
     if (!userProfileFile.exists()) {
       userProfileFile.createNewFile();
@@ -70,21 +87,5 @@ public class App extends Application {
           Platform.exit();
           System.exit(0);
         });
-  }
-
-  private static void loadProfilesFromJson() throws IOException {
-    // Reading the JSON file
-    Gson gson = new Gson();
-    FileReader fr = new FileReader("./src/main/resources/profiles/profiles.json");
-    BufferedReader br = new BufferedReader(fr);
-    String jsonString = br.readLine();
-
-    // Initialising the userProfileList
-    if (jsonString != null) {
-      UserProfile[] users = gson.fromJson(jsonString, UserProfile[].class);
-      UserProfileManager.userProfileList = new ArrayList<>(Arrays.asList(users));
-    } else {
-      UserProfileManager.userProfileList = new ArrayList<>();
-    }
   }
 }
