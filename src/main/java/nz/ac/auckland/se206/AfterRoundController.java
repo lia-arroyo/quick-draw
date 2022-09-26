@@ -115,6 +115,8 @@ public class AfterRoundController {
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
+            // Setting the speech message to the end message (win / lose) and also notifying the
+            // user that they can save their image or restart the game.
             TextToSpeech textToSpeech = new TextToSpeech();
             textToSpeech.speak(END_MESSAGE);
             textToSpeech.speak("You can save your image or restart the game");

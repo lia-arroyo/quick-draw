@@ -38,13 +38,13 @@ public class ChooseProfileController {
     if (UserProfileManager.currentProfileIndex == -1) {
       UserProfileManager.currentProfileIndex = 0;
       this.userNameLabel.setText(UserProfileManager.userProfileList.get(0).getUserName());
-
     } else {
       this.userNameLabel.setText(
           UserProfileManager.userProfileList
               .get(UserProfileManager.currentProfileIndex)
               .getUserName());
     }
+
     // Changes the profile image to the one the user chose
     updateImage();
   }
@@ -79,8 +79,10 @@ public class ChooseProfileController {
   @FXML
   private void onAddUser(ActionEvent event) {
 
+    // Get the button from the event source
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
+
     // Loads the scene for profile creation
     try {
       sceneButtonIsIn.setRoot(App.loadFxml("create_profile"));
@@ -141,7 +143,6 @@ public class ChooseProfileController {
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
-   
     // Sets the current user profile to the chosen user profile
     UserProfileManager.currentProfile =
         UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex);
@@ -153,11 +154,7 @@ public class ChooseProfileController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-
-    
-
   }
-
 
   /** This method is invoked when the profile image needs to be refreshed */
   private void updateImage() {
