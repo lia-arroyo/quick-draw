@@ -42,7 +42,7 @@ public class StatsController {
                 .toString());
     userProfileImage.setImage(userAvatar);
 
-    // updating the statistics shown
+    // displaying other user-related statistics
     updateStatistics();
   }
 
@@ -50,7 +50,7 @@ public class StatsController {
    * This method will update the current statistics, based on the current user profile, and display
    * it on screen.
    */
-  public void updateStatistics() {
+  private void updateStatistics() {
     // updating win and loss counts
     winsLabel.setText(currentProfile.getWinsCount() + "");
     lossesLabel.setText(currentProfile.getLossesCount() + "");
@@ -64,7 +64,7 @@ public class StatsController {
   }
 
   /** This method will display the word history using a String Builder. */
-  public void displayWordHistory() {
+  private void displayWordHistory() {
     StringBuilder builder = new StringBuilder();
 
     // listing every word that the user has played.
@@ -76,11 +76,15 @@ public class StatsController {
     Label words = new Label(builder.toString());
     words.setFont(new Font(38));
 
-    // adding to the scroll pane
+    // adding the new resized label to the scroll pane
     wordHistoryScrollPane.setContent(words);
   }
 
-  public void updateProgress() {
+  /**
+   * This method updates the progress bar and the supporting text, based on how many words the user
+   * has played.
+   */
+  private void updateProgress() {
     // Creating new category selector to get the number of total words
     CategorySelector categorySelector = null;
     try {
@@ -89,12 +93,12 @@ public class StatsController {
       throw new RuntimeException(e);
     }
 
-    // calculating progress
+    // calculating the progress
     int wordsPlayed = currentProfile.getWordHistory().size();
     int wordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.E);
     double progress = (double) wordsPlayed / wordsInTotal;
 
-    // updating the progress bar
+    // updating the actual progress bar
     wordProgressBar.setProgress(progress);
 
     // updating the text that goes with it
@@ -112,7 +116,7 @@ public class StatsController {
    * @param event the ActionEvent handler
    */
   @FXML
-  public void onGoBack(ActionEvent event) {
+  private void onGoBack(ActionEvent event) {
     // getting scene information
     Button button = (Button) event.getSource();
     Scene currentScene = button.getScene();
