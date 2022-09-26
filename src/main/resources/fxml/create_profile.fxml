@@ -11,7 +11,7 @@
 
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" style="-fx-background-color: rgb(245,244,244);" stylesheets="@../css/CreateProfile.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.CreateProfileController">
    <children>
-      <HBox layoutX="320.0" layoutY="210.0" prefHeight="202.0" prefWidth="202.0" styleClass="avatar-image-box">
+      <HBox layoutX="320.0" layoutY="210.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="204.0" prefWidth="204.0" styleClass="avatar-image-box">
          <children>
             <ImageView fx:id="avatarImage" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
          </children>
@@ -31,10 +31,18 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label alignment="CENTER" layoutX="220.0" layoutY="120.0" prefHeight="80.0" prefWidth="400.0" text="Create a new profile:">
+      <Label alignment="CENTER" layoutX="170.0" layoutY="80.0" prefHeight="80.0" prefWidth="500.0" text="Create a New Profile:">
          <font>
-            <Font name="Proxima Nova" size="36.0" />
+            <Font name="Proxima Nova" size="48.0" />
          </font>
       </Label>
+      <Button fx:id="backButton" layoutX="320.0" layoutY="155.0" mnemonicParsing="false" onAction="#onGoBack" prefHeight="40.0" prefWidth="200.0" styleClass="back-button" text="&lt;  back" textFill="#575757">
+         <font>
+            <Font name="Proxima Nova" size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND" />
+         </cursor>
+      </Button>
    </children>
 </Pane>

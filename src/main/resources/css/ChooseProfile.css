@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700&display=swap");
+
+.label {
+  -fx-font-family: "Inter Tight", sans-serif;
+}
+
 .left-button {
   -fx-shape: "M200 0 L100 100 L200 200 Z";
   -fx-background-color: #ababab;
@@ -32,4 +38,13 @@
 
 .add-user:hover {
   -fx-background-color: #ababab;
+}
+
+.back-button {
+  -fx-border-color: transparent;
+  -fx-background-color: transparent;
+}
+
+.back-button:hover {
+  -fx-underline: true;
 }
