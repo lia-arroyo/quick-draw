@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
@@ -21,8 +22,6 @@ public class MainMenuController {
 
   @FXML private ImageView profileImage;
 
-  private Boolean loggedIn = false;
-
   /**
    * JavaFX calls this method once the GUI elements are loaded.
    *
@@ -31,23 +30,19 @@ public class MainMenuController {
   public void initialize() throws FileNotFoundException {
 
     // Setting current user to the first one
-    // TODO: REMOVE AND SET CURRENT USER IN THE CHOOSE USER PROFILE PAGE INSTEAD
-    UserProfileManager.currentProfile = UserProfileManager.userProfileList.get(0);
+    UserProfile currentUser = UserProfileManager.currentProfile;
 
     // Setting speech button icon
     Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
     speechButton.setGraphic(new ImageView(icon));
 
-    startButton.setText("Choose Profile");
-
-    if (loggedIn) {
-      System.out.println("LOGGED IN");
-
-    } else {
-      Image userProfile =
-          new Image(this.getClass().getResource("/images/unknownUser.png").toString());
-      profileImage.setImage(userProfile);
-    }
+    Image userProfileImage =
+        new Image(
+            this.getClass()
+                .getResource(
+                    String.format("/images/profileImages/%d.PNG", currentUser.getProfileIndex()))
+                .toString());
+    profileImage.setImage(userProfileImage);
   }
 
   /**
@@ -61,21 +56,11 @@ public class MainMenuController {
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
-    if (loggedIn) {
-      startButton.setText("Start a new game");
-
-      // Loading the fxml file to change the scene to waiting screen
-      try {
-        sceneButtonIsIn.setRoot(App.loadFxml("waiting"));
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    } else {
-      try {
-        sceneButtonIsIn.setRoot(App.loadFxml("choose_profile"));
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+    // Loading the fxml file to change the scene to waiting screen
+    try {
+      sceneButtonIsIn.setRoot(App.loadFxml("waiting"));
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 

@@ -80,9 +80,6 @@ public class CreateProfileController {
       // Set the current user to the profile that was just made.
       UserProfileManager.currentProfileIndex = UserProfileManager.userProfileList.size() - 1;
 
-      // User is redirected to the main menu
-      sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
-
     } else if (userName.length() > 0) {
       // If the username is already taken, then we alert the user.
       Alert alert = new Alert(AlertType.INFORMATION);
@@ -96,6 +93,11 @@ public class CreateProfileController {
     // Resetting chosen username string and profile index to default values
     UserProfileManager.chosenUsername = "";
     UserProfileManager.chosenProfileIndex = 1;
+    UserProfileManager.currentProfile =
+        UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex);
+
+    // User is redirected to the main menu
+    sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
   }
 
   @FXML

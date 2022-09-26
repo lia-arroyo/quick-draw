@@ -9,7 +9,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.MainMenuController">
    <children>
-      <Label alignment="CENTER" layoutX="240.0" layoutY="140.0" prefHeight="70.0" prefWidth="360.0" text="Quick, Draw!">
+      <Label alignment="CENTER" layoutX="240.0" layoutY="80.0" prefHeight="70.0" prefWidth="360.0" text="Quick, Draw!">
          <font>
             <Font name="Proxima Nova" size="56.0" />
          </font>
@@ -17,7 +17,7 @@
       <Button fx:id="speechButton" layoutX="793.0" layoutY="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlaySound" prefHeight="40.0" prefWidth="40.0" />
       <VBox alignment="CENTER" layoutX="300.0" layoutY="380.0" prefHeight="200.0" prefWidth="240.0" spacing="20.0">
          <children>
-            <Button fx:id="startButton" defaultButton="true" mnemonicParsing="false" onAction="#onMoveToWaiting" prefHeight="60.0" prefWidth="240.0">
+            <Button fx:id="startButton" defaultButton="true" mnemonicParsing="false" onAction="#onMoveToWaiting" prefHeight="60.0" prefWidth="240.0" text="Start a new game">
                <font>
                   <Font name="Proxima Nova" size="24.0" />
                </font>
@@ -34,6 +34,6 @@
             </Button>
          </children>
       </VBox>
-      <ImageView fx:id="profileImage" fitHeight="150.0" fitWidth="150.0" layoutX="345.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="profileImage" fitHeight="150.0" fitWidth="150.0" layoutX="345.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </Pane>

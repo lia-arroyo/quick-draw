@@ -131,15 +131,15 @@ public class ChooseProfileController {
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
+    UserProfileManager.currentProfile =
+        UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex);
+
     try {
       sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
 
     } catch (IOException e) {
       e.printStackTrace();
     }
-
-    UserProfileManager.currentProfile =
-        UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex);
   }
 
   /** This method is invoked when the profile image needs to be refreshed */
