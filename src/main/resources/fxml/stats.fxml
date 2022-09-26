@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -68,28 +69,10 @@
             <Font size="34.0" />
          </font>
       </Label>
-      <ScrollPane layoutX="57.0" layoutY="373.0" prefHeight="278.0" prefWidth="734.0">
-         <content>
-            <Accordion fx:id="wordsAccordion" prefHeight="256.0" prefWidth="732.0">
-              <panes>
-                <TitledPane animated="false" text="untitled 1">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </TitledPane>
-                <TitledPane animated="false" text="untitled 2">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </TitledPane>
-                <TitledPane animated="false" text="untitled 3">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </TitledPane>
-              </panes>
-            </Accordion>
-         </content>
+      <ScrollPane fx:id="wordHistoryScrollPane" layoutX="57.0" layoutY="373.0" prefHeight="278.0" prefWidth="734.0">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
       </ScrollPane>
       <Button fx:id="backButton" layoutX="721.0" layoutY="32.0" mnemonicParsing="false" onAction="#onGoBack" prefWidth="91.0" text="Go Back">
          <font>

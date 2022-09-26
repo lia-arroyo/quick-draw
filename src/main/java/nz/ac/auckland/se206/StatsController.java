@@ -4,10 +4,11 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 
@@ -16,8 +17,9 @@ public class StatsController {
   @FXML private Label winsLabel;
   @FXML private Label lossesLabel;
   @FXML private Label highestPredictionLabel;
+  @FXML private Label wordHistoryLabel;
   @FXML private ImageView userProfileImage;
-  @FXML private Accordion wordsAccordion;
+  @FXML private ScrollPane wordHistoryScrollPane;
 
   private UserProfile currentProfile = UserProfileManager.currentProfile;
 
@@ -42,6 +44,23 @@ public class StatsController {
 
     // updating loss count
     lossesLabel.setText(currentProfile.getLossesCount() + "");
+
+    // updating word history
+    displayWordHistory();
+  }
+
+  /** This method will display the word history using a String Builder. */
+  public void displayWordHistory() {
+    StringBuilder builder = new StringBuilder();
+
+    for (String word : currentProfile.getWordHistory()) {
+      builder.append(word + "\n");
+    }
+
+    Label words = new Label(builder.toString());
+    words.setFont(new Font(38));
+
+    wordHistoryScrollPane.setContent(words);
   }
 
   /**
