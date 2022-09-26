@@ -2,6 +2,7 @@ package nz.ac.auckland.se206;
 
 import com.google.gson.Gson;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,6 +46,11 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
+
+    File userProfileFile = new File("./src/main/resources/profiles/profiles.json");
+    if (!userProfileFile.exists()) {
+      userProfileFile.createNewFile();
+    }
 
     loadProfilesFromJson();
 
