@@ -33,20 +33,18 @@ public class ChooseProfileController {
    */
   public void initialize() throws IOException, URISyntaxException {
 
-    // Load the selected user image
-    Image userProfile =
-        new Image(this.getClass().getResource("/images/profileImages/0.jpg").toString());
-    profileImage.setImage(userProfile);
-
     if (UserProfileManager.currentProfileIndex == -1) {
       UserProfileManager.currentProfileIndex = 0;
       this.userNameLabel.setText(UserProfileManager.userProfileList.get(0).getUserName());
+
     } else {
       this.userNameLabel.setText(
           UserProfileManager.userProfileList
               .get(UserProfileManager.currentProfileIndex)
               .getUserName());
     }
+
+    updateImage();
   }
 
   /**
@@ -69,6 +67,8 @@ public class ChooseProfileController {
                 .getUserName());
       }
     }
+
+    updateImage();
   }
 
   /** This method is invoked when the user clicks on the add button to add a new user. */
@@ -102,6 +102,8 @@ public class ChooseProfileController {
               .get(UserProfileManager.currentProfileIndex)
               .getUserName());
     }
+
+    updateImage();
   }
 
   /** This method is invoked when the user clicks on the right arrow. */
@@ -120,5 +122,22 @@ public class ChooseProfileController {
               .get(UserProfileManager.currentProfileIndex)
               .getUserName());
     }
+
+    updateImage();
+  }
+
+  /** This method is invoked when the profile image needs to be refreshed */
+  private void updateImage() {
+    int profileIndex =
+        UserProfileManager.userProfileList
+            .get(UserProfileManager.currentProfileIndex)
+            .getProfileIndex();
+
+    Image avatarImage =
+        new Image(
+            this.getClass()
+                .getResource(String.format("/images/profileImages/%d.PNG", profileIndex))
+                .toString());
+    profileImage.setImage(avatarImage);
   }
 }
