@@ -31,7 +31,7 @@ public class StatsController {
 
   public void initialize() {
     // updating the title with the current profile's name
-    statsTitleLabel.setText(currentProfile.getUserName() + "'s Stats");
+    statsTitleLabel.setText(currentProfile.getUserName() + "'s stats");
 
     // updating the image to be the user's chosen avatar
     Image userAvatar =
@@ -74,7 +74,7 @@ public class StatsController {
 
     // creating new label that resizes depending on length of above string
     Label words = new Label(builder.toString());
-    words.setFont(new Font(38));
+    words.setFont(new Font(20));
 
     // adding to the scroll pane
     wordHistoryScrollPane.setContent(words);
@@ -101,7 +101,7 @@ public class StatsController {
     progressLabel.setText(
         "You've played a total of "
             + wordsPlayed
-            + " words, and only have "
+            + " words, and have "
             + (wordsInTotal - wordsPlayed)
             + " words to go! Well done!");
   }

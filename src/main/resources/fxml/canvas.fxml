@@ -7,76 +7,92 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="680.0" maxWidth="840.0" minHeight="680.0" minWidth="840.0" prefHeight="680.0" prefWidth="840.0" spacing="20.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.CanvasController">
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" stylesheets="@../css/Canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.CanvasController">
    <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <VBox alignment="CENTER" layoutX="20.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="800.0" spacing="20.0">
          <children>
-            <Label fx:id="timeLeft" alignment="CENTER" contentDisplay="CENTER" prefHeight="97.0" prefWidth="151.0">
-               <font>
-                  <Font name="Proxima Nova" size="48.0" />
-               </font>
-            </Label>
-            <Label fx:id="chosenWord" alignment="CENTER" contentDisplay="CENTER" prefHeight="48.0" prefWidth="436.0" textAlignment="CENTER">
-               <font>
-                  <Font name="Proxima Nova" size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="750.0">
-         <children>
-            <Label fx:id="predictionList" maxHeight="360.0" maxWidth="190.0" minHeight="360.0" minWidth="190.0" prefHeight="360.0" prefWidth="190.0">
-               <font>
-                  <Font name="Proxima Nova" size="18.0" />
-               </font>
-            </Label>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <Canvas fx:id="canvas" height="360.0" width="560.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="timeLeft" alignment="CENTER" contentDisplay="CENTER" prefHeight="97.0" prefWidth="151.0">
+                     <font>
+                        <Font name="Proxima Nova" size="48.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="chosenWord" alignment="CENTER" contentDisplay="CENTER" prefHeight="48.0" prefWidth="436.0" textAlignment="CENTER">
+                     <font>
+                        <Font name="Proxima Nova" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="750.0">
+               <children>
+                  <Label fx:id="predictionList" maxHeight="360.0" maxWidth="190.0" minHeight="360.0" minWidth="190.0" prefHeight="360.0" prefWidth="190.0">
+                     <font>
+                        <Font name="Proxima Nova" size="18.0" />
+                     </font>
+                  </Label>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <Canvas fx:id="canvas" height="360.0" width="560.0" BorderPane.alignment="CENTER">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Canvas>
+                     </center>
+                     <top>
+                        <Line endX="660.0" startX="100.0" BorderPane.alignment="CENTER" />
+                     </top>
+                     <bottom>
+                        <Line endX="660.0" startX="100.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                     <left>
+                        <Line endX="100.0" startX="100.0" startY="360.0" BorderPane.alignment="CENTER" />
+                     </left>
+                     <right>
+                        <Line endX="-100.0" endY="360.0" startX="-100.0" BorderPane.alignment="CENTER" />
+                     </right>
+                  </BorderPane>
+               </children>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+               <children>
+                  <Button fx:id="switchButton" mnemonicParsing="false" onAction="#onSwitchBrushEraser" prefHeight="50.0" prefWidth="200.0" text="Switch to eraser">
+                     <font>
+                        <Font name="Proxima Nova" size="18.0" />
+                     </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                  </Canvas>
-               </center>
-               <top>
-                  <Line endX="660.0" startX="100.0" BorderPane.alignment="CENTER" />
-               </top>
-               <bottom>
-                  <Line endX="660.0" startX="100.0" BorderPane.alignment="CENTER" />
-               </bottom>
-               <left>
-                  <Line endX="100.0" startX="100.0" startY="360.0" BorderPane.alignment="CENTER" />
-               </left>
-               <right>
-                  <Line endX="-100.0" endY="360.0" startX="-100.0" BorderPane.alignment="CENTER" />
-               </right>
-            </BorderPane>
+                  </Button>
+                  <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClear" prefHeight="50.0" prefWidth="200.0" text="Clear canvas">
+                     <font>
+                        <Font name="Proxima Nova" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="speechButton" layoutX="556.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlaySound" prefHeight="50.0" prefWidth="50.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
          </children>
          <padding>
-            <Insets left="20.0" right="20.0" />
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
-         <children>
-            <Button fx:id="switchButton" mnemonicParsing="false" onAction="#onSwitchBrushEraser" prefHeight="40.0" prefWidth="160.0" text="Switch to eraser">
-               <font>
-                  <Font name="Proxima Nova" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClear" prefHeight="40.0" prefWidth="160.0" text="Clear canvas">
-               <font>
-                  <Font name="Proxima Nova" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="speechButton" layoutX="556.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlaySound" prefHeight="40.0" prefWidth="40.0" />
-         </children>
-      </HBox>
+      </VBox>
    </children>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-</VBox>
+</Pane>

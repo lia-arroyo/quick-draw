@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700&display=swap");
 
-.label {
+* {
+  -fx-text-color: black;
+  -fx-text-base-color: black;
   -fx-font-family: "Inter Tight", sans-serif;
 }
 
@@ -34,10 +36,12 @@
   -fx-background-color: #cdcdcd;
   -fx-border-color: transparent;
   -fx-background-radius: 37.5;
+  -fx-font-size: 37px;
 }
 
 .add-user:hover {
   -fx-background-color: #ababab;
+  -fx-font-size: 37px;
 }
 
 .back-button {

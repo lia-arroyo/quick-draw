@@ -14,7 +14,7 @@
       </Label>
       <Label alignment="CENTER" layoutX="270.0" layoutY="480.0" prefHeight="40.0" prefWidth="300.0" text="Loading...">
          <font>
-            <Font size="48.0" />
+            <Font size="36.0" />
          </font>
       </Label>
       <ImageView fx:id="titleImage" fitHeight="170.0" fitWidth="170.0" layoutX="335.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true" />

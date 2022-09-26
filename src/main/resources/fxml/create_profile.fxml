@@ -21,10 +21,13 @@
             <Font name="Proxima Nova" size="24.0" />
          </font>
       </TextField>
-      <Button fx:id="addProfileButton" layoutX="270.0" layoutY="490.0" mnemonicParsing="false" onAction="#onAddProfile" prefHeight="50.0" prefWidth="300.0" styleClass="add-profile" text="Add profile">
+      <Button fx:id="addProfileButton" layoutX="270.0" layoutY="490.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onAddProfile" prefHeight="60.0" prefWidth="300.0" styleClass="add-profile" text="Add profile">
          <font>
             <Font name="Proxima Nova" size="24.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Button fx:id="editAvatarButton" layoutX="480.0" layoutY="220.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#onChooseAvatar" prefHeight="30.0" prefWidth="30.0" styleClass="edit-avatar">
          <cursor>
@@ -41,7 +44,7 @@
             <Font name="Proxima Nova" size="24.0" />
          </font>
          <cursor>
-            <Cursor fx:constant="CLOSED_HAND" />
+            <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
    </children>

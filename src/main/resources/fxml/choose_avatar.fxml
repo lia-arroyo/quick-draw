@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" styleClass="main-pane" stylesheets="@../css/ChooseAvatar.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.ChooseAvatarController">
    <children>
       <VBox fx:id="avatarBox" layoutY="200.0" maxHeight="400.0" maxWidth="840.0" prefHeight="400.0" prefWidth="840.0">
@@ -90,7 +89,7 @@
             <Font name="Proxima Nova" size="24.0" />
          </font>
          <cursor>
-            <Cursor fx:constant="CLOSED_HAND" />
+            <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
    </children>
