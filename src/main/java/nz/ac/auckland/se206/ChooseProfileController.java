@@ -154,11 +154,13 @@ public class ChooseProfileController {
 
   /** This method is invoked when the profile image needs to be refreshed */
   private void updateImage() {
+    // Gets the profile index of the current profile
     int profileIndex =
         UserProfileManager.userProfileList
             .get(UserProfileManager.currentProfileIndex)
             .getProfileIndex();
 
+    // Gets the user profile image of the current profile
     Image avatarImage =
         new Image(
             this.getClass()

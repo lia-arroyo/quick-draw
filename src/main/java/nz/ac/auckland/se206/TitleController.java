@@ -41,14 +41,18 @@ public class TitleController {
           @Override
           public void run() {
 
+            // Displays the images for the loading animation
             if (imageIndex < 5) {
 
+              // Loads the current animation image
               Image image =
                   new Image(
                       this.getClass()
                           .getResource(String.format("/images/titleImages/%d.PNG", imageIndex))
                           .toString());
+              // Displays the current animation image
               titleImage.setImage(image);
+              // Sets the next image of the animation to be displayed
               imageIndex++;
             } else {
 

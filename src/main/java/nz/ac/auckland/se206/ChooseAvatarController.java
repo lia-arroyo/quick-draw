@@ -69,6 +69,7 @@ public class ChooseAvatarController {
 
     UserProfileManager.chosenProfileIndex = Integer.valueOf(profileIndex);
 
+    // Loads the scene for profile creation
     goToCreateProfile(event);
   }
 
