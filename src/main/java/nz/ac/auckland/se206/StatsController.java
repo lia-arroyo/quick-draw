@@ -1,7 +1,11 @@
 package nz.ac.auckland.se206;
 
+import java.io.IOException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.profiles.UserProfile;
@@ -38,5 +42,24 @@ public class StatsController {
 
     // updating loss count
     lossesLabel.setText(currentProfile.getLossesCount() + "");
+  }
+
+  /**
+   * This method is called when the user presses the Go Back button on the Stats page.
+   *
+   * @param event the ActionEvent handler
+   */
+  @FXML
+  public void onGoBack(ActionEvent event) {
+    // getting scene information
+    Button button = (Button) event.getSource();
+    Scene currentScene = button.getScene();
+
+    // going back to main menu page
+    try {
+      currentScene.setRoot(App.loadFxml("main_menu"));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 }
