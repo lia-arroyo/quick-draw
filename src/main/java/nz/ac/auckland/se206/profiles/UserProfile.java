@@ -5,19 +5,23 @@ import java.util.ArrayList;
 public class UserProfile {
 
   private String userName;
-  private int profileID;
+  private int profileIndex;
   private int wins = 0;
   private int losses = 0;
   private ArrayList<String> wordHistory = new ArrayList<>();
   private double highestPredictionPercentage = 0;
 
-  public UserProfile(String userName, int profileID) {
+  public UserProfile(String userName, int profileIndex) {
     this.userName = userName;
-    this.profileID = profileID;
+    this.profileIndex = profileIndex;
   }
 
   public String getUserName() {
     return this.userName;
+  }
+
+  public int getProfileIndex() {
+    return this.profileIndex;
   }
 
   public int getWinsCount() {
