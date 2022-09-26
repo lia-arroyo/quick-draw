@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import nz.ac.auckland.se206.profiles.UserProfile;
@@ -31,6 +32,15 @@ public class StatsController {
   public void initialize() {
     // updating the title with the current profile's name
     statsTitleLabel.setText(currentProfile.getUserName() + "'s Stats");
+
+    // updating the image to be the user's chosen avatar
+    Image userAvatar =
+        new Image(
+            this.getClass()
+                .getResource(
+                    String.format("/images/profileImages/%d.PNG", currentProfile.getProfileIndex()))
+                .toString());
+    userProfileImage.setImage(userAvatar);
 
     // updating the statistics shown
     updateStatistics();
