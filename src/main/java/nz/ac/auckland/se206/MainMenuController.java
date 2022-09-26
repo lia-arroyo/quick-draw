@@ -2,11 +2,15 @@ package nz.ac.auckland.se206;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -21,6 +25,10 @@ public class MainMenuController {
   @FXML private Button startButton;
 
   @FXML private ImageView profileImage;
+
+  @FXML private Label greetingLabel;
+
+  @FXML private ImageView emojiImage;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded.
@@ -43,6 +51,8 @@ public class MainMenuController {
                     String.format("/images/profileImages/%d.PNG", currentUser.getProfileIndex()))
                 .toString());
     profileImage.setImage(userProfileImage);
+
+    setGreetingText(currentUser.getUserName());
   }
 
   /**
@@ -107,7 +117,8 @@ public class MainMenuController {
           @Override
           protected Void call() throws Exception {
             TextToSpeech textToSpeech = new TextToSpeech();
-            textToSpeech.speak("Quick, draw", "Start a new game or exit the game");
+            textToSpeech.speak(
+                "Quick, draw", "Start a new game, check your stats, or exit the game");
 
             return null;
           }
@@ -115,5 +126,26 @@ public class MainMenuController {
 
     Thread speechThread = new Thread(speechTask);
     speechThread.start();
+  }
+
+  @FXML
+  private void onSwitchUser() {}
+
+  private void setGreetingText(String username) {
+    // Setting greeting text
+    List<String> greetingList = Arrays.asList("Welcome,", "Hello", "Hey", "Hi", "What's up");
+    Random random = new Random();
+    greetingLabel.setText(
+        String.format(
+            "%s %s", greetingList.get(random.nextInt(greetingList.size() - 0)), username));
+
+    // Setting emoji
+    int emojiIndex = random.nextInt(8);
+    Image emoji =
+        new Image(
+            this.getClass()
+                .getResource(String.format("/images/emojis/%d.png", emojiIndex))
+                .toString());
+    emojiImage.setImage(emoji);
   }
 }
