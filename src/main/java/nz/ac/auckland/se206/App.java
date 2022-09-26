@@ -56,9 +56,10 @@ public class App extends Application {
     // Makes sure all threads are closed when the window closes
     stage.setOnCloseRequest(
         e -> {
-          // Automatically saving everything on close
-          UserProfileManager.saveToFile();
-
+          // Automatically saving data on close
+          if (!UserProfileManager.userProfileList.isEmpty()) {
+            UserProfileManager.saveToFile();
+          }
           // Ensuring everything exits properly
           Platform.exit();
           System.exit(0);
