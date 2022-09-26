@@ -21,12 +21,19 @@ public class UserProfileManager {
   // this is a reference to the current profile.
   public static UserProfile currentProfile;
 
+  /**
+   * This method is called every time the json file needs to be updated to the current user profile
+   * array.
+   */
   public static void saveToFile() {
     try {
+      // Saving the current user profile array to the json file
       Gson gson = new Gson();
       Writer writer =
           Files.newBufferedWriter(
               Paths.get("src/main/resources/profiles/profiles.json"), StandardCharsets.UTF_8);
+
+      // Converting the user profile array into the json format using gson
       gson.toJson(userProfileList, writer);
       writer.close();
     } catch (IOException e) {

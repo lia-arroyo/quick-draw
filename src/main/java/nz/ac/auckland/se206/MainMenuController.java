@@ -116,8 +116,10 @@ public class MainMenuController {
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
-            // Implementing the text to speech function
             TextToSpeech textToSpeech = new TextToSpeech();
+
+            // Notifying the user about the game title, and also telling them about
+            // the available options.
             textToSpeech.speak(
                 "Quick, draw", "Start a new game, check your stats, or exit the game");
             return null;

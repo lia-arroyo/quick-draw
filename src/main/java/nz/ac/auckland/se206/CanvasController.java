@@ -189,18 +189,19 @@ public class CanvasController {
 
     Timer timer = new Timer();
 
-    // Decrementing i every second and updating the time left label. If i goes below
+    // Decrementing variable seconds every second and updating the time left label. If seconds goes
+    // below
     // 0, then we finish the round, notifying the player that they ran out of time.
     timer.scheduleAtFixedRate(
         new TimerTask() {
-          int i = secondsLeft + 1;
+          int seconds = secondsLeft + 1;
 
           public void run() {
 
             // Every second, the time left label and model prediction is updated
             Platform.runLater(
                 () -> {
-                  updateCounter(i);
+                  updateCounter(seconds);
                   if (!canvasIsEmpty) {
                     try {
                       updatePrediction(timer, getCurrentSnapshot());
@@ -209,11 +210,11 @@ public class CanvasController {
                     }
                   }
                 });
-            i--;
+            seconds--;
 
             // If the timer reaches 0, we cancel the timer so that it stops, and we finish
             // the round with 0 (lost)
-            if (i < 0) {
+            if (seconds < 0) {
               timer.cancel();
               finishRound(0);
             }
@@ -349,11 +350,12 @@ public class CanvasController {
    */
   @FXML
   private void onSwitchBrushEraser() {
-    // Once eraser is pressed, button switches to "switch to brush" and vice versa
+    // Once eraser is pressed, button switches to "switch to brush"
     if (eraser == true) {
       eraser = false;
       switchButton.setText("Switch to eraser");
 
+      // Once brush is pressed, button switches to "switch to eraser"
     } else {
       eraser = true;
       switchButton.setText("Switch to brush");

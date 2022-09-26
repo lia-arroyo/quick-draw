@@ -16,13 +16,13 @@ import nz.ac.auckland.se206.profiles.UserProfileManager;
 
 public class CategorySelector {
 
-  public static String chosenWord;
-
   public enum Difficulty {
     E,
     M,
     H
   }
+
+  public static String chosenWord;
 
   private Map<Difficulty, List<String>> difficultyToCategories;
 

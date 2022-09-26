@@ -37,7 +37,6 @@ public class CreateProfileController {
    */
   public void initialize() throws IOException {
 
-    
     // A user can only return to the main menu if there is at least one profile in the profile list
     if (UserProfileManager.userProfileList.isEmpty()) {
       backButton.setVisible(false);
