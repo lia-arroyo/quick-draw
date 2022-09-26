@@ -53,9 +53,17 @@ public class ChooseAvatarController {
   private void onClickImage(ActionEvent event) {
     Button avatarButton = (Button) event.getSource();
     String avatarId = avatarButton.getId();
+    String profileIndex = "";
 
-    UserProfileManager.chosenProfileIndex = Character.getNumericValue(avatarId.charAt(7));
-    System.out.println(avatarId);
+    for (int i = 0; i < avatarId.length(); i++) {
+      // If the character is a number
+      if (avatarId.charAt(i) >= 48 && avatarId.charAt(i) <= 57) {
+        profileIndex = profileIndex + avatarId.charAt(i);
+      }
+    }
+
+    UserProfileManager.chosenProfileIndex = Integer.valueOf(profileIndex);
+
     goToCreateProfile(event);
   }
 
