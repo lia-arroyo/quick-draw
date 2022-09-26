@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.WaitingController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" stylesheets="@../css/Waiting.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.WaitingController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="160.0" prefHeight="70.0" prefWidth="400.0" text="Your word is:" textAlignment="CENTER">
          <font>
-            <Font name="Proxima Nova" size="48.0" />
+            <Font name="Proxima Nova" size="40.0" />
          </font>
       </Label>
       <Label fx:id="chosenWord" alignment="CENTER" layoutX="10.0" layoutY="220.0" maxHeight="120.0" maxWidth="820.0" prefHeight="120.0" prefWidth="820.0" text="The great wall of china" textAlignment="CENTER">
@@ -17,11 +18,14 @@
             <Font name="Proxima Nova" size="72.0" />
          </font>
       </Label>
-      <Button fx:id="readyButton" layoutX="280.0" layoutY="450.0" mnemonicParsing="false" onAction="#onStartGame" prefHeight="70.0" prefWidth="280.0" text="I'm Ready">
+      <Button fx:id="readyButton" layoutX="280.0" layoutY="370.0" mnemonicParsing="false" onAction="#onStartGame" prefHeight="65.0" prefWidth="300.0" text="I'm Ready">
          <font>
             <Font name="Proxima Nova" size="36.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-      <Button fx:id="speechButton" layoutX="792.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlaySound" prefHeight="40.0" prefWidth="40.0" />
+      <Button fx:id="speechButton" layoutX="790.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlaySound" prefHeight="40.0" prefWidth="40.0" />
    </children>
 </Pane>

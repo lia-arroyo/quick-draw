@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500&display=swap");
+
+* {
+  -fx-text-color: black;
+  -fx-text-base-color: black;
+  -fx-font-family: "Inter Tight", sans-serif;
+}
+
+.button {
+  -fx-background-color: #cdcdcd;
+  -fx-background-radius: 30px;
+  -fx-font-size: 18px;
+}
+
+.button:hover {
+  -fx-background-color: #ababab;
+  -fx-font-size: 18px;
+}

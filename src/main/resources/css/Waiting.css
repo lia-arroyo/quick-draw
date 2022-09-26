@@ -2,22 +2,18 @@
 
 * {
   -fx-font-family: "Inter Tight", sans-serif;
-  -fx-font-weight: 700;
   -fx-font-color: black;
   -fx-text-base-color: black;
 }
 
-.avatar-button-box .button {
-  -fx-background-color: transparent;
-}
-
-.back-button {
+.button {
+  -fx-background-color: #cdcdcd;
   -fx-border-color: transparent;
-  -fx-background-color: transparent;
   -fx-font-size: 24px;
+  -fx-background-radius: 30px;
 }
 
-.back-button:hover {
-  -fx-underline: true;
+.button:hover {
+  -fx-background-color: #ababab;
   -fx-font-size: 24px;
 }

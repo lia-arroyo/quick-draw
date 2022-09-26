@@ -26,7 +26,8 @@ public class TitleController {
     if (!profiles.exists()) {
       profiles.createNewFile();
       noProfiles = true;
-      // Checks if the user profile file is empty or not
+      
+    // Checks if the user profile file is empty or not
     } else {
       if (profiles.length() == 0) {
         noProfiles = true;
@@ -50,6 +51,7 @@ public class TitleController {
                       this.getClass()
                           .getResource(String.format("/images/titleImages/%d.PNG", imageIndex))
                           .toString());
+                          
               // Displays the current animation image
               titleImage.setImage(image);
               // Sets the next image of the animation to be displayed
@@ -74,6 +76,7 @@ public class TitleController {
   }
 
   private void moveToCreateProfile() {
+
     // Loads the scene for profile creation
     try {
       pane.getScene().setRoot(App.loadFxml("create_profile"));
@@ -84,6 +87,7 @@ public class TitleController {
   }
 
   private void moveToChooseProfile() {
+  
     // Loads the scene for choosing profile
     try {
       pane.getScene().setRoot(App.loadFxml("choose_profile"));
