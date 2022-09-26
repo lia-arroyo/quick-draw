@@ -55,7 +55,7 @@ public class ChooseProfileController {
     if (UserProfileManager.userProfileList.size() > 1) {
       UserProfileManager.userProfileList.remove(UserProfileManager.currentProfileIndex);
       if (UserProfileManager.currentProfileIndex == UserProfileManager.userProfileList.size()) {
-        UserProfileManager.currentProfileIndex = UserProfileManager.userProfileList.size() - 1;
+        UserProfileManager.currentProfileIndex = 0;
         this.userNameLabel.setText(
             UserProfileManager.userProfileList
                 .get(UserProfileManager.currentProfileIndex)
