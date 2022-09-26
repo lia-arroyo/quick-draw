@@ -10,6 +10,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 
@@ -17,17 +20,41 @@ public class CreateProfileController {
 
   @FXML private TextField profileName;
 
+  @FXML private Button editAvatarButton;
+
+  @FXML private Button addProfileButton;
+
+  @FXML private Pane pane;
+
+  @FXML ImageView avatarImage;
+
   private Boolean fileEmpty = false;
+
+  private Boolean avatarChosen = false;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded.
    *
    * @throws IOException
    */
-  public void initialize() throws IOException {}
+  public void initialize() throws IOException {
+    profileName.setText(UserProfileManager.chosenUsername);
+    profileName.setFocusTraversable(false);
+
+    Image initialAvatar =
+        new Image(
+            this.getClass()
+                .getResource(
+                    String.format(
+                        "/images/profileImages/%d.PNG", UserProfileManager.chosenProfileIndex))
+                .toString());
+    avatarImage.setImage(initialAvatar);
+  }
 
   @FXML
   private void onAddProfile(ActionEvent event) throws IOException {
+    // Getting the currently chosen profile image index
+    int profileIndex = UserProfileManager.chosenProfileIndex;
 
     // getting info from fxml
     String userName = profileName.getText();
@@ -40,7 +67,7 @@ public class CreateProfileController {
     if (userName.strip().length() > 0 && !checkUserNameTaken(userName)) {
 
       // Creating a new object with the given username and profile image index.
-      UserProfile user = new UserProfile(userName, 0);
+      UserProfile user = new UserProfile(userName, profileIndex);
 
       // Adding user to the profile list
       UserProfileManager.userProfileList.add(user);
@@ -64,6 +91,27 @@ public class CreateProfileController {
       alert.setContentText("Username already exists. Please choose another name.");
 
       alert.showAndWait();
+    }
+
+    // Resetting chosen username string and profile index to default values
+    UserProfileManager.chosenUsername = "";
+    UserProfileManager.chosenProfileIndex = 1;
+  }
+
+  @FXML
+  private void onChooseAvatar(ActionEvent event) {
+    Button button = (Button) event.getSource();
+    Scene sceneButtonIsIn = button.getScene();
+
+    // Saving current input from the textfield so that when the user comes back to
+    // the create profile page, the text field does not reset.
+    UserProfileManager.chosenUsername = profileName.getText();
+
+    // Loading the fxml file of the choose avatar page
+    try {
+      sceneButtonIsIn.setRoot(App.loadFxml("choose_avatar"));
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 

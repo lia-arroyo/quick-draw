@@ -12,6 +12,10 @@ public class UserProfileManager {
 
   public static ArrayList<UserProfile> userProfileList;
 
+  public static String chosenUsername = "";
+
+  public static int chosenProfileIndex = 1;
+
   public static int currentProfileIndex = -1;
 
   // this is a reference to the current profile.

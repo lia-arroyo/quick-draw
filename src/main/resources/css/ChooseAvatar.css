@@ -1,0 +1,12 @@
+.avatar-button-box .button {
+  -fx-background-color: transparent;
+}
+
+.back-button {
+  -fx-border-color: transparent;
+  -fx-background-color: transparent;
+}
+
+.back-button:hover {
+  -fx-underline: true;
+}
