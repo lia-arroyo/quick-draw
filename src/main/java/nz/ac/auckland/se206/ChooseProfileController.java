@@ -21,7 +21,7 @@ public class ChooseProfileController {
 
   @FXML private Button addUserButton;
 
-  @FXML private ImageView profileImage;
+  @FXML private Button profileImageButton;
 
   @FXML private Label userNameLabel;
 
@@ -126,6 +126,19 @@ public class ChooseProfileController {
     updateImage();
   }
 
+  @FXML
+  private void onSelectProfile(ActionEvent event) {
+    Button button = (Button) event.getSource();
+    Scene sceneButtonIsIn = button.getScene();
+
+    try {
+      sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   /** This method is invoked when the profile image needs to be refreshed */
   private void updateImage() {
     int profileIndex =
@@ -138,6 +151,16 @@ public class ChooseProfileController {
             this.getClass()
                 .getResource(String.format("/images/profileImages/%d.PNG", profileIndex))
                 .toString());
-    profileImage.setImage(avatarImage);
+
+    // Set image width and height to the button's width and height
+    ImageView avatarImageView = new ImageView(avatarImage);
+    avatarImageView.setFitWidth(profileImageButton.getPrefWidth());
+    avatarImageView.setFitHeight(profileImageButton.getPrefHeight());
+
+    // Set button background colour to transparent
+    profileImageButton.setStyle("-fx-background-color: transparent;");
+
+    // Set button image to the profile image of the user
+    profileImageButton.setGraphic(avatarImageView);
   }
 }
