@@ -22,8 +22,6 @@ public class MainMenuController {
 
   @FXML private Button speechButton;
 
-  @FXML private Button startButton;
-
   @FXML private ImageView profileImage;
 
   @FXML private Label greetingLabel;
@@ -44,6 +42,7 @@ public class MainMenuController {
     Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
     speechButton.setGraphic(new ImageView(icon));
 
+    // Setting the user's selected avatar image and displaying it.
     Image userProfileImage =
         new Image(
             this.getClass()
@@ -52,6 +51,7 @@ public class MainMenuController {
                 .toString());
     profileImage.setImage(userProfileImage);
 
+    // Welcoming the user using a randomly-generated greeting
     setGreetingText(currentUser.getUserName());
   }
 
@@ -63,10 +63,11 @@ public class MainMenuController {
    */
   @FXML
   private void onMoveToWaiting(ActionEvent event) {
+    // Getting the scene information
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
-    // Loading the fxml file to change the scene to waiting screen
+    // Changing the scene to waiting screen
     try {
       sceneButtonIsIn.setRoot(App.loadFxml("waiting"));
     } catch (IOException e) {
@@ -80,7 +81,7 @@ public class MainMenuController {
    * @param event the ActionEvent passed by JAVAFX
    */
   @FXML
-  public void onSeeStats(ActionEvent event) {
+  private void onSeeStats(ActionEvent event) {
     // getting scene information
     Button button = (Button) event.getSource();
     Scene currentScene = button.getScene();
@@ -110,26 +111,33 @@ public class MainMenuController {
    */
   @FXML
   private void onPlaySound() {
-
     // Making a new thread for playing the sound
     Task<Void> speechTask =
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
+            // Implementing the text to speech function
             TextToSpeech textToSpeech = new TextToSpeech();
             textToSpeech.speak(
                 "Quick, draw", "Start a new game, check your stats, or exit the game");
-
             return null;
           }
         };
 
+    // Starting the thread
     Thread speechThread = new Thread(speechTask);
     speechThread.start();
   }
 
+  /**
+   * This method will be called when the user clicks the Switch icon button, and will lead them to
+   * the choose profile page.
+   *
+   * @param event the event handler
+   */
   @FXML
   private void onSwitchUser(ActionEvent event) {
+    // scene information
     Button button = (Button) event.getSource();
     Scene currentScene = button.getScene();
 
@@ -141,14 +149,22 @@ public class MainMenuController {
     }
   }
 
+  /**
+   * This method randomly chooses and displays a fun and trendy greeting from a list to appeal to
+   * our target audience, young adult/teenagers.
+   *
+   * @param username the name of the user
+   */
   private void setGreetingText(String username) {
-    // Setting greeting text
+    // Initialising greetings to choose from
     List<String> greetingList = Arrays.asList("Welcome,", "Hello", "Hey", "Hi", "What's up");
+
+    // Randomly selecting the greeting
     Random random = new Random();
     greetingLabel.setText(
         String.format("%s %s", greetingList.get(random.nextInt(greetingList.size())), username));
 
-    // Setting emoji
+    // Setting random emoji
     int emojiIndex = random.nextInt(8);
     Image emoji =
         new Image(
