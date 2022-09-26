@@ -24,17 +24,17 @@ public class CategorySelector {
     H
   }
 
-  private Map<Difficulty, List<String>> difficulty2categories;
+  private Map<Difficulty, List<String>> difficultyToCategories;
 
   public CategorySelector() throws IOException, CsvException, URISyntaxException {
-    difficulty2categories = new HashMap<>();
+    difficultyToCategories = new HashMap<>();
 
     for (Difficulty difficulty : Difficulty.values()) {
-      difficulty2categories.put(difficulty, new ArrayList<>());
+      difficultyToCategories.put(difficulty, new ArrayList<>());
     }
 
     for (String[] line : getLines()) {
-      difficulty2categories.get(Difficulty.valueOf(line[1])).add(line[0]);
+      difficultyToCategories.get(Difficulty.valueOf(line[1])).add(line[0]);
     }
   }
 
@@ -47,13 +47,13 @@ public class CategorySelector {
   public String getRandomCategory(Difficulty difficulty) {
 
     // a clone of the word list
-    List<String> wordListCopy = difficulty2categories.get(difficulty);
+    List<String> wordListCopy = difficultyToCategories.get(difficulty);
 
     // removing all played words from the cloned list
     wordListCopy.removeAll(UserProfileManager.currentProfile.getWordHistory());
 
     // Returns a random word from the updated word list without played words
-    return wordListCopy.get(new Random().nextInt(difficulty2categories.get(difficulty).size()));
+    return wordListCopy.get(new Random().nextInt(difficultyToCategories.get(difficulty).size()));
   }
 
   /**
@@ -90,5 +90,9 @@ public class CategorySelector {
    */
   public String getChosenWord() {
     return CategorySelector.chosenWord;
+  }
+
+  public int getTotalWordCount(Difficulty difficulty) {
+    return difficultyToCategories.get(difficulty).size();
   }
 }
