@@ -38,9 +38,11 @@ public class CreateProfileController {
    * @throws IOException
    */
   public void initialize() throws IOException {
+    // A blank username is displayed by default
     profileName.setText(UserProfileManager.chosenUsername);
     profileName.setFocusTraversable(false);
 
+    // The first image is displayed by default
     Image initialAvatar =
         new Image(
             this.getClass()
@@ -116,6 +118,8 @@ public class CreateProfileController {
   }
 
   private Boolean checkUserNameTaken(String userName) throws IOException {
+    // Only checks if there is currently as least one user profile in the profile
+    // list
     if (!UserProfileManager.userProfileList.isEmpty()) {
 
       for (UserProfile user : UserProfileManager.userProfileList) {

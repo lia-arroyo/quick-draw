@@ -108,6 +108,7 @@ public class AfterRoundController {
   @FXML
   private void onPlaySound() {
 
+    // Creates a background task to play text-to-speech
     Task<Void> speechTask =
         new Task<Void>() {
           @Override
@@ -119,6 +120,7 @@ public class AfterRoundController {
           }
         };
 
+    // Creates a thread to run the background task
     Thread speechThread = new Thread(speechTask);
     speechThread.start();
   }

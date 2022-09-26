@@ -17,6 +17,8 @@ public class ChooseAvatarController {
   @FXML private VBox avatarBox;
 
   public void initialize() {
+
+    // Displays the first image as the default image
     int imageIndex = 1;
 
     for (Node hbox : avatarBox.getChildren()) {
@@ -71,6 +73,7 @@ public class ChooseAvatarController {
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
+    // Loads the scene for profile creation
     try {
       sceneButtonIsIn.setRoot(App.loadFxml("create_profile"));
     } catch (IOException e) {
