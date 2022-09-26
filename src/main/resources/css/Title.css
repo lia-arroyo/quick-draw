@@ -1,0 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Londrina+Shadow&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Just+Me+Again+Down+Here&display=swap");
+
+.label {
+  -fx-font-family: "Just Me Again Down Here";
+}
+
+.title-label {
+  -fx-font-family: "Londrina Shadow";
+}

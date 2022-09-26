@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700&display=swap");
+
+.label {
+  -fx-font-family: "Inter Tight", sans-serif;
+}
+
+.profile-image-box {
+  -fx-border-width: 2px;
+  -fx-border-color: #000;
+}
+
+.switch-user-button {
+  -fx-background-color: #cdcdcd;
+  -fx-graphic: url(../images/switchUser.png);
+  -fx-background-radius: 15px;
+}
+
+.switch-user-button:hover {
+  -fx-background-color: #ababab;
+}

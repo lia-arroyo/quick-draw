@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" stylesheets="@../css/ChooseProfile.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.ChooseProfileController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" styleClass="pane" stylesheets="@../css/ChooseProfile.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.ChooseProfileController">
    <children>
       <HBox layoutX="320.0" layoutY="210.0" maxHeight="202.0" maxWidth="202.0" prefHeight="202.0" prefWidth="202.0" styleClass="profile-image-box">
          <children>
@@ -18,9 +18,9 @@
             </Button>
          </children>
       </HBox>
-      <Label alignment="CENTER" layoutX="220.0" layoutY="120.0" prefHeight="80.0" prefWidth="400.0" text="Choose user profile:">
+      <Label alignment="CENTER" layoutX="170.0" layoutY="80.0" prefHeight="80.0" prefWidth="500.0" text="Choose User Profile:">
          <font>
-            <Font name="Proxima Nova" size="36.0" />
+            <Font name="Proxima Nova" size="48.0" />
          </font>
       </Label>
       <Button fx:id="leftButton" layoutX="230.0" layoutY="295.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#onGoLeft" prefHeight="50.0" prefWidth="50.0" styleClass="left-button">
@@ -33,7 +33,7 @@
          </cursor></Button>
       <Label fx:id="userNameLabel" alignment="CENTER" layoutX="305.0" layoutY="420.0" prefHeight="40.0" prefWidth="230.0">
          <font>
-            <Font name="Proxima Nova" size="24.0" />
+            <Font name="Proxima Nova" size="30.0" />
          </font>
       </Label>
       <Button fx:id="deleteUserButton" layoutX="480.0" layoutY="220.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#onDeleteUser" prefHeight="30.0" prefWidth="30.0" styleClass="delete-user">

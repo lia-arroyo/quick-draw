@@ -24,13 +24,11 @@ public class CreateProfileController {
 
   @FXML private Button addProfileButton;
 
+  @FXML private Button backButton;
+
   @FXML private Pane pane;
 
   @FXML ImageView avatarImage;
-
-  private Boolean fileEmpty = false;
-
-  private Boolean avatarChosen = false;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded.
@@ -38,7 +36,14 @@ public class CreateProfileController {
    * @throws IOException
    */
   public void initialize() throws IOException {
-    // A blank username is displayed by default
+
+    
+    // A user can only return to the main menu if there is at least one profile in the profile list
+    if (UserProfileManager.userProfileList.isEmpty()) {
+      backButton.setVisible(false);
+    }
+
+    // The usernametext is retained when switching to another scene
     profileName.setText(UserProfileManager.chosenUsername);
     profileName.setFocusTraversable(false);
 
@@ -82,6 +87,9 @@ public class CreateProfileController {
       // Set the current user to the profile that was just made.
       UserProfileManager.currentProfileIndex = UserProfileManager.userProfileList.size() - 1;
 
+      UserProfileManager.currentProfile =
+          UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex);
+
       // User is redirected to the main menu
       sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
 
@@ -98,6 +106,18 @@ public class CreateProfileController {
     // Resetting chosen username string and profile index to default values
     UserProfileManager.chosenUsername = "";
     UserProfileManager.chosenProfileIndex = 1;
+  }
+
+  @FXML
+  private void onGoBack(ActionEvent event) {
+    Button button = (Button) event.getSource();
+    Scene sceneButtonIsIn = button.getScene();
+
+    try {
+      sceneButtonIsIn.setRoot(App.loadFxml("choose_profile"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   @FXML

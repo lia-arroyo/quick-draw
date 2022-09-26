@@ -56,7 +56,7 @@ public class StatsController {
     lossesLabel.setText(currentProfile.getLossesCount() + "");
 
     // updating the highest prediction
-    highestPredictionLabel.setText(Math.round(currentProfile.getHighestPrediction() * 100) + "%");
+    highestPredictionLabel.setText(Math.round(currentProfile.getHighestPrediction()) + "%");
 
     // updating the word history and progress
     displayWordHistory();
