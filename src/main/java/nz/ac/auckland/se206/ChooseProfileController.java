@@ -137,6 +137,9 @@ public class ChooseProfileController {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+    UserProfileManager.currentProfile =
+        UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex);
   }
 
   /** This method is invoked when the profile image needs to be refreshed */
