@@ -299,7 +299,7 @@ public class CanvasController {
       currentIndex++;
     }
 
-    return -1;
+    return 340;
   }
 
   /**
