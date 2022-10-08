@@ -18,6 +18,14 @@ public class DifficultyLevel {
 		E, M, H
 	}
 
+	public static Accuracy currentAccuracyLevel;
+
+	public static Words currentWordsLevel;
+
+	public static Time currentTimeLevel;
+
+	public static Confidence currentConfidenceLevel;
+
 	private Accuracy accuracyLevel;
 
 	private Words wordsLevel;
