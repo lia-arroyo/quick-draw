@@ -55,6 +55,10 @@ public class CanvasController {
 
   @FXML private Button speechButton;
 
+  @FXML private Label closerFurtherLabel;
+
+  @FXML private ImageView closerFurtherImage;
+
   private GraphicsContext graphic;
 
   private DoodlePrediction model;
@@ -65,6 +69,8 @@ public class CanvasController {
 
   private Boolean eraser = false;
   private Boolean canvasIsEmpty = true;
+
+  private int predictionIndex = 340;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -80,7 +86,7 @@ public class CanvasController {
     speechButton.setGraphic(new ImageView(icon));
 
     // Displaying chosen word
-    chosenWord.setText("[ " + CategorySelector.chosenWord + " ]");
+    chosenWord.setText(CategorySelector.chosenWord);
     model = new DoodlePrediction();
 
     // Adding the chosen word to the history of current user
@@ -133,6 +139,10 @@ public class CanvasController {
 
     // Emptying the prediction list as there's nothing on the canvas
     predictionList.setText("");
+
+    // Emptying the closer/further text and image
+    closerFurtherLabel.setText("");
+    closerFurtherImage.setImage(null);
   }
 
   /**
@@ -206,6 +216,7 @@ public class CanvasController {
                   if (!canvasIsEmpty) {
                     try {
                       updatePrediction(timer, getCurrentSnapshot());
+                      updateCloserFurther();
                     } catch (TranslateException e) {
                       e.printStackTrace();
                     }
@@ -233,11 +244,62 @@ public class CanvasController {
    */
   private void updateCounter(int timeLeft) {
     if (timeLeft >= 0) {
-      this.timeLeft.setText(String.format("%d s", timeLeft));
+      this.timeLeft.setText(String.format("%d", timeLeft));
     } else {
       // Displays if there is no time left
       this.timeLeft.setText("Time up");
     }
+  }
+
+  /**
+   * This method updates the closer or further label / emoji depending on the prediction list. If
+   * the user's drawing is getting closer to the top 10, then we display 'closer', if it goes
+   * further away then we display 'further'.
+   *
+   * @throws TranslateException
+   */
+  private void updateCloserFurther() throws TranslateException {
+
+    int previousIndex = predictionIndex;
+    predictionIndex = getPredictionIndex();
+
+    if (predictionIndex < 10) {
+      closerFurtherLabel.setText("TOP 10!");
+      closerFurtherImage.setImage(
+          new Image(this.getClass().getResource("/images/emojis/3.png").toString()));
+    } else {
+      // Closer
+      if (predictionIndex < previousIndex) {
+        closerFurtherLabel.setText("CLOSER");
+        closerFurtherImage.setImage(
+            new Image(this.getClass().getResource("/images/emojis/0.png").toString()));
+
+        // Further
+      } else if (predictionIndex > previousIndex) {
+        closerFurtherLabel.setText("FURTHER");
+        closerFurtherImage.setImage(
+            new Image(this.getClass().getResource("/images/emojis/8.png").toString()));
+      }
+    }
+  }
+
+  private int getPredictionIndex() throws TranslateException {
+    List<Classifications.Classification> predictions =
+        model.getPredictions(getCurrentSnapshot(), 340);
+
+    String chosenWord = CategorySelector.chosenWord;
+
+    int currentIndex = 0;
+
+    for (Classifications.Classification category : predictions) {
+      if (category.getClassName().equals(chosenWord)) {
+        return currentIndex;
+      }
+
+      currentIndex++;
+    }
+
+    return -1;
   }
 
   /**
@@ -258,7 +320,7 @@ public class CanvasController {
             StringBuilder sb = new StringBuilder();
 
             // Building the string to set as the prediction label on the GUI
-            sb.append("TOP 10 PREDICTIONS\n\n");
+            sb.append("Top 10 Predictions\n\n");
 
             int i = 1;
 
