@@ -189,7 +189,8 @@ public class CanvasController {
 
     Timer timer = new Timer();
 
-    // Decrementing variable seconds every second and updating the time left label. If seconds goes
+    // Decrementing variable seconds every second and updating the time left label.
+    // If seconds goes
     // below
     // 0, then we finish the round, notifying the player that they ran out of time.
     timer.scheduleAtFixedRate(

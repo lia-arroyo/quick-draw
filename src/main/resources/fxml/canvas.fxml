@@ -12,7 +12,6 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" stylesheets="@../css/Canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.CanvasController">
    <children>
       <VBox alignment="CENTER" layoutX="20.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="800.0" spacing="20.0">
@@ -38,9 +37,9 @@
                         <Font name="Proxima Nova" size="18.0" />
                      </font>
                   </Label>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="canvasPane">
                      <center>
-                        <Canvas fx:id="canvas" height="360.0" width="560.0" BorderPane.alignment="CENTER">
+                        <Canvas fx:id="canvas" height="360.0" styleClass="canvas" width="560.0" BorderPane.alignment="CENTER">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
