@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" layoutX="179.0" layoutY="52.0" prefHeight="105.0" prefWidth="482.0" text="Settings" textAlignment="CENTER">
+         <font>
+            <Font size="72.0" />
+         </font>
+      </Label>
+      <Slider fx:id="accuracySlider" layoutX="149.0" layoutY="238.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" prefHeight="52.0" prefWidth="543.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="confidenceSlider" layoutX="149.0" layoutY="558.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" prefHeight="52.0" prefWidth="543.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="wordsSlider" layoutX="149.0" layoutY="340.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" prefHeight="52.0" prefWidth="543.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="timeSlider" layoutX="149.0" layoutY="448.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" prefHeight="52.0" prefWidth="543.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Label alignment="CENTER" layoutX="360.0" layoutY="202.0" prefHeight="36.0" prefWidth="120.0" text="Accuracy" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="360.0" layoutY="304.0" prefHeight="36.0" prefWidth="120.0" text="Words" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="361.0" layoutY="412.0" prefHeight="36.0" prefWidth="120.0" text="Time" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="360.0" layoutY="522.0" prefHeight="36.0" prefWidth="120.0" text="Confidence" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
