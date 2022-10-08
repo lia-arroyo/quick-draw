@@ -2,10 +2,14 @@ package nz.ac.auckland.se206;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -56,23 +60,38 @@ public class ChooseProfileController {
   private void onDeleteUser() {
     // Can only delete user profile if there are at least current user profiles
     if (UserProfileManager.userProfileList.size() > 1) {
-      UserProfileManager.userProfileList.remove(UserProfileManager.currentProfileIndex);
-      // When deleted, the next user profile is displayed instead
-      if (UserProfileManager.currentProfileIndex == UserProfileManager.userProfileList.size()) {
-        UserProfileManager.currentProfileIndex = 0;
-        this.userNameLabel.setText(
-            UserProfileManager.userProfileList
-                .get(UserProfileManager.currentProfileIndex)
-                .getUserName());
-      } else {
-        this.userNameLabel.setText(
-            UserProfileManager.userProfileList
-                .get(UserProfileManager.currentProfileIndex)
-                .getUserName());
+
+      Alert alert = new Alert(AlertType.CONFIRMATION);
+      alert.setTitle(null);
+      alert.setHeaderText(null);
+      alert.setContentText(
+          String.format(
+              "Are you sure you want to delete %s?",
+              UserProfileManager.currentProfile.getUserName()));
+
+      Optional<ButtonType> result = alert.showAndWait();
+
+      if (result.get() == ButtonType.OK) {
+        UserProfileManager.userProfileList.remove(UserProfileManager.currentProfileIndex);
+
+        // When deleted, the next user profile is displayed instead
+        if (UserProfileManager.currentProfileIndex == UserProfileManager.userProfileList.size()) {
+          UserProfileManager.currentProfileIndex = 0;
+          this.userNameLabel.setText(
+              UserProfileManager.userProfileList
+                  .get(UserProfileManager.currentProfileIndex)
+                  .getUserName());
+        } else {
+          this.userNameLabel.setText(
+              UserProfileManager.userProfileList
+                  .get(UserProfileManager.currentProfileIndex)
+                  .getUserName());
+        }
       }
+
+      // Changes the profile image to the one the user chose
+      updateImage();
     }
-    // Changes the profile image to the one the user chose
-    updateImage();
   }
 
   /** This method is invoked when the user clicks on the add button to add a new user. */
