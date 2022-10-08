@@ -16,3 +16,7 @@
   -fx-background-color: #ababab;
   -fx-font-size: 18px;
 }
+
+.canvasPane {
+  -fx-background-color: #ffffff;
+}
