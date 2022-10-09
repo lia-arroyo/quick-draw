@@ -62,5 +62,6 @@
             <ImageView fx:id="emojiImage" fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </HBox>
+      <Button layoutX="497.0" layoutY="531.0" mnemonicParsing="false" onAction="#onChangeSettings" prefHeight="40.0" prefWidth="106.0" text="Settings" />
    </children>
 </Pane>
