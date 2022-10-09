@@ -18,14 +18,6 @@ public class DifficultyLevel {
 		E, M, H
 	}
 
-	public static Accuracy currentAccuracyLevel;
-
-	public static Words currentWordsLevel;
-
-	public static Time currentTimeLevel;
-
-	public static Confidence currentConfidenceLevel;
-
 	private Accuracy accuracyLevel;
 
 	private Words wordsLevel;
@@ -41,19 +33,35 @@ public class DifficultyLevel {
 		this.confidenceLevel = Confidence.E;
 	}
 
-	private void setAccuracyLevel(Accuracy accuracyLevel) {
+	public Accuracy getAccuracyLevel() {
+		return this.accuracyLevel;
+	}
+
+	public Words getWordsLevel() {
+		return this.wordsLevel;
+	}
+
+	public Time getTimeLevel() {
+		return this.timeLevel;
+	}
+
+	public Confidence getConfidenceLevel() {
+		return this.confidenceLevel;
+	}
+
+	public void setAccuracyLevel(Accuracy accuracyLevel) {
 		this.accuracyLevel = accuracyLevel;
 	}
 
-	private void setWordsLevel(Words wordsLevel) {
+	public void setWordsLevel(Words wordsLevel) {
 		this.wordsLevel = wordsLevel;
 	}
 
-	private void setTimeLevel(Time timeLevel) {
+	public void setTimeLevel(Time timeLevel) {
 		this.timeLevel = timeLevel;
 	}
 
-	private void setConfidenceLevel(Confidence confidenceLevel) {
+	public void setConfidenceLevel(Confidence confidenceLevel) {
 		this.confidenceLevel = confidenceLevel;
 	}
 

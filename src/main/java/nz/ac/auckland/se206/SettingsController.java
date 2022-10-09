@@ -6,6 +6,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
 import javafx.util.StringConverter;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel.Accuracy;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel.Confidence;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel.Time;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel.Words;
+import nz.ac.auckland.se206.profiles.UserProfileManager;
 
 public class SettingsController {
 
@@ -21,12 +26,36 @@ public class SettingsController {
 	@FXML
 	private Slider confidenceSlider;
 
+	private static void updateUserAccuracyDifficulty(Accuracy accuracyLevel) {
+		UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex).getDifficultyLevel()
+				.setAccuracyLevel(accuracyLevel);
+	}
+
+	private static void updateUserWordsDifficulty(Words wordsLevel) {
+		UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex).getDifficultyLevel()
+				.setWordsLevel(wordsLevel);
+	}
+
+	private static void updateUserTimeDifficulty(Time timeLevel) {
+		UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex).getDifficultyLevel()
+				.setTimeLevel(timeLevel);
+	}
+
+	private static void updateUserConfidenceDifficulty(Confidence confidenceLevel) {
+		UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex).getDifficultyLevel()
+				.setConfidenceLevel(confidenceLevel);
+	}
+
 	public void initialize() {
 		String[] currentDifficulties = new String[4];
-		currentDifficulties[0] = DifficultyLevel.currentAccuracyLevel.toString();
-		currentDifficulties[1] = DifficultyLevel.currentWordsLevel.toString();
-		currentDifficulties[2] = DifficultyLevel.currentTimeLevel.toString();
-		currentDifficulties[3] = DifficultyLevel.currentConfidenceLevel.toString();
+		currentDifficulties[0] = UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex)
+				.getDifficultyLevel().getAccuracyLevel().toString();
+		currentDifficulties[1] = UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex)
+				.getDifficultyLevel().getWordsLevel().toString();
+		currentDifficulties[2] = UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex)
+				.getDifficultyLevel().getTimeLevel().toString();
+		currentDifficulties[3] = UserProfileManager.userProfileList.get(UserProfileManager.currentProfileIndex)
+				.getDifficultyLevel().getConfidenceLevel().toString();
 
 		Slider[] difficultySliders = new Slider[4];
 		difficultySliders[0] = this.accuracySlider;
@@ -68,11 +97,11 @@ public class SettingsController {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				if ((int) newValue == 0) {
-					DifficultyLevel.currentAccuracyLevel = DifficultyLevel.Accuracy.E;
+					updateUserAccuracyDifficulty(DifficultyLevel.Accuracy.E);
 				} else if ((int) newValue == 1) {
-					DifficultyLevel.currentAccuracyLevel = DifficultyLevel.Accuracy.M;
+					updateUserAccuracyDifficulty(DifficultyLevel.Accuracy.M);
 				} else {
-					DifficultyLevel.currentAccuracyLevel = DifficultyLevel.Accuracy.H;
+					updateUserAccuracyDifficulty(DifficultyLevel.Accuracy.H);
 				}
 			}
 		});
@@ -81,11 +110,11 @@ public class SettingsController {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				if ((int) newValue == 0) {
-					DifficultyLevel.currentWordsLevel = DifficultyLevel.Words.E;
+					updateUserWordsDifficulty(DifficultyLevel.Words.E);
 				} else if ((int) newValue == 1) {
-					DifficultyLevel.currentWordsLevel = DifficultyLevel.Words.M;
+					updateUserWordsDifficulty(DifficultyLevel.Words.M);
 				} else {
-					DifficultyLevel.currentWordsLevel = DifficultyLevel.Words.H;
+					updateUserWordsDifficulty(DifficultyLevel.Words.H);
 				}
 			}
 		});
@@ -94,11 +123,11 @@ public class SettingsController {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				if ((int) newValue == 0) {
-					DifficultyLevel.currentTimeLevel = DifficultyLevel.Time.E;
+					updateUserTimeDifficulty(DifficultyLevel.Time.E);
 				} else if ((int) newValue == 1) {
-					DifficultyLevel.currentTimeLevel = DifficultyLevel.Time.M;
+					updateUserTimeDifficulty(DifficultyLevel.Time.M);
 				} else {
-					DifficultyLevel.currentTimeLevel = DifficultyLevel.Time.H;
+					updateUserTimeDifficulty(DifficultyLevel.Time.H);
 				}
 			}
 		});
@@ -107,11 +136,11 @@ public class SettingsController {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				if ((int) newValue == 0) {
-					DifficultyLevel.currentConfidenceLevel = DifficultyLevel.Confidence.E;
+					updateUserConfidenceDifficulty(DifficultyLevel.Confidence.E);
 				} else if ((int) newValue == 1) {
-					DifficultyLevel.currentConfidenceLevel = DifficultyLevel.Confidence.M;
+					updateUserConfidenceDifficulty(DifficultyLevel.Confidence.M);
 				} else {
-					DifficultyLevel.currentConfidenceLevel = DifficultyLevel.Confidence.H;
+					updateUserConfidenceDifficulty(DifficultyLevel.Confidence.H);
 				}
 			}
 		});
