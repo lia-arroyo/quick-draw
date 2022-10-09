@@ -1,5 +1,7 @@
 package nz.ac.auckland.se206;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
 import javafx.util.StringConverter;
@@ -61,6 +63,58 @@ public class SettingsController {
 				}
 			});
 		}
+
+		difficultySliders[0].valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				if ((int) newValue == 0) {
+					DifficultyLevel.currentAccuracyLevel = DifficultyLevel.Accuracy.E;
+				} else if ((int) newValue == 1) {
+					DifficultyLevel.currentAccuracyLevel = DifficultyLevel.Accuracy.M;
+				} else {
+					DifficultyLevel.currentAccuracyLevel = DifficultyLevel.Accuracy.H;
+				}
+			}
+		});
+
+		difficultySliders[1].valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				if ((int) newValue == 0) {
+					DifficultyLevel.currentWordsLevel = DifficultyLevel.Words.E;
+				} else if ((int) newValue == 1) {
+					DifficultyLevel.currentWordsLevel = DifficultyLevel.Words.M;
+				} else {
+					DifficultyLevel.currentWordsLevel = DifficultyLevel.Words.H;
+				}
+			}
+		});
+
+		difficultySliders[0].valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				if ((int) newValue == 0) {
+					DifficultyLevel.currentTimeLevel = DifficultyLevel.Time.E;
+				} else if ((int) newValue == 1) {
+					DifficultyLevel.currentTimeLevel = DifficultyLevel.Time.M;
+				} else {
+					DifficultyLevel.currentTimeLevel = DifficultyLevel.Time.H;
+				}
+			}
+		});
+
+		difficultySliders[0].valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				if ((int) newValue == 0) {
+					DifficultyLevel.currentConfidenceLevel = DifficultyLevel.Confidence.E;
+				} else if ((int) newValue == 1) {
+					DifficultyLevel.currentConfidenceLevel = DifficultyLevel.Confidence.M;
+				} else {
+					DifficultyLevel.currentConfidenceLevel = DifficultyLevel.Confidence.H;
+				}
+			}
+		});
 	}
 
 }
