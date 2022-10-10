@@ -98,6 +98,8 @@ public class SettingsController {
         difficultySliders[i].setValue((int) 1);
       } else if (currentDifficulties[i] == "H") {
         difficultySliders[i].setValue((int) 2);
+      } else {
+        difficultySliders[i].setValue((int) 3);
       }
     }
 
@@ -110,8 +112,10 @@ public class SettingsController {
                 return "Easy";
               } else if (number == 1) {
                 return "Medium";
-              } else {
+              } else if (number == 2) {
                 return "Hard";
+              } else {
+                return "Master";
               }
             }
 
@@ -133,8 +137,10 @@ public class SettingsController {
                   updateUserAccuracyDifficulty(DifficultyLevel.Accuracy.E);
                 } else if ((double) newValue == 1) {
                   updateUserAccuracyDifficulty(DifficultyLevel.Accuracy.M);
-                } else {
+                } else if ((double) newValue == 2) {
                   updateUserAccuracyDifficulty(DifficultyLevel.Accuracy.H);
+                } else {
+                  updateUserAccuracyDifficulty(DifficultyLevel.Accuracy.MA);
                 }
               }
             });
@@ -150,8 +156,10 @@ public class SettingsController {
                   updateUserWordsDifficulty(DifficultyLevel.Words.E);
                 } else if ((double) newValue == 1) {
                   updateUserWordsDifficulty(DifficultyLevel.Words.M);
-                } else {
+                } else if ((double) newValue == 2) {
                   updateUserWordsDifficulty(DifficultyLevel.Words.H);
+                } else {
+                  updateUserWordsDifficulty(DifficultyLevel.Words.MA);
                 }
               }
             });
@@ -167,8 +175,10 @@ public class SettingsController {
                   updateUserTimeDifficulty(DifficultyLevel.Time.E);
                 } else if ((double) newValue == 1) {
                   updateUserTimeDifficulty(DifficultyLevel.Time.M);
-                } else {
+                } else if ((double) newValue == 2) {
                   updateUserTimeDifficulty(DifficultyLevel.Time.H);
+                } else {
+                  updateUserTimeDifficulty(DifficultyLevel.Time.MA);
                 }
               }
             });
@@ -184,8 +194,10 @@ public class SettingsController {
                   updateUserConfidenceDifficulty(DifficultyLevel.Confidence.E);
                 } else if ((double) newValue == 1) {
                   updateUserConfidenceDifficulty(DifficultyLevel.Confidence.M);
-                } else {
+                } else if ((double) newValue == 2) {
                   updateUserConfidenceDifficulty(DifficultyLevel.Confidence.H);
+                } else {
+                  updateUserConfidenceDifficulty(DifficultyLevel.Confidence.MA);
                 }
               }
             });

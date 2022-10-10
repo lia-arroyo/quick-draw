@@ -91,10 +91,12 @@ public class CanvasController {
             .getDifficultyLevel()
             .getAccuracyLevel();
     if (accuracuLevel == DifficultyLevel.Accuracy.E) {
-      this.accuracyIndex = 3;
+      this.accuracyIndex = 5;
     } else if (accuracuLevel == DifficultyLevel.Accuracy.M) {
-      this.accuracyIndex = 2;
+      this.accuracyIndex = 3;
     } else if (accuracuLevel == DifficultyLevel.Accuracy.H) {
+      this.accuracyIndex = 2;
+    } else {
       this.accuracyIndex = 1;
     }
 

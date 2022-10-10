@@ -2,67 +2,78 @@ package nz.ac.auckland.se206.difficulty;
 
 public class DifficultyLevel {
 
-	public enum Accuracy {
-		E, M, H
-	}
+  public enum Accuracy {
+    E,
+    M,
+    H,
+    MA
+  }
 
-	public enum Words {
-		E, M, H
-	}
+  public enum Words {
+    E,
+    M,
+    H,
+    MA
+  }
 
-	public enum Time {
-		E, M, H
-	}
+  public enum Time {
+    E,
+    M,
+    H,
+    MA
+  }
 
-	public enum Confidence {
-		E, M, H
-	}
+  public enum Confidence {
+    E,
+    M,
+    H,
+    MA
+  }
 
-	private Accuracy accuracyLevel;
+  private Accuracy accuracyLevel;
 
-	private Words wordsLevel;
+  private Words wordsLevel;
 
-	private Time timeLevel;
+  private Time timeLevel;
 
-	private Confidence confidenceLevel;
+  private Confidence confidenceLevel;
 
-	public DifficultyLevel() {
-		this.accuracyLevel = Accuracy.E;
-		this.wordsLevel = Words.E;
-		this.timeLevel = Time.E;
-		this.confidenceLevel = Confidence.E;
-	}
+  public DifficultyLevel() {
+    this.accuracyLevel = Accuracy.E;
+    this.wordsLevel = Words.E;
+    this.timeLevel = Time.E;
+    this.confidenceLevel = Confidence.E;
+  }
 
-	public Accuracy getAccuracyLevel() {
-		return this.accuracyLevel;
-	}
+  public Accuracy getAccuracyLevel() {
+    return this.accuracyLevel;
+  }
 
-	public Words getWordsLevel() {
-		return this.wordsLevel;
-	}
+  public Words getWordsLevel() {
+    return this.wordsLevel;
+  }
 
-	public Time getTimeLevel() {
-		return this.timeLevel;
-	}
+  public Time getTimeLevel() {
+    return this.timeLevel;
+  }
 
-	public Confidence getConfidenceLevel() {
-		return this.confidenceLevel;
-	}
+  public Confidence getConfidenceLevel() {
+    return this.confidenceLevel;
+  }
 
-	public void setAccuracyLevel(Accuracy accuracyLevel) {
-		this.accuracyLevel = accuracyLevel;
-	}
+  public void setAccuracyLevel(Accuracy accuracyLevel) {
+    this.accuracyLevel = accuracyLevel;
+  }
 
-	public void setWordsLevel(Words wordsLevel) {
-		this.wordsLevel = wordsLevel;
-	}
+  public void setWordsLevel(Words wordsLevel) {
+    this.wordsLevel = wordsLevel;
+  }
 
-	public void setTimeLevel(Time timeLevel) {
-		this.timeLevel = timeLevel;
-	}
+  public void setTimeLevel(Time timeLevel) {
+    this.timeLevel = timeLevel;
+  }
 
-	public void setConfidenceLevel(Confidence confidenceLevel) {
-		this.confidenceLevel = confidenceLevel;
-	}
-
+  public void setConfidenceLevel(Confidence confidenceLevel) {
+    this.confidenceLevel = confidenceLevel;
+  }
 }
