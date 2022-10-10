@@ -24,6 +24,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel.Accuracy;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel.Confidence;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel.Time;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
@@ -63,6 +67,12 @@ public class CanvasController {
 
   private DoodlePrediction model;
 
+  private int drawTime;
+
+  private int accuracyIndex;
+
+  private int predictionConfidence;
+
   // mouse coordinates
   private double currentX;
   private double currentY;
@@ -80,6 +90,51 @@ public class CanvasController {
    * @throws IOException If the model cannot be found on the file system.
    */
   public void initialize() throws ModelException, IOException, CsvException, URISyntaxException {
+
+    Accuracy accuracyLevel =
+        UserProfileManager.userProfileList
+            .get(UserProfileManager.currentProfileIndex)
+            .getDifficultyLevel()
+            .getAccuracyLevel();
+    if (accuracyLevel == DifficultyLevel.Accuracy.E) {
+      this.accuracyIndex = 5;
+    } else if (accuracyLevel == DifficultyLevel.Accuracy.M) {
+      this.accuracyIndex = 3;
+    } else if (accuracyLevel == DifficultyLevel.Accuracy.H) {
+      this.accuracyIndex = 2;
+    } else {
+      this.accuracyIndex = 1;
+    }
+
+    Time timeLevel =
+        UserProfileManager.userProfileList
+            .get(UserProfileManager.currentProfileIndex)
+            .getDifficultyLevel()
+            .getTimeLevel();
+    if (timeLevel == DifficultyLevel.Time.E) {
+      this.drawTime = 60;
+    } else if (timeLevel == DifficultyLevel.Time.M) {
+      this.drawTime = 45;
+    } else if (timeLevel == DifficultyLevel.Time.H) {
+      this.drawTime = 30;
+    } else {
+      this.drawTime = 15;
+    }
+
+    Confidence confidenceLevel =
+        UserProfileManager.userProfileList
+            .get(UserProfileManager.currentProfileIndex)
+            .getDifficultyLevel()
+            .getConfidenceLevel();
+    if (confidenceLevel == DifficultyLevel.Confidence.E) {
+      this.predictionConfidence = 1;
+    } else if (confidenceLevel == DifficultyLevel.Confidence.M) {
+      this.predictionConfidence = 10;
+    } else if (confidenceLevel == DifficultyLevel.Confidence.H) {
+      this.predictionConfidence = 25;
+    } else {
+      this.predictionConfidence = 50;
+    }
 
     // Setting speech button icon
     Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
@@ -195,7 +250,7 @@ public class CanvasController {
    */
   private void runCounter() {
 
-    int secondsLeft = 60;
+    int secondsLeft = this.drawTime;
 
     Timer timer = new Timer();
 
@@ -341,12 +396,15 @@ public class CanvasController {
 
             // Checking if the top 3 predictions match the chosen word. If it does, then the
             // round finishes with 1 (win) and we stop the timer.
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < accuracyIndex; j++) {
               // Removing underscores if they exist in the string
               String categoryName = predictions.get(j).getClassName().replaceAll("_", " ");
 
-              if (categoryName.equals(CategorySelector.chosenWord) && !canvasIsEmpty) {
-                double predictionPercentage = predictions.get(j).getProbability() * 100;
+              double predictionPercentage = predictions.get(j).getProbability() * 100;
+
+              if (categoryName.equals(CategorySelector.chosenWord)
+                  && !canvasIsEmpty
+                  && predictionPercentage >= predictionConfidence) {
 
                 // Checking if prediction is the new highest prediction percentage
                 if (predictionPercentage

@@ -151,6 +151,20 @@ public class MainMenuController {
     }
   }
 
+  @FXML
+  private void onChangeSettings(ActionEvent event) {
+    // Getting the scene information
+    Button button = (Button) event.getSource();
+    Scene sceneButtonIsIn = button.getScene();
+
+    // Changing the scene to waiting screen
+    try {
+      sceneButtonIsIn.setRoot(App.loadFxml("settings"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   /**
    * This method randomly chooses and displays a fun and trendy greeting from a list to appeal to
    * our target audience, young adult/teenagers.

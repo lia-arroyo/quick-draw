@@ -11,6 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel.Words;
+import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
@@ -37,7 +40,34 @@ public class WaitingController {
 
     // Selecting a random word for user
     CategorySelector categorySelector = new CategorySelector();
-    categorySelector.setNewChosenWord(Difficulty.E);
+
+    Words wordsLevel =
+        UserProfileManager.userProfileList
+            .get(UserProfileManager.currentProfileIndex)
+            .getDifficultyLevel()
+            .getWordsLevel();
+    if (wordsLevel == DifficultyLevel.Words.E) {
+      categorySelector.setNewChosenWord(Difficulty.E);
+    } else if (wordsLevel == DifficultyLevel.Words.M) {
+      double randomNumber = Math.random();
+      if (randomNumber < 0.3) {
+        categorySelector.setNewChosenWord(Difficulty.E);
+      } else {
+        categorySelector.setNewChosenWord(Difficulty.M);
+      }
+    } else if (wordsLevel == DifficultyLevel.Words.H) {
+      double randomNumber = Math.random();
+      if (randomNumber < 0.1) {
+        categorySelector.setNewChosenWord(Difficulty.E);
+      } else if (randomNumber < 0.4) {
+        categorySelector.setNewChosenWord(Difficulty.M);
+      } else {
+        categorySelector.setNewChosenWord(Difficulty.H);
+      }
+    } else {
+      categorySelector.setNewChosenWord(Difficulty.H);
+    }
+
     chosenWord.setText(categorySelector.getChosenWord());
   }
 
