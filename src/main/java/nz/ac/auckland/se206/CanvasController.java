@@ -24,6 +24,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel.Time;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
@@ -59,6 +61,8 @@ public class CanvasController {
 
   private DoodlePrediction model;
 
+  private int drawTime;
+
   // mouse coordinates
   private double currentX;
   private double currentY;
@@ -74,6 +78,21 @@ public class CanvasController {
    * @throws IOException If the model cannot be found on the file system.
    */
   public void initialize() throws ModelException, IOException, CsvException, URISyntaxException {
+
+    Time timeDifficulty =
+        UserProfileManager.userProfileList
+            .get(UserProfileManager.currentProfileIndex)
+            .getDifficultyLevel()
+            .getTimeLevel();
+    if (timeDifficulty == DifficultyLevel.Time.E) {
+      this.drawTime = 60;
+    } else if (timeDifficulty == DifficultyLevel.Time.M) {
+      this.drawTime = 45;
+    } else if (timeDifficulty == DifficultyLevel.Time.H) {
+      this.drawTime = 30;
+    } else {
+      this.drawTime = 15;
+    }
 
     // Setting speech button icon
     Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
@@ -185,11 +204,12 @@ public class CanvasController {
    */
   private void runCounter() {
 
-    int secondsLeft = 60;
+    int secondsLeft = this.drawTime;
 
     Timer timer = new Timer();
 
-    // Decrementing variable seconds every second and updating the time left label. If seconds goes
+    // Decrementing variable seconds every second and updating the time left label.
+    // If seconds goes
     // below
     // 0, then we finish the round, notifying the player that they ran out of time.
     timer.scheduleAtFixedRate(
