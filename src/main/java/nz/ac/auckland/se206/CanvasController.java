@@ -25,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel.Accuracy;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Time;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
@@ -63,6 +64,8 @@ public class CanvasController {
 
   private int drawTime;
 
+  private int accuracyIndex;
+
   // mouse coordinates
   private double currentX;
   private double currentY;
@@ -79,16 +82,29 @@ public class CanvasController {
    */
   public void initialize() throws ModelException, IOException, CsvException, URISyntaxException {
 
-    Time timeDifficulty =
+    Accuracy accuracuLevel =
+        UserProfileManager.userProfileList
+            .get(UserProfileManager.currentProfileIndex)
+            .getDifficultyLevel()
+            .getAccuracyLevel();
+    if (accuracuLevel == DifficultyLevel.Accuracy.E) {
+      this.accuracyIndex = 3;
+    } else if (accuracuLevel == DifficultyLevel.Accuracy.M) {
+      this.accuracyIndex = 2;
+    } else if (accuracuLevel == DifficultyLevel.Accuracy.H) {
+      this.accuracyIndex = 1;
+    }
+
+    Time timeLevel =
         UserProfileManager.userProfileList
             .get(UserProfileManager.currentProfileIndex)
             .getDifficultyLevel()
             .getTimeLevel();
-    if (timeDifficulty == DifficultyLevel.Time.E) {
+    if (timeLevel == DifficultyLevel.Time.E) {
       this.drawTime = 60;
-    } else if (timeDifficulty == DifficultyLevel.Time.M) {
+    } else if (timeLevel == DifficultyLevel.Time.M) {
       this.drawTime = 45;
-    } else if (timeDifficulty == DifficultyLevel.Time.H) {
+    } else if (timeLevel == DifficultyLevel.Time.H) {
       this.drawTime = 30;
     } else {
       this.drawTime = 15;
@@ -298,7 +314,7 @@ public class CanvasController {
 
             // Checking if the top 3 predictions match the chosen word. If it does, then the
             // round finishes with 1 (win) and we stop the timer.
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < accuracyIndex; j++) {
               // Removing underscores if they exist in the string
               String categoryName = predictions.get(j).getClassName().replaceAll("_", " ");
 
