@@ -26,6 +26,7 @@ import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Accuracy;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel.Confidence;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Time;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
@@ -65,6 +66,8 @@ public class CanvasController {
   private int drawTime;
 
   private int accuracyIndex;
+
+  private int predictionConfidence;
 
   // mouse coordinates
   private double currentX;
@@ -108,6 +111,21 @@ public class CanvasController {
       this.drawTime = 30;
     } else {
       this.drawTime = 15;
+    }
+
+    Confidence confidenceLevel =
+        UserProfileManager.userProfileList
+            .get(UserProfileManager.currentProfileIndex)
+            .getDifficultyLevel()
+            .getConfidenceLevel();
+    if (confidenceLevel == DifficultyLevel.Confidence.E) {
+      this.predictionConfidence = 1;
+    } else if (confidenceLevel == DifficultyLevel.Confidence.M) {
+      this.predictionConfidence = 10;
+    } else if (confidenceLevel == DifficultyLevel.Confidence.H) {
+      this.predictionConfidence = 25;
+    } else {
+      this.predictionConfidence = 50;
     }
 
     // Setting speech button icon
@@ -318,8 +336,11 @@ public class CanvasController {
               // Removing underscores if they exist in the string
               String categoryName = predictions.get(j).getClassName().replaceAll("_", " ");
 
-              if (categoryName.equals(CategorySelector.chosenWord) && !canvasIsEmpty) {
-                double predictionPercentage = predictions.get(j).getProbability() * 100;
+              double predictionPercentage = predictions.get(j).getProbability() * 100;
+
+              if (categoryName.equals(CategorySelector.chosenWord)
+                  && !canvasIsEmpty
+                  && predictionPercentage >= predictionConfidence) {
 
                 // Checking if prediction is the new highest prediction percentage
                 if (predictionPercentage
