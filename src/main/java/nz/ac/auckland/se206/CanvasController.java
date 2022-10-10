@@ -85,16 +85,16 @@ public class CanvasController {
    */
   public void initialize() throws ModelException, IOException, CsvException, URISyntaxException {
 
-    Accuracy accuracuLevel =
+    Accuracy accuracyLevel =
         UserProfileManager.userProfileList
             .get(UserProfileManager.currentProfileIndex)
             .getDifficultyLevel()
             .getAccuracyLevel();
-    if (accuracuLevel == DifficultyLevel.Accuracy.E) {
+    if (accuracyLevel == DifficultyLevel.Accuracy.E) {
       this.accuracyIndex = 5;
-    } else if (accuracuLevel == DifficultyLevel.Accuracy.M) {
+    } else if (accuracyLevel == DifficultyLevel.Accuracy.M) {
       this.accuracyIndex = 3;
-    } else if (accuracuLevel == DifficultyLevel.Accuracy.H) {
+    } else if (accuracyLevel == DifficultyLevel.Accuracy.H) {
       this.accuracyIndex = 2;
     } else {
       this.accuracyIndex = 1;
