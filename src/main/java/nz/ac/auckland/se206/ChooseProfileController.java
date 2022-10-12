@@ -49,6 +49,12 @@ public class ChooseProfileController {
               .getUserName());
     }
 
+    // If there is only one profile available, then we hide the arrow buttons.
+    if (UserProfileManager.userProfileList.size() == 1) {
+      leftButton.setVisible(false);
+      rightButton.setVisible(false);
+    }
+
     // Changes the profile image to the one the user chose
     updateImage();
   }
@@ -91,6 +97,12 @@ public class ChooseProfileController {
 
       // Changes the profile image to the one the user chose
       updateImage();
+    }
+
+    // If there is only one profile available, then we hide the arrow buttons.
+    if (UserProfileManager.userProfileList.size() == 1) {
+      leftButton.setVisible(false);
+      rightButton.setVisible(false);
     }
   }
 
