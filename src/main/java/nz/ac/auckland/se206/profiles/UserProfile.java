@@ -13,6 +13,7 @@ public class UserProfile {
   private double highestPredictionPercentage = 0;
   private DifficultyLevel difficultyLevel;
   private boolean[] badges = new boolean[8];
+  private int consecutiveWins = 0;
 
   public UserProfile(String userName, int profileIndex) {
     this.userName = userName;
@@ -71,5 +72,17 @@ public class UserProfile {
 
   public boolean[] getBadges() {
     return this.badges;
+  }
+
+  public int getConsecutiveWins() {
+    return this.consecutiveWins;
+  }
+
+  public void resetConsecutiveWins() {
+    this.consecutiveWins = 0;
+  }
+
+  public void incrementConsecutiveWins() {
+    this.consecutiveWins++;
   }
 }

@@ -448,10 +448,14 @@ public class CanvasController {
       AfterRoundController.END_MESSAGE = "You ran out of time  :(";
       UserProfileManager.currentProfile.incrementLossesCount();
 
+      UserProfileManager.currentProfile.resetConsecutiveWins();
+
     } else if (result == 1) {
       // the user has won
       AfterRoundController.END_MESSAGE = "Congratulations! You won  :)";
       UserProfileManager.currentProfile.incrementWinsCount();
+
+      UserProfileManager.currentProfile.incrementConsecutiveWins();
 
       if (gameTime <= 30) {
         UserProfileManager.currentProfile.getBadges()[0] = true;
@@ -466,12 +470,18 @@ public class CanvasController {
         UserProfileManager.currentProfile.getBadges()[3] = true;
       }
       if (gameConfidence >= 75) {
-        UserProfileManager.currentProfile.getBadges()[3] = true;
+        UserProfileManager.currentProfile.getBadges()[4] = true;
+      }
+      if (UserProfileManager.currentProfile.getConsecutiveWins() == 3) {
+        UserProfileManager.currentProfile.getBadges()[6] = true;
+      }
+      if (UserProfileManager.currentProfile.getConsecutiveWins() == 10) {
+        UserProfileManager.currentProfile.getBadges()[7] = true;
       }
     }
 
     if (UserProfileManager.currentProfile.getWordHistory().size() == 200) {
-      UserProfileManager.currentProfile.getBadges()[4] = true;
+      UserProfileManager.currentProfile.getBadges()[5] = true;
     }
 
     // Ensuring that statistics are saved to file after each round.
