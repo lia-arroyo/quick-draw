@@ -49,6 +49,11 @@ public class ChooseProfileController {
               .getUserName());
     }
 
+    if (UserProfileManager.userProfileList.size() == 1) {
+      leftButton.setVisible(false);
+      rightButton.setVisible(false);
+    }
+
     // Changes the profile image to the one the user chose
     updateImage();
   }
@@ -91,6 +96,11 @@ public class ChooseProfileController {
 
       // Changes the profile image to the one the user chose
       updateImage();
+    }
+
+    if (UserProfileManager.userProfileList.size() == 1) {
+      leftButton.setVisible(false);
+      rightButton.setVisible(false);
     }
   }
 
