@@ -10,7 +10,6 @@ public class UserProfile {
   private int profileIndex;
   private int wins = 0;
   private int losses = 0;
-  private ArrayList<String> wordHistory = new ArrayList<>();
   private double highestPredictionPercentage = 0;
   private DifficultyLevel difficultyLevel;
   private ArrayList<Game> historyOfGames = new ArrayList<>();
@@ -76,19 +75,21 @@ public class UserProfile {
     this.losses++;
   }
 
-  // TODO: update the usages of this method to use new history of games arraylist
-  public ArrayList<String> getWordHistory() {
-    return this.wordHistory;
-  }
-
   /**
-   * This method adds to the user's existing word history arraylist.
+   * This method takes the history of games list and grabs only the words and nothing else.
    *
-   * @param word the word the user has played
+   * @return an arraylist containing all the played words
    */
-  // TODO: update usages to use the new history of games list
-  public void addWordToHistory(String word) {
-    this.wordHistory.add(word);
+  public ArrayList<String> getWordHistory() {
+    ArrayList<String> wordHistory = new ArrayList<>();
+
+    // iterating through each game and adding word to the list
+    historyOfGames.forEach(
+        game -> {
+          wordHistory.add(game.getWord());
+        });
+
+    return wordHistory;
   }
 
   /**
