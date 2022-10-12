@@ -17,7 +17,7 @@
          </cursor></Button>
       <VBox alignment="CENTER" layoutX="430.0" layoutY="275.0" prefHeight="200.0" prefWidth="240.0" spacing="20.0" styleClass="button-box">
          <children>
-            <Button fx:id="startButton" defaultButton="true" mnemonicParsing="false" onAction="#onMoveToWaiting" prefHeight="60.0" prefWidth="240.0" text="Start a new game">
+            <Button fx:id="startButton" defaultButton="true" mnemonicParsing="false" onAction="#onStartGame" prefHeight="60.0" prefWidth="240.0" text="Start a new game">
                <font>
                   <Font name="Proxima Nova" size="24.0" />
                </font>
@@ -52,7 +52,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <HBox fx:id="welcomeBox" alignment="CENTER" layoutX="70.0" layoutY="100.0" prefHeight="85.0" prefWidth="700.0" spacing="10.0">
+      <HBox fx:id="welcomeBox" alignment="CENTER" layoutX="70.0" layoutY="70.0" prefHeight="85.0" prefWidth="700.0" spacing="10.0">
          <children>
             <Label fx:id="greetingLabel" alignment="CENTER" contentDisplay="RIGHT">
                <font>
@@ -62,6 +62,40 @@
             <ImageView fx:id="emojiImage" fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </HBox>
-      <Button layoutX="497.0" layoutY="531.0" mnemonicParsing="false" onAction="#onChangeSettings" prefHeight="40.0" prefWidth="106.0" text="Settings" />
+      <Button contentDisplay="RIGHT" layoutX="430.0" layoutY="530.0" mnemonicParsing="false" onAction="#onChangeSettings" prefHeight="40.0" prefWidth="130.0" styleClass="bottom-button" text="Settings">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button contentDisplay="RIGHT" layoutX="270.0" layoutY="530.0" mnemonicParsing="false" onAction="#onViewBadges" prefHeight="40.0" prefWidth="130.0" styleClass="bottom-button" text="My Badges">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label alignment="CENTER" layoutX="270.0" layoutY="170.0" prefHeight="30.0" prefWidth="300.0" text="Game mode:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="gameModeLabel" alignment="CENTER" layoutX="330.0" layoutY="200.0" prefHeight="30.0" prefWidth="180.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="313.0" layoutY="202.0" mnemonicParsing="false" onAction="#onModeLeft" styleClass="left-button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="510.0" layoutY="202.0" mnemonicParsing="false" onAction="#onModeRight" styleClass="right-button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </Pane>

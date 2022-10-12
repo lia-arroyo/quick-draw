@@ -28,6 +28,10 @@ public class MainMenuController {
 
   @FXML private ImageView emojiImage;
 
+  @FXML private Label gameModeLabel;
+
+  private int gameMode = 0;
+
   /**
    * JavaFX calls this method once the GUI elements are loaded.
    *
@@ -53,6 +57,8 @@ public class MainMenuController {
 
     // Welcoming the user using a randomly-generated greeting
     setGreetingText(currentUser.getUserName());
+
+    updateGameMode();
   }
 
   /**
@@ -62,14 +68,24 @@ public class MainMenuController {
    * @param event when the button is pressed
    */
   @FXML
-  private void onMoveToWaiting(ActionEvent event) {
+  private void onStartGame(ActionEvent event) {
     // Getting the scene information
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
+    String currentMode = new String();
+
+    if (gameMode == 0) {
+      currentMode = "waiting";
+    } else if (gameMode == 1) {
+      currentMode = "hidden_word";
+    } else if (gameMode == 2) {
+      currentMode = "zen";
+    }
+
     // Changing the scene to waiting screen
     try {
-      sceneButtonIsIn.setRoot(App.loadFxml("waiting"));
+      sceneButtonIsIn.setRoot(App.loadFxml(String.format("%s", currentMode)));
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -139,7 +155,7 @@ public class MainMenuController {
    */
   @FXML
   private void onSwitchUser(ActionEvent event) {
-    // scene information
+    // Getting the scene information
     Button button = (Button) event.getSource();
     Scene currentScene = button.getScene();
 
@@ -165,6 +181,42 @@ public class MainMenuController {
     }
   }
 
+  @FXML
+  private void onViewBadges(ActionEvent event) {
+    // Getting the scene information
+    Button button = (Button) event.getSource();
+    Scene currentScene = button.getScene();
+
+    // Change to My badges page
+    try {
+      currentScene.setRoot(App.loadFxml("badges"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @FXML
+  private void onModeLeft() {
+    if (gameMode == 0) {
+      gameMode = 2;
+    } else {
+      gameMode--;
+    }
+
+    updateGameMode();
+  }
+
+  @FXML
+  private void onModeRight() {
+    if (gameMode == 2) {
+      gameMode = 0;
+    } else {
+      gameMode++;
+    }
+
+    updateGameMode();
+  }
+
   /**
    * This method randomly chooses and displays a fun and trendy greeting from a list to appeal to
    * our target audience, young adult/teenagers.
@@ -188,5 +240,21 @@ public class MainMenuController {
                 .getResource(String.format("/images/emojis/%d.png", emojiIndex))
                 .toString());
     emojiImage.setImage(emoji);
+  }
+
+  /**
+   * This method is called every time we need to update the game mode. When the game mode is 0, it
+   * is on 'Normal' mode, and when the game mode is 1, it is on 'Hidden Word' mode, and 2 is for
+   * 'Zen' mode.
+   */
+  private void updateGameMode() {
+    // Checking the current game mode and updating the labels and logics accordingly
+    if (gameMode == 0) {
+      gameModeLabel.setText("Normal");
+    } else if (gameMode == 1) {
+      gameModeLabel.setText("Hidden Word");
+    } else if (gameMode == 2) {
+      gameModeLabel.setText("Zen");
+    }
   }
 }
