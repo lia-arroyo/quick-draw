@@ -28,6 +28,7 @@ import nz.ac.auckland.se206.difficulty.DifficultyLevel;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Accuracy;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Confidence;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Time;
+import nz.ac.auckland.se206.games.Game;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
@@ -143,9 +144,6 @@ public class CanvasController {
     // Displaying chosen word
     chosenWordLabel.setText(CategorySelector.chosenWord);
     model = new DoodlePrediction();
-
-    // Adding the chosen word to the history of current user
-    UserProfileManager.currentProfile.addWordToHistory(CategorySelector.chosenWord);
 
     graphic = canvas.getGraphicsContext2D();
 
@@ -445,6 +443,11 @@ public class CanvasController {
       AfterRoundController.END_MESSAGE = "Congratulations! You won  :)";
       UserProfileManager.currentProfile.incrementWinsCount();
     }
+
+    // Saving game statistics
+    Game game =
+        new Game(CategorySelector.chosenWord, CategorySelector.currentDifficulty, (result == 1));
+    UserProfileManager.currentProfile.addGameToHistory(game);
 
     // Ensuring that statistics are saved to file after each round.
     UserProfileManager.saveToFile();
