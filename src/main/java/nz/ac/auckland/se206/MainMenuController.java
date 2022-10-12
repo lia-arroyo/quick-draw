@@ -30,7 +30,7 @@ public class MainMenuController {
 
   @FXML private Label gameModeLabel;
 
-  private int gameMode = 0;
+  public static int gameMode = 0;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded.
@@ -75,17 +75,15 @@ public class MainMenuController {
 
     String currentMode = new String();
 
-    if (gameMode == 0) {
+    if (gameMode == 0 || gameMode == 2) {
       currentMode = "waiting";
     } else if (gameMode == 1) {
       currentMode = "hidden_word";
-    } else if (gameMode == 2) {
-      currentMode = "zen";
     }
 
     // Changing the scene to waiting screen
     try {
-      sceneButtonIsIn.setRoot(App.loadFxml(String.format("%s", currentMode)));
+      sceneButtonIsIn.setRoot(App.loadFxml(currentMode));
     } catch (IOException e) {
       e.printStackTrace();
     }

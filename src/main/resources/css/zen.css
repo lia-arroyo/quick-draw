@@ -1,0 +1,39 @@
+* {
+  -fx-text-color: black;
+  -fx-text-base-color: black;
+  -fx-text-background-color: black;
+  -fx-text-fill: black;
+  -fx-font-family: "Inter Tight", sans-serif;
+}
+
+.button {
+  -fx-border-color: transparent;
+  -fx-background-color: transparent;
+  -fx-font-size: 24px;
+}
+
+.button:hover {
+  -fx-underline: true;
+  -fx-font-size: 24px;
+}
+
+.button-box > .button {
+  -fx-background-color: #cdcdcd;
+  -fx-background-radius: 30px;
+  -fx-font-size: 18px;
+}
+
+.button-box > .button:hover {
+  -fx-background-color: #ababab;
+  -fx-font-size: 18px;
+}
+
+.color-picker {
+  -fx-background-color: #cdcdcd;
+  -fx-background-radius: 30px;
+  -fx-font-size: 15px;
+}
+
+.canvasPane {
+  -fx-background-color: #ffffff;
+}

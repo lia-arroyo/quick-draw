@@ -49,7 +49,7 @@ public class CanvasController {
 
   @FXML private Canvas canvas;
 
-  @FXML private Label chosenWord;
+  @FXML private Label chosenWordLabel;
 
   @FXML private Label timeLeft;
 
@@ -141,7 +141,7 @@ public class CanvasController {
     speechButton.setGraphic(new ImageView(icon));
 
     // Displaying chosen word
-    chosenWord.setText(CategorySelector.chosenWord);
+    chosenWordLabel.setText(CategorySelector.chosenWord);
     model = new DoodlePrediction();
 
     // Adding the chosen word to the history of current user
