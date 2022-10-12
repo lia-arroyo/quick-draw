@@ -291,16 +291,12 @@ public class CanvasController {
 
   /**
    * This method updates the counter shown to the user by receiving the current time left as input.
-   * When the time reaches 0, the text shows "Time up".
    *
    * @param timeLeft the amount of time left in seconds
    */
   private void updateCounter(int timeLeft) {
     if (timeLeft >= 0) {
       this.timeLeft.setText(String.format("%d", timeLeft));
-    } else {
-      // Displays if there is no time left
-      this.timeLeft.setText("Time up");
     }
   }
 
