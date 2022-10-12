@@ -470,6 +470,10 @@ public class CanvasController {
       }
     }
 
+    if (UserProfileManager.currentProfile.getWordHistory().size() == 200) {
+      UserProfileManager.currentProfile.getBadges()[4] = true;
+    }
+
     // Ensuring that statistics are saved to file after each round.
     UserProfileManager.saveToFile();
 
