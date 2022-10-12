@@ -75,6 +75,8 @@ public class CanvasController {
 
   private int gameTime;
 
+  private double gameConfidence;
+
   // mouse coordinates
   private double currentX;
   private double currentY;
@@ -417,6 +419,8 @@ public class CanvasController {
                       predictionPercentage);
                 }
 
+                gameConfidence = predictionPercentage;
+
                 // Finishing the round
                 finishRound(1);
                 timer.cancel();
@@ -459,6 +463,9 @@ public class CanvasController {
         UserProfileManager.currentProfile.getBadges()[2] = true;
       }
       if ((gameTime == drawTime) || (gameTime == (drawTime - 1))) {
+        UserProfileManager.currentProfile.getBadges()[3] = true;
+      }
+      if (gameConfidence >= 75) {
         UserProfileManager.currentProfile.getBadges()[3] = true;
       }
     }
