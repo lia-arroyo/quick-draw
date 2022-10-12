@@ -34,7 +34,7 @@
                         <Font name="Proxima Nova" size="48.0" />
                      </font>
                   </Label>
-                  <Label fx:id="chosenWord" contentDisplay="CENTER" prefHeight="48.0" prefWidth="400.0" textAlignment="CENTER">
+                  <Label fx:id="chosenWordLabel" contentDisplay="CENTER" prefHeight="48.0" prefWidth="400.0" textAlignment="CENTER">
                      <font>
                         <Font name="Proxima Nova" size="36.0" />
                      </font>

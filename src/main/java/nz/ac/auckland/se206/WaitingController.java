@@ -83,9 +83,17 @@ public class WaitingController {
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
+    String currentMode = new String();
+
+    if (MainMenuController.gameMode == 0) {
+      currentMode = "canvas";
+    } else if (MainMenuController.gameMode == 2) {
+      currentMode = "zen";
+    }
+
     // Switching scenes to the canvas page.
     try {
-      sceneButtonIsIn.setRoot(App.loadFxml("canvas"));
+      sceneButtonIsIn.setRoot(App.loadFxml(currentMode));
 
     } catch (IOException e) {
       e.printStackTrace();
