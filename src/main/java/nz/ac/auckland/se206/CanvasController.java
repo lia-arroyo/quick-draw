@@ -73,6 +73,8 @@ public class CanvasController {
 
   private int predictionConfidence;
 
+  private int gameTime;
+
   // mouse coordinates
   private double currentX;
   private double currentY;
@@ -251,6 +253,7 @@ public class CanvasController {
   private void runCounter() {
 
     int secondsLeft = this.drawTime;
+    this.gameTime = -1;
 
     Timer timer = new Timer();
 
@@ -278,6 +281,8 @@ public class CanvasController {
                   }
                 });
             seconds--;
+            gameTime++;
+            System.out.println(gameTime);
 
             // If the timer reaches 0, we cancel the timer so that it stops, and we finish
             // the round with 0 (lost)
@@ -444,6 +449,16 @@ public class CanvasController {
       // the user has won
       AfterRoundController.END_MESSAGE = "Congratulations! You won  :)";
       UserProfileManager.currentProfile.incrementWinsCount();
+
+      if (gameTime <= 30) {
+        UserProfileManager.currentProfile.getBadges()[0] = true;
+      }
+      if (gameTime <= 15) {
+        UserProfileManager.currentProfile.getBadges()[1] = true;
+      }
+      if (gameTime <= 5) {
+        UserProfileManager.currentProfile.getBadges()[2] = true;
+      }
     }
 
     // Ensuring that statistics are saved to file after each round.
