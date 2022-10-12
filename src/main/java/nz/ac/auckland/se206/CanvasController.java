@@ -282,7 +282,6 @@ public class CanvasController {
                 });
             seconds--;
             gameTime++;
-            System.out.println(gameTime);
 
             // If the timer reaches 0, we cancel the timer so that it stops, and we finish
             // the round with 0 (lost)
@@ -458,6 +457,9 @@ public class CanvasController {
       }
       if (gameTime <= 5) {
         UserProfileManager.currentProfile.getBadges()[2] = true;
+      }
+      if ((gameTime == drawTime) || (gameTime == (drawTime - 1))) {
+        UserProfileManager.currentProfile.getBadges()[3] = true;
       }
     }
 
