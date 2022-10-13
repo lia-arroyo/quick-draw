@@ -42,24 +42,31 @@ public class WaitingController {
     // Selecting a random word for user
     CategorySelector categorySelector = new CategorySelector();
 
-    // getting the current word difficulty level
+    // Getting the difficulty level based on the users' chosen settings.
     Words wordsLevel = UserProfileManager.currentProfile.getDifficultyLevel().getWordsLevel();
 
-    // assigning chosen word
     if (wordsLevel == DifficultyLevel.Words.E) {
       // only easy words
       categorySelector.setNewChosenWord(Difficulty.E);
+
+      // medium difficulty - easy + medium words
     } else if (wordsLevel == DifficultyLevel.Words.M) {
       // easy or medium words
       double randomNumber = Math.random();
+
+      // 30% easy, 70% medium word
       if (randomNumber < 0.3) {
         categorySelector.setNewChosenWord(Difficulty.E);
       } else {
         categorySelector.setNewChosenWord(Difficulty.M);
       }
+
+      // hard difficulty - easy + medium + hard words
     } else if (wordsLevel == DifficultyLevel.Words.H) {
       // easy, medium or hard words
       double randomNumber = Math.random();
+
+      // 10% easy, 30% medium, 60% hard word
       if (randomNumber < 0.1) {
         categorySelector.setNewChosenWord(Difficulty.E);
       } else if (randomNumber < 0.4) {
@@ -67,6 +74,8 @@ public class WaitingController {
       } else {
         categorySelector.setNewChosenWord(Difficulty.H);
       }
+
+      // master difficulty - hard words only
     } else {
       // only hard words
       categorySelector.setNewChosenWord(Difficulty.H);

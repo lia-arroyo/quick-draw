@@ -78,9 +78,6 @@ public class ZenController {
     chosenWordLabel.setText(CategorySelector.chosenWord);
     model = new DoodlePrediction();
 
-    // Adding the chosen word to the history of current user
-    UserProfileManager.currentProfile.addWordToHistory(CategorySelector.chosenWord);
-
     graphic = canvas.getGraphicsContext2D();
 
     // save coordinates when mouse is pressed on the canvas

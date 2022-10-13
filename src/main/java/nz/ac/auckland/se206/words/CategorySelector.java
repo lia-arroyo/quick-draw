@@ -24,7 +24,7 @@ public class CategorySelector {
   }
 
   public static String chosenWord;
-
+  public static Difficulty currentDifficulty;
   private Map<Difficulty, List<String>> difficultyToCategories;
 
   /**
@@ -92,6 +92,7 @@ public class CategorySelector {
    */
   public void setNewChosenWord(Difficulty difficulty) {
     CategorySelector.chosenWord = getRandomCategory(difficulty);
+    CategorySelector.currentDifficulty = difficulty;
   }
 
   /**

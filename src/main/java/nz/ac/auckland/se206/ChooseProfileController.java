@@ -69,6 +69,7 @@ public class ChooseProfileController {
     // Can only delete user profile if there are at least current user profiles
     if (UserProfileManager.userProfileList.size() > 1) {
 
+      // creating an alert to prevent users from accidentally losing all their progress.
       Alert alert = new Alert(AlertType.CONFIRMATION);
 
       // Adding style to the alert
@@ -81,10 +82,13 @@ public class ChooseProfileController {
       alert.setContentText(
           String.format(
               "Are you sure you want to delete %s?",
-              UserProfileManager.currentProfile.getUserName()));
+              UserProfileManager.userProfileList
+                  .get(UserProfileManager.currentProfileIndex)
+                  .getUserName()));
 
       Optional<ButtonType> result = alert.showAndWait();
 
+      // when the user confirms that they want to delete
       if (result.get() == ButtonType.OK) {
         UserProfileManager.userProfileList.remove(UserProfileManager.currentProfileIndex);
 
@@ -105,6 +109,15 @@ public class ChooseProfileController {
 
       // Changes the profile image to the one the user chose
       updateImage();
+
+    } else {
+      // alerting user that they aren't allowed to delete profiles if its the only one left.
+      Alert alert = new Alert(AlertType.CONFIRMATION);
+      alert.setTitle(null);
+      alert.setHeaderText(null);
+      alert.setContentText(
+          "Sorry, you can't delete this profile. :( You must have at least one active profile. Create a new profile then try again.");
+      Optional<ButtonType> result = alert.showAndWait();
     }
 
     // If there is only one profile available, then we hide the arrow buttons.

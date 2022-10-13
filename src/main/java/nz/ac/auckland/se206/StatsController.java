@@ -3,16 +3,17 @@ package nz.ac.auckland.se206;
 import com.opencsv.exceptions.CsvException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
+import javafx.scene.layout.AnchorPane;
+import nz.ac.auckland.se206.games.Game;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.words.CategorySelector;
@@ -25,7 +26,7 @@ public class StatsController {
   @FXML private Label highestPredictionLabel;
   @FXML private Label progressLabel;
   @FXML private ImageView userProfileImage;
-  @FXML private ScrollPane wordHistoryScrollPane;
+  @FXML private Accordion wordHistoryAccordion;
   @FXML private ProgressBar wordProgressBar;
 
   private UserProfile currentProfile = UserProfileManager.currentProfile;
@@ -65,21 +66,58 @@ public class StatsController {
     updateProgress();
   }
 
-  /** This method will display the word history using a String Builder. */
+  /**
+   * This method will display the word history using the Game statistic history and the FXML
+   * components: accordion, and some title and anchored panes.
+   */
   private void displayWordHistory() {
-    StringBuilder builder = new StringBuilder();
+    // Getting a copy of the games and their statistics for each related to the user.
+    ArrayList<Game> games = new ArrayList<>(currentProfile.getHistoryOfGames());
 
-    // listing every word that the user has played.
-    for (String word : currentProfile.getWordHistory()) {
-      builder.append(word + "\n");
-    }
+    // Reversing order of history (of the copy, not the actual history).
+    Collections.reverse(games);
 
-    // creating new label that resizes depending on length of above string
-    Label words = new Label(builder.toString());
-    words.setFont(new Font(20));
+    // Iterating through each game
+    games.forEach(
+        (game) -> {
 
-    // adding the new resized label to the scroll pane
-    wordHistoryScrollPane.setContent(words);
+          // setting up content for each dropdown pane
+          StringBuilder sb = new StringBuilder();
+          sb.append("Played on " + game.getTimePlayed() + "\n");
+          sb.append("Word Difficulty: ");
+
+          // word difficulty
+          switch (game.getWordDifficulty()) {
+            case E:
+              sb.append("Easy");
+              break;
+            case M:
+              sb.append("Medium");
+              break;
+            case H:
+              sb.append("Hard");
+              break;
+          }
+
+          sb.append("\nResult: " + (game.getResult() ? "Won" : "Lost") + "\n");
+
+          // if user has won, display accuracy as well.
+          if (game.getResult()) {
+            sb.append(String.format("Accuracy: %.2f%%", game.getAccuracy()));
+          }
+
+          // adding contents to dropdown content
+          Label label = new Label(sb.toString());
+          label.setPadding(new Insets(20));
+          AnchorPane anchorPane = new AnchorPane(label);
+
+          // Creating a titled pane
+          TitledPane dropdown = new TitledPane(game.getWord(), anchorPane);
+          dropdown.setStyle("-fx-text-fill: " + (game.getResult() ? "green" : "red"));
+
+          // adding each dropdown to accordion
+          wordHistoryAccordion.getPanes().add(dropdown);
+        });
   }
 
   /**
