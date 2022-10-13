@@ -66,6 +66,8 @@ public class CanvasController {
 
   @FXML private Label underscoreLabel;
 
+  @FXML private Label definitionLabel;
+
   @FXML private Label closerFurtherLabel;
 
   @FXML private ImageView closerFurtherImage;
@@ -86,9 +88,9 @@ public class CanvasController {
 
   @FXML private Pane zenTopPane;
 
-  @FXML private VBox underscoreBox;
+  @FXML private HBox timerTopBox;
 
-  @FXML private HBox timerBox;
+  @FXML private VBox underscoreBox;
 
   @FXML private HBox normalBottomBox;
 
@@ -199,6 +201,7 @@ public class CanvasController {
 
       // When game mode is 'HIDDEN WORD'
     } else if (gameMode == 1) {
+      // Disable the chosen word label and canvas pane, then show the definition pane.
       chosenWordLabel.setVisible(false);
       canvasPane.setVisible(false);
       definitionPane.setVisible(true);
@@ -206,7 +209,7 @@ public class CanvasController {
       // When game mode is 'ZEN'
     } else if (gameMode == 2) {
       zenTopPane.setVisible(true);
-      timerBox.setVisible(false);
+      timerTopBox.setVisible(false);
 
       zenBottomBox.setVisible(true);
       normalBottomBox.setVisible(false);
@@ -224,6 +227,8 @@ public class CanvasController {
 
     // Now the definition pane can be closed by the close button
     closeButton.setVisible(true);
+
+    underscoreBox.setVisible(true);
   }
 
   @FXML
@@ -264,18 +269,18 @@ public class CanvasController {
     final Image snapshot = canvas.snapshot(null, null);
     final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
 
-    // Converting into a binary image.
-    final BufferedImage imageBinary =
-        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+    // Converting into a color image.
+    final BufferedImage buffered =
+        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
 
-    final Graphics2D graphics = imageBinary.createGraphics();
+    final Graphics2D graphics = buffered.createGraphics();
 
     graphics.drawImage(image, 0, 0, null);
 
     // To release memory we dispose.
     graphics.dispose();
 
-    return imageBinary;
+    return buffered;
   }
 
   /**

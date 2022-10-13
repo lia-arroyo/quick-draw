@@ -116,6 +116,7 @@ public class CategorySelector {
     return difficultyToCategories.get(difficulty).size();
   }
 
+  /** This method sets the chosen word depending on the current user's difficulty level. */
   public void setWordWithDifficulty() {
     // Getting the difficulty level based on the users' chosen settings.
     Words wordsLevel = UserProfileManager.currentProfile.getDifficultyLevel().getWordsLevel();
