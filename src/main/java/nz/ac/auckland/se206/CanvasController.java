@@ -458,30 +458,30 @@ public class CanvasController {
       UserProfileManager.currentProfile.incrementConsecutiveWins();
 
       if (gameTime <= 30) {
-        UserProfileManager.currentProfile.getBadges()[0] = true;
+        UserProfileManager.currentProfile.setBadgeTrue(0);
       }
       if (gameTime <= 15) {
-        UserProfileManager.currentProfile.getBadges()[1] = true;
+        UserProfileManager.currentProfile.setBadgeTrue(1);
       }
       if (gameTime <= 5) {
-        UserProfileManager.currentProfile.getBadges()[2] = true;
+        UserProfileManager.currentProfile.setBadgeTrue(2);
       }
       if ((gameTime == drawTime) || (gameTime == (drawTime - 1))) {
-        UserProfileManager.currentProfile.getBadges()[3] = true;
+        UserProfileManager.currentProfile.setBadgeTrue(3);
       }
       if (gameConfidence >= 75) {
-        UserProfileManager.currentProfile.getBadges()[4] = true;
+        UserProfileManager.currentProfile.setBadgeTrue(4);
       }
       if (UserProfileManager.currentProfile.getConsecutiveWins() == 3) {
-        UserProfileManager.currentProfile.getBadges()[6] = true;
+        UserProfileManager.currentProfile.setBadgeTrue(6);
       }
       if (UserProfileManager.currentProfile.getConsecutiveWins() == 10) {
-        UserProfileManager.currentProfile.getBadges()[7] = true;
+        UserProfileManager.currentProfile.setBadgeTrue(7);
       }
     }
 
     if (UserProfileManager.currentProfile.getWordHistory().size() == 200) {
-      UserProfileManager.currentProfile.getBadges()[5] = true;
+      UserProfileManager.currentProfile.setBadgeTrue(5);
     }
 
     // Ensuring that statistics are saved to file after each round.

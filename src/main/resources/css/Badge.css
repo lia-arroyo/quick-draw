@@ -1,0 +1,13 @@
+* {
+  -fx-text-color: black;
+  -fx-text-base-color: black;
+  -fx-text-background-color: black;
+  -fx-text-fill: black;
+  -fx-font-family: "Inter Tight", sans-serif;
+}
+
+.badge-box {
+  -fx-border-color: black;
+  -fx-border-radius: 20px;
+  -fx-border-width: 3px;
+}

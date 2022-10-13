@@ -74,6 +74,10 @@ public class UserProfile {
     return this.badges;
   }
 
+  public void setBadgeTrue(int badgeIndex) {
+    this.badges[badgeIndex] = true;
+  }
+
   public int getConsecutiveWins() {
     return this.consecutiveWins;
   }
