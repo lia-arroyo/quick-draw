@@ -209,7 +209,8 @@ public class MainMenuController {
   @FXML
   private void onModeLeft() {
     if (gameMode == 0) {
-      // if the gamemode is on the first mode (i.e. normal mode), it returns to the last game mode.
+      // if the gamemode is on the first mode (i.e. normal mode), it returns to the
+      // last game mode.
       gameMode = 2;
     } else {
       gameMode--;

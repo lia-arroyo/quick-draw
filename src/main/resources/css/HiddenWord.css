@@ -1,0 +1,39 @@
+* {
+  -fx-text-color: black;
+  -fx-text-base-color: black;
+  -fx-font-family: "Inter Tight", sans-serif;
+}
+
+.button {
+  -fx-background-color: #cdcdcd;
+  -fx-background-radius: 30px;
+  -fx-font-size: 18px;
+}
+
+.button:hover {
+  -fx-background-color: #ababab;
+  -fx-font-size: 18px;
+}
+
+.canvasPane {
+  -fx-background-color: #ffffff;
+}
+
+.definition-box {
+  -fx-border-radius: 20px;
+  -fx-border-width: 5px;
+  -fx-border-color: black;
+  -fx-background-color: white;
+  -fx-background-radius: 20px;
+}
+
+.definition-button {
+  -fx-background-color: transparent;
+  -fx-font-size: 16px;
+}
+
+.definition-button:hover {
+  -fx-underline: true;
+  -fx-font-size: 16px;
+  -fx-background-color: transparent;
+}
