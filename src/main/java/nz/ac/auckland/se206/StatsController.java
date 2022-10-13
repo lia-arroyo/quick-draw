@@ -82,8 +82,22 @@ public class StatsController {
           // setting up content for each dropdown pane
           StringBuilder sb = new StringBuilder();
           sb.append("Played on " + game.getTimePlayed() + "\n");
-          sb.append("Difficulty: " + game.getWordDifficulty() + "\n");
-          sb.append("Result: " + (game.getResult() ? "Won" : "Lost") + "\n");
+          sb.append("Word Difficulty: ");
+
+          // word difficulty
+          switch (game.getWordDifficulty()) {
+            case E:
+              sb.append("Easy");
+              break;
+            case M:
+              sb.append("Medium");
+              break;
+            case H:
+              sb.append("Hard");
+              break;
+          }
+
+          sb.append("\nResult: " + (game.getResult() ? "Won" : "Lost") + "\n");
 
           // if user has won, display accuracy as well.
           if (game.getResult()) {
