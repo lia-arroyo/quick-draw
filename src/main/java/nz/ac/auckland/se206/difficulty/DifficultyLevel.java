@@ -1,5 +1,7 @@
 package nz.ac.auckland.se206.difficulty;
 
+import nz.ac.auckland.se206.profiles.UserProfileManager;
+
 /** This class is for all operations regarding the difficulty settings for the user. */
 public class DifficultyLevel {
 
@@ -29,6 +31,53 @@ public class DifficultyLevel {
     M,
     H,
     MA
+  }
+
+  /**
+   * This method returns the current accuracy level setting of the user.
+   *
+   * @return the current accuracy level
+   */
+  public static int getAccuracyIndex() {
+    Accuracy accuracyLevel =
+        UserProfileManager.currentProfile.getDifficultyLevel().getAccuracyLevel();
+
+    int accuracyIndex;
+
+    if (accuracyLevel == DifficultyLevel.Accuracy.E) {
+      accuracyIndex = 5;
+    } else if (accuracyLevel == DifficultyLevel.Accuracy.M) {
+      accuracyIndex = 3;
+    } else if (accuracyLevel == DifficultyLevel.Accuracy.H) {
+      accuracyIndex = 2;
+    } else {
+      accuracyIndex = 1;
+    }
+
+    return accuracyIndex;
+  }
+
+  /**
+   * This method returns the current time level setting of the user.
+   *
+   * @return the current draw time
+   */
+  public static int getDrawTime() {
+    Time timeLevel = UserProfileManager.currentProfile.getDifficultyLevel().getTimeLevel();
+
+    int drawTime;
+
+    if (timeLevel == DifficultyLevel.Time.E) {
+      drawTime = 60;
+    } else if (timeLevel == DifficultyLevel.Time.M) {
+      drawTime = 45;
+    } else if (timeLevel == DifficultyLevel.Time.H) {
+      drawTime = 30;
+    } else {
+      drawTime = 15;
+    }
+
+    return drawTime;
   }
 
   private Accuracy accuracyLevel;

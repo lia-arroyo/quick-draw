@@ -26,7 +26,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel;
-import nz.ac.auckland.se206.difficulty.DifficultyLevel.Accuracy;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Confidence;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Time;
 import nz.ac.auckland.se206.games.Game;
@@ -88,6 +87,8 @@ public class CanvasController {
 
   private int predictionIndex = 340;
 
+  private int gameMode = 0;
+
   /**
    * JavaFX calls this method once the GUI elements are loaded. For the canvas controller, we create
    * a listener for the drawing, and we load the ML model.
@@ -97,24 +98,10 @@ public class CanvasController {
    */
   public void initialize() throws ModelException, IOException, CsvException, URISyntaxException {
 
-    /*
-     * Getting the current accuracy level setting of the user and saving it into the
-     * accuracy index, so that the game logic can be applied appropriately.
-     */
-    Accuracy accuracyLevel =
-        UserProfileManager.userProfileList
-            .get(UserProfileManager.currentProfileIndex)
-            .getDifficultyLevel()
-            .getAccuracyLevel();
-    if (accuracyLevel == DifficultyLevel.Accuracy.E) {
-      accuracyIndex = 5;
-    } else if (accuracyLevel == DifficultyLevel.Accuracy.M) {
-      accuracyIndex = 3;
-    } else if (accuracyLevel == DifficultyLevel.Accuracy.H) {
-      accuracyIndex = 2;
-    } else {
-      accuracyIndex = 1;
-    }
+    // Getting the current game mode and game variables
+    gameMode = MainMenuController.gameMode;
+
+    accuracyIndex = DifficultyLevel.getAccuracyIndex();
 
     /*
      * Getting the current time level setting of the user and saving it into the
