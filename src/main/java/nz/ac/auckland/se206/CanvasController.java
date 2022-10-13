@@ -293,7 +293,7 @@ public class CanvasController {
             // the round with 0 (lost)
             if (seconds < 0) {
               timer.cancel();
-              finishRound(0, 0);
+              finishRound(0);
             }
           }
         },
@@ -432,7 +432,7 @@ public class CanvasController {
                 gameConfidence = predictionPercentage;
 
                 // Finishing the round
-                finishRound(1, predictionPercentage);
+                finishRound(1);
                 timer.cancel();
               }
             }
@@ -449,7 +449,7 @@ public class CanvasController {
    *
    * @param result if the player wins, result = 1, if the player loses, result = 0
    */
-  private void finishRound(int result, double predictionPercentage) {
+  private void finishRound(int result) {
 
     // Setting the message label that will be shown to the user depending on the
     // result
@@ -470,14 +470,8 @@ public class CanvasController {
     }
 
     // Saving game statistics
-    Game game =
-        new Game(
-            CategorySelector.chosenWord,
-            CategorySelector.currentDifficulty,
-            (result == 1),
-            LocalDateTime.now(),
-            predictionPercentage);
-    UserProfileManager.currentProfile.addGameToHistory(game);
+    UserProfileManager.currentProfile.addGameToHistory(
+        new Game((result == 1), LocalDateTime.now(), gameConfidence));
 
     // Ensuring that statistics are saved to file after each round.
     UserProfileManager.saveToFile();

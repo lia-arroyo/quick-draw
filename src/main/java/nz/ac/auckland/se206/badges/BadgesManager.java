@@ -5,6 +5,13 @@ import nz.ac.auckland.se206.profiles.UserProfileManager;
 /** This class is for managing all the badges and their related functionality. */
 public class BadgesManager {
 
+  /**
+   * This method checks whether the current user can qualify for any of the 8 badges.
+   *
+   * @param gameTime how long the user took to finish the round
+   * @param drawTime how long the user has to draw
+   * @param gameConfidence the
+   */
   public static void checkForBadges(int gameTime, int drawTime, double gameConfidence) {
     // Checking the game time so that the badges can be updated if needed
     if (gameTime <= 30) {
