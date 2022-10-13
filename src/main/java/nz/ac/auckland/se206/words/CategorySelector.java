@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel.Words;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 
 /** This class is for all things to do with word selection for each round. */
@@ -112,5 +114,46 @@ public class CategorySelector {
    */
   public int getTotalWordCount(Difficulty difficulty) {
     return difficultyToCategories.get(difficulty).size();
+  }
+
+  public void setWordWithDifficulty() {
+    // Getting the difficulty level based on the users' chosen settings.
+    Words wordsLevel = UserProfileManager.currentProfile.getDifficultyLevel().getWordsLevel();
+
+    if (wordsLevel == DifficultyLevel.Words.E) {
+      // only easy words
+      setNewChosenWord(Difficulty.E);
+
+      // medium difficulty - easy + medium words
+    } else if (wordsLevel == DifficultyLevel.Words.M) {
+      // easy or medium words
+      double randomNumber = Math.random();
+
+      // 30% easy, 70% medium word
+      if (randomNumber < 0.3) {
+        setNewChosenWord(Difficulty.E);
+      } else {
+        setNewChosenWord(Difficulty.M);
+      }
+
+      // hard difficulty - easy + medium + hard words
+    } else if (wordsLevel == DifficultyLevel.Words.H) {
+      // easy, medium or hard words
+      double randomNumber = Math.random();
+
+      // 10% easy, 30% medium, 60% hard word
+      if (randomNumber < 0.1) {
+        setNewChosenWord(Difficulty.E);
+      } else if (randomNumber < 0.4) {
+        setNewChosenWord(Difficulty.M);
+      } else {
+        setNewChosenWord(Difficulty.H);
+      }
+
+      // master difficulty - hard words only
+    } else {
+      // only hard words
+      setNewChosenWord(Difficulty.H);
+    }
   }
 }
