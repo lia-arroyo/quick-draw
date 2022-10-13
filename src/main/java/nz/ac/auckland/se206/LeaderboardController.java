@@ -127,7 +127,39 @@ public class LeaderboardController {
         playerFive.setText(podiumProfiles[4].getUserName());
         winsFive.setText(String.valueOf(podiumProfiles[4].getWinsCount()));
       }
+
+      int leaderboardIndex = -1;
+
+      for (int i = 0; i < podiumProfiles.length; i++) {
+        if (UserProfileManager.currentProfile
+            .getUserName()
+            .equals(podiumProfiles[i].getUserName())) {
+          leaderboardIndex = i;
+          break;
+        }
+      }
+
+      if (leaderboardIndex != -1) {
+        if (leaderboardIndex == 0) {
+          setBoldStyle(positionOne, playerOne, winsOne);
+        } else if (leaderboardIndex == 1) {
+          setBoldStyle(positionTwo, playerTwo, winsTwo);
+        } else if (leaderboardIndex == 2) {
+          setBoldStyle(positionThree, playerThree, winsThree);
+        } else if (leaderboardIndex == 3) {
+          setBoldStyle(positionFour, playerFour, winsFour);
+        } else {
+          setBoldStyle(positionFive, playerFive, winsFive);
+        }
+      }
     }
+  }
+
+  private static void setBoldStyle(Label positionText, Label playerText, Label winsText) {
+    String boldStyle = "-fx-font-weight: bold;";
+    positionText.setStyle(boldStyle);
+    playerText.setStyle(boldStyle);
+    winsText.setStyle(boldStyle);
   }
 
   @FXML
