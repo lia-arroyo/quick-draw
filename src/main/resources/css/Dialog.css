@@ -1,0 +1,15 @@
+* {
+  -fx-text-color: black;
+  -fx-text-base-color: black;
+  -fx-font-family: "Inter Tight", sans-serif;
+}
+
+.label.content {
+  -fx-text-align: center;
+  -fx-font-size: 15px;
+}
+
+:header *.header-panel *.label {
+  -fx-font-size: 20px;
+  -fx-padding-left: 22px;
+}

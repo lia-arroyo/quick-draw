@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -49,6 +50,12 @@ public class ChooseProfileController {
               .getUserName());
     }
 
+    // If there is only one profile available, then we hide the arrow buttons.
+    if (UserProfileManager.userProfileList.size() == 1) {
+      leftButton.setVisible(false);
+      rightButton.setVisible(false);
+    }
+
     // Changes the profile image to the one the user chose
     updateImage();
   }
@@ -63,6 +70,11 @@ public class ChooseProfileController {
 
       // creating an alert to prevent users from accidentally losing all their progress.
       Alert alert = new Alert(AlertType.CONFIRMATION);
+
+      // Adding style to the alert
+      DialogPane dialogPane = alert.getDialogPane();
+      dialogPane.getStylesheets().add(this.getClass().getResource("/css/dialog.css").toString());
+
       alert.setTitle(null);
       alert.setHeaderText(null);
       alert.setContentText(
@@ -104,6 +116,12 @@ public class ChooseProfileController {
       alert.setContentText(
           "Sorry, you can't delete this profile. :( You must have at least one active profile. Create a new profile then try again.");
       Optional<ButtonType> result = alert.showAndWait();
+    }
+
+    // If there is only one profile available, then we hide the arrow buttons.
+    if (UserProfileManager.userProfileList.size() == 1) {
+      leftButton.setVisible(false);
+      rightButton.setVisible(false);
     }
   }
 

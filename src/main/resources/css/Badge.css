@@ -1,0 +1,32 @@
+* {
+  -fx-text-color: black;
+  -fx-text-base-color: black;
+  -fx-text-background-color: black;
+  -fx-font-family: "Inter Tight", sans-serif;
+}
+
+.badge-box {
+  -fx-border-color: black;
+  -fx-border-radius: 20px;
+  -fx-border-width: 5px;
+}
+
+.back-button {
+  -fx-border-color: transparent;
+  -fx-background-color: transparent;
+  -fx-font-size: 24px;
+}
+
+.back-button:hover {
+  -fx-underline: true;
+  -fx-font-size: 24px;
+}
+
+.button {
+  -fx-background-color: transparent;
+  -fx-border-width: 0px;
+}
+
+.h-box > .button {
+  -fx-background-radius: 50%;
+}

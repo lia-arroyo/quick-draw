@@ -13,6 +13,8 @@ public class UserProfile {
   private double highestPredictionPercentage = 0;
   private DifficultyLevel difficultyLevel;
   private ArrayList<Game> historyOfGames = new ArrayList<>();
+  private boolean[] badges = new boolean[8];
+  private int consecutiveWins = 0;
 
   /**
    * This is the constructor for the User Profile class to set usernames and such.
@@ -25,7 +27,7 @@ public class UserProfile {
     this.profileIndex = profileIndex;
     this.difficultyLevel = new DifficultyLevel();
   }
-
+  
   /**
    * This getter method is for the name chosen by the user.
    *
@@ -34,7 +36,7 @@ public class UserProfile {
   public String getUserName() {
     return this.userName;
   }
-
+  
   /**
    * This getter method is for the index of the avatar
    *
@@ -61,7 +63,7 @@ public class UserProfile {
   public int getLossesCount() {
     return this.losses;
   }
-
+  
   /** This method will increase the number of wins by 1. It is called when the round is won. */
   public void incrementWinsCount() {
     this.wins++;
@@ -135,5 +137,24 @@ public class UserProfile {
    */
   public void addGameToHistory(Game game) {
     this.historyOfGames.add(game);
+  
+  public boolean[] getBadges() {
+    return this.badges;
+  }
+
+  public void setBadgeTrue(int badgeIndex) {
+    this.badges[badgeIndex] = true;
+  }
+
+  public int getConsecutiveWins() {
+    return this.consecutiveWins;
+  }
+
+  public void resetConsecutiveWins() {
+    this.consecutiveWins = 0;
+  }
+
+  public void incrementConsecutiveWins() {
+    this.consecutiveWins++;
   }
 }
