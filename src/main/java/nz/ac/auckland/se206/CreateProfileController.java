@@ -28,7 +28,7 @@ public class CreateProfileController {
 
   @FXML private Pane pane;
 
-  @FXML ImageView avatarImage;
+  @FXML private ImageView avatarImage;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded.

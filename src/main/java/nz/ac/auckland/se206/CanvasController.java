@@ -282,7 +282,7 @@ public class CanvasController {
     // 0, then we finish the round, notifying the player that they ran out of time.
     timer.scheduleAtFixedRate(
         new TimerTask() {
-          int seconds = secondsLeft + 1;
+          private int seconds = secondsLeft + 1;
 
           public void run() {
 
