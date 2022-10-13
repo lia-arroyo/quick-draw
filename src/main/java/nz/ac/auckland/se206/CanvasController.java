@@ -449,7 +449,6 @@ public class CanvasController {
       // the user has won
       AfterRoundController.END_MESSAGE = "Congratulations! You won  :)";
       UserProfileManager.currentProfile.incrementWinsCount();
-
       UserProfileManager.currentProfile.incrementConsecutiveWins();
 
       if (gameTime <= 30) {

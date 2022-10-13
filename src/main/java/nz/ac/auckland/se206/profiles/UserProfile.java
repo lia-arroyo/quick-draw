@@ -27,7 +27,7 @@ public class UserProfile {
     this.profileIndex = profileIndex;
     this.difficultyLevel = new DifficultyLevel();
   }
-  
+
   /**
    * This getter method is for the name chosen by the user.
    *
@@ -36,7 +36,7 @@ public class UserProfile {
   public String getUserName() {
     return this.userName;
   }
-  
+
   /**
    * This getter method is for the index of the avatar
    *
@@ -63,7 +63,7 @@ public class UserProfile {
   public int getLossesCount() {
     return this.losses;
   }
-  
+
   /** This method will increase the number of wins by 1. It is called when the round is won. */
   public void incrementWinsCount() {
     this.wins++;
@@ -137,7 +137,8 @@ public class UserProfile {
    */
   public void addGameToHistory(Game game) {
     this.historyOfGames.add(game);
-  
+  }
+
   public boolean[] getBadges() {
     return this.badges;
   }

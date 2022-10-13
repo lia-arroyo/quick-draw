@@ -25,7 +25,6 @@ public class StatsController {
   @FXML private Label highestPredictionLabel;
   @FXML private Label progressLabel;
   @FXML private ImageView userProfileImage;
-  @FXML private ScrollPane wordHistoryScrollPane;
   @FXML private Accordion wordHistoryAccordion;
   @FXML private ProgressBar wordProgressBar;
 

@@ -30,7 +30,7 @@ public class Game {
     this.isWin = isWin;
 
     // formatting date and time
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM YYYY HH:mm a");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM YYYY hh:mm a");
     this.timePlayedFormatted = timePlayed.format(formatter);
 
     // only updating accuracy if user has won
