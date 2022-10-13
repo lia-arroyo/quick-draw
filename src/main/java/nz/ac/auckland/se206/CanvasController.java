@@ -473,15 +473,15 @@ public class CanvasController {
         UserProfileManager.currentProfile.setBadgeTrue(4);
       }
       if (UserProfileManager.currentProfile.getConsecutiveWins() == 3) {
-        UserProfileManager.currentProfile.setBadgeTrue(6);
+        UserProfileManager.currentProfile.setBadgeTrue(5);
       }
       if (UserProfileManager.currentProfile.getConsecutiveWins() == 10) {
-        UserProfileManager.currentProfile.setBadgeTrue(7);
+        UserProfileManager.currentProfile.setBadgeTrue(6);
       }
     }
 
     if (UserProfileManager.currentProfile.getWordHistory().size() == 200) {
-      UserProfileManager.currentProfile.setBadgeTrue(5);
+      UserProfileManager.currentProfile.setBadgeTrue(7);
     }
 
     // Ensuring that statistics are saved to file after each round.
