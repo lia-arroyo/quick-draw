@@ -16,7 +16,52 @@ import nz.ac.auckland.se206.difficulty.DifficultyLevel.Time;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Words;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 
+/** This method is to handle any actions on the Settings page. */
 public class SettingsController {
+
+  /**
+   * This method is for updating the accuracy difficulty of the chosen user.
+   *
+   * @param accuracyLevel the accuracy level the user chose
+   */
+  private static void updateUserAccuracyDifficulty(Accuracy accuracyLevel) {
+    // setting the accuracy level of the current user
+    UserProfileManager.currentProfile.getDifficultyLevel().setAccuracyLevel(accuracyLevel);
+    UserProfileManager.saveToFile();
+  }
+
+  /**
+   * This method is used to update the difficulty of the words as chosen by the user
+   *
+   * @param wordsLevel the word difficulty the user chose
+   */
+  private static void updateUserWordsDifficulty(Words wordsLevel) {
+    // setting the word difficulty setting
+    UserProfileManager.currentProfile.getDifficultyLevel().setWordsLevel(wordsLevel);
+    UserProfileManager.saveToFile();
+  }
+
+  /**
+   * This method is used to update the time difficulty level that the user has chosen.
+   *
+   * @param timeLevel time difficulty that the user chose
+   */
+  private static void updateUserTimeDifficulty(Time timeLevel) {
+    // setting the user time difficulty
+    UserProfileManager.currentProfile.getDifficultyLevel().setTimeLevel(timeLevel);
+    UserProfileManager.saveToFile();
+  }
+
+  /**
+   * This method is used to update the user confidence difficulty level that the user chose
+   *
+   * @param confidenceLevel the confidence difficulty setting that user chose
+   */
+  private static void updateUserConfidenceDifficulty(Confidence confidenceLevel) {
+    // setting the confidence level
+    UserProfileManager.currentProfile.getDifficultyLevel().setConfidenceLevel(confidenceLevel);
+    UserProfileManager.saveToFile();
+  }
 
   @FXML private Slider accuracySlider;
 
@@ -26,71 +71,27 @@ public class SettingsController {
 
   @FXML private Slider confidenceSlider;
 
-  private static void updateUserAccuracyDifficulty(Accuracy accuracyLevel) {
-    UserProfileManager.userProfileList
-        .get(UserProfileManager.currentProfileIndex)
-        .getDifficultyLevel()
-        .setAccuracyLevel(accuracyLevel);
-    UserProfileManager.saveToFile();
-  }
-
-  private static void updateUserWordsDifficulty(Words wordsLevel) {
-    UserProfileManager.userProfileList
-        .get(UserProfileManager.currentProfileIndex)
-        .getDifficultyLevel()
-        .setWordsLevel(wordsLevel);
-    UserProfileManager.saveToFile();
-  }
-
-  private static void updateUserTimeDifficulty(Time timeLevel) {
-    UserProfileManager.userProfileList
-        .get(UserProfileManager.currentProfileIndex)
-        .getDifficultyLevel()
-        .setTimeLevel(timeLevel);
-    UserProfileManager.saveToFile();
-  }
-
-  private static void updateUserConfidenceDifficulty(Confidence confidenceLevel) {
-    UserProfileManager.userProfileList
-        .get(UserProfileManager.currentProfileIndex)
-        .getDifficultyLevel()
-        .setConfidenceLevel(confidenceLevel);
-    UserProfileManager.saveToFile();
-  }
-
+  /** This method will be called when the Settings page starts up. */
   public void initialize() {
+    // rendering the user's previously chosen settings
     String[] currentDifficulties = new String[4];
     currentDifficulties[0] =
-        UserProfileManager.userProfileList
-            .get(UserProfileManager.currentProfileIndex)
-            .getDifficultyLevel()
-            .getAccuracyLevel()
-            .toString();
+        UserProfileManager.currentProfile.getDifficultyLevel().getAccuracyLevel().toString();
     currentDifficulties[1] =
-        UserProfileManager.userProfileList
-            .get(UserProfileManager.currentProfileIndex)
-            .getDifficultyLevel()
-            .getWordsLevel()
-            .toString();
+        UserProfileManager.currentProfile.getDifficultyLevel().getWordsLevel().toString();
     currentDifficulties[2] =
-        UserProfileManager.userProfileList
-            .get(UserProfileManager.currentProfileIndex)
-            .getDifficultyLevel()
-            .getTimeLevel()
-            .toString();
+        UserProfileManager.currentProfile.getDifficultyLevel().getTimeLevel().toString();
     currentDifficulties[3] =
-        UserProfileManager.userProfileList
-            .get(UserProfileManager.currentProfileIndex)
-            .getDifficultyLevel()
-            .getConfidenceLevel()
-            .toString();
+        UserProfileManager.currentProfile.getDifficultyLevel().getConfidenceLevel().toString();
 
+    // assigning slider properties to each setting
     Slider[] difficultySliders = new Slider[4];
     difficultySliders[0] = this.accuracySlider;
     difficultySliders[1] = this.wordsSlider;
     difficultySliders[2] = this.timeSlider;
     difficultySliders[3] = this.confidenceSlider;
 
+    // associating E,M,H, and Master to each slider
     for (int i = 0; i < 4; i++) {
       if (currentDifficulties[i] == "E") {
         difficultySliders[i].setValue((int) 0);
@@ -103,6 +104,7 @@ public class SettingsController {
       }
     }
 
+    // labelling each slide property depending on difficulty
     for (int i = 0; i < 4; i++) {
       difficultySliders[i].setLabelFormatter(
           new StringConverter<Double>() {
@@ -126,6 +128,7 @@ public class SettingsController {
           });
     }
 
+    // setting up the accuracy difficulty
     difficultySliders[0]
         .valueProperty()
         .addListener(
@@ -145,6 +148,7 @@ public class SettingsController {
               }
             });
 
+    // setting up the word difficulty slider
     difficultySliders[1]
         .valueProperty()
         .addListener(
@@ -164,6 +168,7 @@ public class SettingsController {
               }
             });
 
+    // setting up time difficulty slider
     difficultySliders[2]
         .valueProperty()
         .addListener(
@@ -183,6 +188,7 @@ public class SettingsController {
               }
             });
 
+    // updating confidence difficulty setting slider
     difficultySliders[3]
         .valueProperty()
         .addListener(
@@ -203,6 +209,11 @@ public class SettingsController {
             });
   }
 
+  /**
+   * This method is called when the user clicks on the return button.
+   *
+   * @param event the action event handler result
+   */
   @FXML
   private void onReturn(ActionEvent event) {
     // Getting the scene information
