@@ -23,7 +23,7 @@ public class CategorySelector {
   }
 
   public static String chosenWord;
-
+  public static Difficulty currentDifficulty;
   private Map<Difficulty, List<String>> difficultyToCategories;
 
   public CategorySelector() throws IOException, CsvException, URISyntaxException {
@@ -77,10 +77,11 @@ public class CategorySelector {
   /**
    * This method sets a new chosen category and updates the static variable.
    *
-   * @param difficulty the difficultry of the cateogry (E, M or H)
+   * @param difficulty the difficulty of the category (E, M or H)
    */
   public void setNewChosenWord(Difficulty difficulty) {
     CategorySelector.chosenWord = getRandomCategory(difficulty);
+    CategorySelector.currentDifficulty = difficulty;
   }
 
   /**

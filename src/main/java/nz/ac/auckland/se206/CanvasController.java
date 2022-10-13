@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,6 +29,7 @@ import nz.ac.auckland.se206.difficulty.DifficultyLevel;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Accuracy;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Confidence;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Time;
+import nz.ac.auckland.se206.games.Game;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
@@ -147,9 +149,6 @@ public class CanvasController {
     // Displaying chosen word
     chosenWordLabel.setText(CategorySelector.chosenWord);
     model = new DoodlePrediction();
-
-    // Adding the chosen word to the history of current user
-    UserProfileManager.currentProfile.addWordToHistory(CategorySelector.chosenWord);
 
     graphic = canvas.getGraphicsContext2D();
 
@@ -289,7 +288,7 @@ public class CanvasController {
             // the round with 0 (lost)
             if (seconds < 0) {
               timer.cancel();
-              finishRound(0);
+              finishRound(0, 0);
             }
           }
         },
@@ -299,16 +298,12 @@ public class CanvasController {
 
   /**
    * This method updates the counter shown to the user by receiving the current time left as input.
-   * When the time reaches 0, the text shows "Time up".
    *
    * @param timeLeft the amount of time left in seconds
    */
   private void updateCounter(int timeLeft) {
     if (timeLeft >= 0) {
       this.timeLeft.setText(String.format("%d", timeLeft));
-    } else {
-      // Displays if there is no time left
-      this.timeLeft.setText("Time up");
     }
   }
 
@@ -422,7 +417,7 @@ public class CanvasController {
                 gameConfidence = predictionPercentage;
 
                 // Finishing the round
-                finishRound(1);
+                finishRound(1, predictionPercentage);
                 timer.cancel();
               }
             }
@@ -439,7 +434,7 @@ public class CanvasController {
    *
    * @param result if the player wins, result = 1, if the player loses, result = 0
    */
-  private void finishRound(int result) {
+  private void finishRound(int result, double predictionPercentage) {
 
     // Setting the message label that will be shown to the user depending on the
     // result
@@ -454,7 +449,6 @@ public class CanvasController {
       // the user has won
       AfterRoundController.END_MESSAGE = "Congratulations! You won  :)";
       UserProfileManager.currentProfile.incrementWinsCount();
-
       UserProfileManager.currentProfile.incrementConsecutiveWins();
 
       if (gameTime <= 30) {
@@ -483,6 +477,16 @@ public class CanvasController {
     if (UserProfileManager.currentProfile.getWordHistory().size() == 200) {
       UserProfileManager.currentProfile.setBadgeTrue(7);
     }
+
+    // Saving game statistics
+    Game game =
+        new Game(
+            CategorySelector.chosenWord,
+            CategorySelector.currentDifficulty,
+            (result == 1),
+            LocalDateTime.now(),
+            predictionPercentage);
+    UserProfileManager.currentProfile.addGameToHistory(game);
 
     // Ensuring that statistics are saved to file after each round.
     UserProfileManager.saveToFile();
