@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500&display=swap");
-
 * {
   -fx-text-color: black;
   -fx-text-base-color: black;
@@ -21,3 +19,13 @@
   -fx-background-color: #ffffff;
 }
 
+.zen-button {
+  -fx-border-color: transparent;
+  -fx-background-color: transparent;
+  -fx-font-size: 24px;
+}
+
+.zen-button:hover {
+  -fx-underline: true;
+  -fx-font-size: 24px;
+}

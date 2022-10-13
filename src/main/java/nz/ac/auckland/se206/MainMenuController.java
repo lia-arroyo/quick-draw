@@ -80,7 +80,7 @@ public class MainMenuController {
     if (gameMode == 0 || gameMode == 2) {
       currentMode = "waiting";
     } else if (gameMode == 1) {
-      currentMode = "hidden_word";
+      currentMode = "canvas";
     }
 
     // Changing the scene to waiting screen

@@ -11,23 +11,31 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel;
-import nz.ac.auckland.se206.difficulty.DifficultyLevel.Confidence;
-import nz.ac.auckland.se206.difficulty.DifficultyLevel.Time;
 import nz.ac.auckland.se206.games.Game;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
@@ -56,13 +64,37 @@ public class CanvasController {
 
   @FXML private Label predictionList;
 
-  @FXML private Button switchButton;
-
-  @FXML private Button speechButton;
+  @FXML private Label underscoreLabel;
 
   @FXML private Label closerFurtherLabel;
 
   @FXML private ImageView closerFurtherImage;
+
+  @FXML private Button switchButton;
+
+  @FXML private Button speechButton;
+
+  @FXML private Button readyButton;
+
+  @FXML private Button definitionButton;
+
+  @FXML private Button closeButton;
+
+  @FXML private Pane canvasPane;
+
+  @FXML private Pane definitionPane;
+
+  @FXML private Pane zenTopPane;
+
+  @FXML private VBox underscoreBox;
+
+  @FXML private HBox timerBox;
+
+  @FXML private HBox normalBottomBox;
+
+  @FXML private HBox zenBottomBox;
+
+  @FXML private ColorPicker penColorPicker;
 
   private GraphicsContext graphic;
 
@@ -82,6 +114,7 @@ public class CanvasController {
   private double currentX;
   private double currentY;
 
+  private Color penColor;
   private Boolean eraser = false;
   private Boolean canvasIsEmpty = true;
 
@@ -103,44 +136,9 @@ public class CanvasController {
 
     accuracyIndex = DifficultyLevel.getAccuracyIndex();
 
-    /*
-     * Getting the current time level setting of the user and saving it into the
-     * draw time variable, so that the game logic can be applied appropriately.
-     */
-    Time timeLevel =
-        UserProfileManager.userProfileList
-            .get(UserProfileManager.currentProfileIndex)
-            .getDifficultyLevel()
-            .getTimeLevel();
-    if (timeLevel == DifficultyLevel.Time.E) {
-      drawTime = 60;
-    } else if (timeLevel == DifficultyLevel.Time.M) {
-      drawTime = 45;
-    } else if (timeLevel == DifficultyLevel.Time.H) {
-      drawTime = 30;
-    } else {
-      drawTime = 15;
-    }
+    drawTime = DifficultyLevel.getDrawTime();
 
-    /*
-     * Getting the confidence level setting of the user and saving it into a
-     * prediction confidence variable, so that the game logic can be applied
-     * appropriately.
-     */
-    Confidence confidenceLevel =
-        UserProfileManager.userProfileList
-            .get(UserProfileManager.currentProfileIndex)
-            .getDifficultyLevel()
-            .getConfidenceLevel();
-    if (confidenceLevel == DifficultyLevel.Confidence.E) {
-      predictionConfidence = 1;
-    } else if (confidenceLevel == DifficultyLevel.Confidence.M) {
-      predictionConfidence = 10;
-    } else if (confidenceLevel == DifficultyLevel.Confidence.H) {
-      predictionConfidence = 25;
-    } else {
-      predictionConfidence = 50;
-    }
+    predictionConfidence = DifficultyLevel.getPredictionConfidence();
 
     // Setting the speech button icon to the speech image
     Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
@@ -186,7 +184,58 @@ public class CanvasController {
           canvasIsEmpty = false;
         });
 
+    setupScreen();
+
     runCounter();
+  }
+
+  /**
+   * This method is called in the initialize method of the canvas controller to set up the screen
+   * initially, according to the game mode.
+   */
+  private void setupScreen() {
+    // When game mode is 'NORMAL'
+    if (gameMode == 0) {
+
+      // When game mode is 'HIDDEN WORD'
+    } else if (gameMode == 1) {
+      chosenWordLabel.setVisible(false);
+      canvasPane.setVisible(false);
+      definitionPane.setVisible(true);
+
+      // When game mode is 'ZEN'
+    } else if (gameMode == 2) {
+      zenTopPane.setVisible(true);
+      timerBox.setVisible(false);
+
+      zenBottomBox.setVisible(true);
+      normalBottomBox.setVisible(false);
+    }
+  }
+
+  @FXML
+  private void onReady() {
+    // Close the definition pane and show the canvas pane
+    definitionPane.setVisible(false);
+    canvasPane.setVisible(true);
+
+    // Also now the ready button won't be visible as it is not needed anymore
+    readyButton.setVisible(false);
+
+    // Now the definition pane can be closed by the close button
+    closeButton.setVisible(true);
+  }
+
+  @FXML
+  private void onViewDefinition() {
+    canvasPane.setOpacity(0.3);
+    definitionPane.setVisible(true);
+  }
+
+  @FXML
+  private void onCloseDefinition() {
+    definitionPane.setVisible(false);
+    canvasPane.setOpacity(1);
   }
 
   /**
@@ -573,5 +622,71 @@ public class CanvasController {
 
     Thread speechThread = new Thread(speechTask);
     speechThread.start();
+  }
+
+  /** This method is called when the player changes the color on the color picker. */
+  @FXML
+  private void onChangeColor() {
+    penColor = penColorPicker.getValue();
+  }
+
+  /**
+   * This method will be called when the user clicks on the back button
+   *
+   * @param event the action event handler result
+   */
+  @FXML
+  private void onGoBack(ActionEvent event) {
+
+    // confirming that the user wants to go back
+    Alert alert = new Alert(AlertType.CONFIRMATION);
+    alert.setTitle(null);
+    alert.setHeaderText(null);
+    alert.setContentText(
+        String.format(
+            "Are you sure you want to leave? You will lose your drawing!",
+            UserProfileManager.currentProfile.getUserName()));
+
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.get() == ButtonType.OK) {
+      // Getting scene information
+      Button button = (Button) event.getSource();
+      Scene sceneButtonIsIn = button.getScene();
+
+      // Switching scenes to the canvas page.
+      try {
+        sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  /**
+   * This method is called when the user clicks on the done button
+   *
+   * @param event the action event handler result
+   * @throws IOException {@inheritDoc}
+   */
+  @FXML
+  private void onDone(ActionEvent event) throws IOException {
+    AfterRoundController.END_MESSAGE = "Nice drawing :)";
+    saveCurrentSnapshotOnFile();
+
+    /*
+     * Getting the snapshot of the current canvas so that the user can see their art
+     * after the round and decide if they should save it or not. Also moving the
+     * user to the next scene (after_round) as the round finished.
+     */
+    Platform.runLater(
+        () -> {
+          try {
+            canvas.getScene().setRoot(App.loadFxml("after_round"));
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
   }
 }

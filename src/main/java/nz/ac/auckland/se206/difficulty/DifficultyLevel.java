@@ -80,6 +80,30 @@ public class DifficultyLevel {
     return drawTime;
   }
 
+  /**
+   * This method returns the current confidence level setting of the user.
+   *
+   * @return the current prediction confidence
+   */
+  public static int getPredictionConfidence() {
+    Confidence confidenceLevel =
+        UserProfileManager.currentProfile.getDifficultyLevel().getConfidenceLevel();
+
+    int predictionConfidence;
+
+    if (confidenceLevel == DifficultyLevel.Confidence.E) {
+      predictionConfidence = 1;
+    } else if (confidenceLevel == DifficultyLevel.Confidence.M) {
+      predictionConfidence = 10;
+    } else if (confidenceLevel == DifficultyLevel.Confidence.H) {
+      predictionConfidence = 25;
+    } else {
+      predictionConfidence = 50;
+    }
+
+    return predictionConfidence;
+  }
+
   private Accuracy accuracyLevel;
 
   private Words wordsLevel;
