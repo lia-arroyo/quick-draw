@@ -1,5 +1,7 @@
 package nz.ac.auckland.se206.games;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import nz.ac.auckland.se206.words.CategorySelector;
 
 /** This class is the object for storing game statistics. */
@@ -7,6 +9,8 @@ public class Game {
   private String word;
   private CategorySelector.Difficulty wordDifficulty;
   private boolean isWin;
+  private String timePlayedFormatted;
+  private double accuracy;
 
   /**
    * This is a constructor for setting the instance variables as stated below:
@@ -15,10 +19,25 @@ public class Game {
    * @param difficulty the difficulty of the chosen word
    * @param isWin the outcome of the game. true if won and false if loss.
    */
-  public Game(String word, CategorySelector.Difficulty difficulty, boolean isWin) {
+  public Game(
+      String word,
+      CategorySelector.Difficulty difficulty,
+      boolean isWin,
+      LocalDateTime timePlayed,
+      double accuracy) {
     this.word = word;
     this.wordDifficulty = difficulty;
     this.isWin = isWin;
+
+    // formatting date and time
+    System.out.println("game:" + accuracy);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    this.timePlayedFormatted = timePlayed.format(formatter);
+
+    // only updating accuracy if user has won
+    if (accuracy != 0 && isWin) {
+      this.accuracy = accuracy;
+    }
   }
 
   /**
@@ -46,5 +65,23 @@ public class Game {
    */
   public boolean getResult() {
     return isWin;
+  }
+
+  /**
+   * This getter method is for the time they finished the game.
+   *
+   * @return the time the user has finished the game, formatted as DD-MM-YYYY HH:MM
+   */
+  public String getTimePlayed() {
+    return this.timePlayedFormatted;
+  }
+
+  /**
+   * This getter method is for getting the accuracy (prediction percentage) of their drawing.
+   *
+   * @return the accuracy of their drawing
+   */
+  public double getAccuracy() {
+    return accuracy;
   }
 }

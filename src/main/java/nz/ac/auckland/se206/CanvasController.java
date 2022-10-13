@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -281,7 +282,7 @@ public class CanvasController {
             // the round with 0 (lost)
             if (seconds < 0) {
               timer.cancel();
-              finishRound(0);
+              finishRound(0, 0);
             }
           }
         },
@@ -408,7 +409,7 @@ public class CanvasController {
                 }
 
                 // Finishing the round
-                finishRound(1);
+                finishRound(1, predictionPercentage);
                 timer.cancel();
               }
             }
@@ -425,7 +426,7 @@ public class CanvasController {
    *
    * @param result if the player wins, result = 1, if the player loses, result = 0
    */
-  private void finishRound(int result) {
+  private void finishRound(int result, double predictionPercentage) {
 
     // Setting the message label that will be shown to the user depending on the
     // result
@@ -442,7 +443,12 @@ public class CanvasController {
 
     // Saving game statistics
     Game game =
-        new Game(CategorySelector.chosenWord, CategorySelector.currentDifficulty, (result == 1));
+        new Game(
+            CategorySelector.chosenWord,
+            CategorySelector.currentDifficulty,
+            (result == 1),
+            LocalDateTime.now(),
+            predictionPercentage);
     UserProfileManager.currentProfile.addGameToHistory(game);
 
     // Ensuring that statistics are saved to file after each round.

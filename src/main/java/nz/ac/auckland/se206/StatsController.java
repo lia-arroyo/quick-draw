@@ -81,8 +81,16 @@ public class StatsController {
 
           // setting up content for each dropdown pane
           StringBuilder sb = new StringBuilder();
+          sb.append("Played on " + game.getTimePlayed() + "\n");
           sb.append("Difficulty: " + game.getWordDifficulty() + "\n");
-          sb.append("Result: " + (game.getResult() ? "Won" : "Lost"));
+          sb.append("Result: " + (game.getResult() ? "Won" : "Lost") + "\n");
+
+          // if user has won, display accuracy as well.
+          if (game.getResult()) {
+            sb.append(String.format("Accuracy: %.2f%%", game.getAccuracy()));
+          }
+
+          // adding contents to dropdown content
           Label label = new Label(sb.toString());
           AnchorPane anchorPane = new AnchorPane(label);
 
