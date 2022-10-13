@@ -29,6 +29,7 @@ public class StatsController {
 
   private UserProfile currentProfile = UserProfileManager.currentProfile;
 
+  /** This method is called when the Stats page is loaded. */
   public void initialize() {
     // updating the title with the current profile's name
     statsTitleLabel.setText(currentProfile.getUserName() + "'s stats");
