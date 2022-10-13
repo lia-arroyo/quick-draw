@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -92,6 +93,7 @@ public class StatsController {
 
           // adding contents to dropdown content
           Label label = new Label(sb.toString());
+          label.setPadding(new Insets(20));
           AnchorPane anchorPane = new AnchorPane(label);
 
           // Creating a titled pane
