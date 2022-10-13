@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Random;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 
+/** This class is for all things to do with word selection for each round. */
 public class CategorySelector {
 
   public enum Difficulty {
@@ -26,13 +27,23 @@ public class CategorySelector {
 
   private Map<Difficulty, List<String>> difficultyToCategories;
 
+  /**
+   * This constructor essentially reads the csv file full of words and parses it into a hashmap that
+   * has each key as the 3 different difficulties - E, M, and H.
+   *
+   * @throws IOException {@inheritDoc}
+   * @throws CsvException {@inheritDoc}
+   * @throws URISyntaxException {@inheritDoc}
+   */
   public CategorySelector() throws IOException, CsvException, URISyntaxException {
     difficultyToCategories = new HashMap<>();
 
+    // initialising each key,value pair for hashmap
     for (Difficulty difficulty : Difficulty.values()) {
       difficultyToCategories.put(difficulty, new ArrayList<>());
     }
 
+    // reading the file and adding each word to the hashmap.
     for (String[] line : getLines()) {
       difficultyToCategories.get(Difficulty.valueOf(line[1])).add(line[0]);
     }
@@ -77,7 +88,7 @@ public class CategorySelector {
   /**
    * This method sets a new chosen category and updates the static variable.
    *
-   * @param difficulty the difficultry of the cateogry (E, M or H)
+   * @param difficulty the difficultly of the category (E, M or H)
    */
   public void setNewChosenWord(Difficulty difficulty) {
     CategorySelector.chosenWord = getRandomCategory(difficulty);
@@ -92,6 +103,12 @@ public class CategorySelector {
     return CategorySelector.chosenWord;
   }
 
+  /**
+   * This method calculates the amount of words in the hashmap given the difficulty.
+   *
+   * @param difficulty difficulty of word list desired
+   * @return the number of entries in this word list
+   */
   public int getTotalWordCount(Difficulty difficulty) {
     return difficultyToCategories.get(difficulty).size();
   }
