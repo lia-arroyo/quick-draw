@@ -102,6 +102,31 @@ public class LeaderboardController {
           }
         }
       }
+
+      positionOne.setText("1");
+      playerOne.setText(podiumProfiles[0].getUserName());
+      winsOne.setText(String.valueOf(podiumProfiles[0].getWinsCount()));
+
+      if (podiumProfiles.length > 1) {
+        positionTwo.setText("2");
+        playerTwo.setText(podiumProfiles[1].getUserName());
+        winsTwo.setText(String.valueOf(podiumProfiles[1].getWinsCount()));
+      }
+      if (podiumProfiles.length > 2) {
+        positionThree.setText("3");
+        playerThree.setText(podiumProfiles[2].getUserName());
+        winsThree.setText(String.valueOf(podiumProfiles[2].getWinsCount()));
+      }
+      if (podiumProfiles.length > 3) {
+        positionFour.setText("4");
+        playerFour.setText(podiumProfiles[3].getUserName());
+        winsFour.setText(String.valueOf(podiumProfiles[3].getWinsCount()));
+      }
+      if (podiumProfiles.length > 4) {
+        positionFive.setText("5");
+        playerFive.setText(podiumProfiles[4].getUserName());
+        winsFive.setText(String.valueOf(podiumProfiles[4].getWinsCount()));
+      }
     }
   }
 
