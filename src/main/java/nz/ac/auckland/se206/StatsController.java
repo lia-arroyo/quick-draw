@@ -4,6 +4,7 @@ import com.opencsv.exceptions.CsvException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -70,6 +71,9 @@ public class StatsController {
   private void displayWordHistory() {
     // Getting all the games and their statistics for each related to the user.
     ArrayList<Game> games = currentProfile.getHistoryOfGames();
+
+    // Reversing order of history
+    Collections.reverse(games);
 
     // Iterating through each game
     games.forEach(
