@@ -87,64 +87,77 @@ public class CanvasController {
   private int predictionIndex = 340;
 
   /**
-   * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
-   * the drawing, and we load the ML model.
+   * JavaFX calls this method once the GUI elements are loaded. For the canvas controller, we create
+   * a listener for the drawing, and we load the ML model.
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.
    */
   public void initialize() throws ModelException, IOException, CsvException, URISyntaxException {
 
+    /*
+     * Getting the current accuracy level setting of the user and saving it into the
+     * accuracy index, so that the game logic can be applied appropriately.
+     */
     Accuracy accuracyLevel =
         UserProfileManager.userProfileList
             .get(UserProfileManager.currentProfileIndex)
             .getDifficultyLevel()
             .getAccuracyLevel();
     if (accuracyLevel == DifficultyLevel.Accuracy.E) {
-      this.accuracyIndex = 5;
+      accuracyIndex = 5;
     } else if (accuracyLevel == DifficultyLevel.Accuracy.M) {
-      this.accuracyIndex = 3;
+      accuracyIndex = 3;
     } else if (accuracyLevel == DifficultyLevel.Accuracy.H) {
-      this.accuracyIndex = 2;
+      accuracyIndex = 2;
     } else {
-      this.accuracyIndex = 1;
+      accuracyIndex = 1;
     }
 
+    /*
+     * Getting the current time level setting of the user and saving it into the
+     * draw time variable, so that the game logic can be applied appropriately.
+     */
     Time timeLevel =
         UserProfileManager.userProfileList
             .get(UserProfileManager.currentProfileIndex)
             .getDifficultyLevel()
             .getTimeLevel();
     if (timeLevel == DifficultyLevel.Time.E) {
-      this.drawTime = 60;
+      drawTime = 60;
     } else if (timeLevel == DifficultyLevel.Time.M) {
-      this.drawTime = 45;
+      drawTime = 45;
     } else if (timeLevel == DifficultyLevel.Time.H) {
-      this.drawTime = 30;
+      drawTime = 30;
     } else {
-      this.drawTime = 15;
+      drawTime = 15;
     }
 
+    /*
+     * Getting the confidence level setting of the user and saving it into a
+     * prediction confidence variable, so that the game logic can be applied
+     * appropriately.
+     */
     Confidence confidenceLevel =
         UserProfileManager.userProfileList
             .get(UserProfileManager.currentProfileIndex)
             .getDifficultyLevel()
             .getConfidenceLevel();
     if (confidenceLevel == DifficultyLevel.Confidence.E) {
-      this.predictionConfidence = 1;
+      predictionConfidence = 1;
     } else if (confidenceLevel == DifficultyLevel.Confidence.M) {
-      this.predictionConfidence = 10;
+      predictionConfidence = 10;
     } else if (confidenceLevel == DifficultyLevel.Confidence.H) {
-      this.predictionConfidence = 25;
+      predictionConfidence = 25;
     } else {
-      this.predictionConfidence = 50;
+      predictionConfidence = 50;
     }
 
-    // Setting speech button icon
+    // Setting the speech button icon to the speech image
     Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
     speechButton.setGraphic(new ImageView(icon));
 
-    // Displaying chosen word
+    // Displaying the chosen word to the user
     chosenWordLabel.setText(CategorySelector.chosenWord);
     model = new DoodlePrediction();
 
@@ -153,7 +166,7 @@ public class CanvasController {
 
     graphic = canvas.getGraphicsContext2D();
 
-    // save coordinates when mouse is pressed on the canvas
+    // Saving coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
         e -> {
           currentX = e.getX();
@@ -162,7 +175,7 @@ public class CanvasController {
 
     canvas.setOnMouseDragged(
         e -> {
-          // Brush size (you can change this, it should not be too small or too large).
+          // This is the brush size
           final double size = 6.0;
 
           final double x = e.getX() - size / 2;
@@ -177,10 +190,10 @@ public class CanvasController {
             graphic.setLineWidth(size);
           }
 
-          // Create a line that goes from the point (currentX, currentY) and (x,y)
+          // Creating a line that goes from the point (currentX, currentY) and (x,y)
           graphic.strokeLine(currentX, currentY, x, y);
 
-          // update the coordinates
+          // Updating the coordinates
           currentX = x;
           currentY = y;
 
@@ -190,7 +203,10 @@ public class CanvasController {
     runCounter();
   }
 
-  /** This method is called when the "Clear" button is pressed. */
+  /**
+   * This method is called when the "Clear" button is pressed. It will empty the canvas and also
+   * reset the prediction list and the closer/further section.
+   */
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -205,7 +221,7 @@ public class CanvasController {
   }
 
   /**
-   * Get the current snapshot of the canvas.
+   * This method gets the current snapshot of the canvas.
    *
    * @return The BufferedImage corresponding to the current canvas content.
    */
@@ -213,7 +229,7 @@ public class CanvasController {
     final Image snapshot = canvas.snapshot(null, null);
     final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
 
-    // Convert into a binary image.
+    // Converting into a binary image.
     final BufferedImage imageBinary =
         new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
 
@@ -228,7 +244,7 @@ public class CanvasController {
   }
 
   /**
-   * Save the current snapshot on a bitmap file.
+   * This method saves the current snapshot on a bitmap file.
    *
    * @return The file of the saved image.
    * @throws IOException If the image cannot be saved.
@@ -250,7 +266,8 @@ public class CanvasController {
 
   /**
    * This method is responsible for running the timer. The timer is used to notify the user how much
-   * time they have left, and it is also used to refresh the model predictions every second.
+   * time they have left, and it is also used to refresh the model predictions and the
+   * closer/further section every second.
    */
   private void runCounter() {
 
@@ -317,7 +334,7 @@ public class CanvasController {
    * the user's drawing is getting closer to the top 10, then we display 'closer', if it goes
    * further away then we display 'further'.
    *
-   * @throws TranslateException
+   * @throws TranslateException when an error occurs during the processing of an input or output
    */
   private void updateCloserFurther() throws TranslateException {
 
@@ -344,6 +361,12 @@ public class CanvasController {
     }
   }
 
+  /**
+   * This method returns the current prediction index of the chosen word in the prediction list.
+   *
+   * @return the current prediction index of the chosen word
+   * @throws TranslateException when an error occurs during the processing of an input or output
+   */
   private int getPredictionIndex() throws TranslateException {
     List<Classifications.Classification> predictions =
         model.getPredictions(getCurrentSnapshot(), 340);
@@ -352,6 +375,8 @@ public class CanvasController {
 
     int currentIndex = 0;
 
+    // Going through the whole prediction list to look for the index of the chosen
+    // word
     for (Classifications.Classification category : predictions) {
       if (category.getClassName().equals(chosenWord)) {
         return currentIndex;
@@ -360,7 +385,9 @@ public class CanvasController {
       currentIndex++;
     }
 
-    return 340;
+    // If for some reason the word is not found, we return the size of the
+    // prediction list.
+    return predictions.size();
   }
 
   /**
@@ -444,19 +471,20 @@ public class CanvasController {
     // Setting the message label that will be shown to the user depending on the
     // result
     if (result == 0) {
-      // the user has lost
+      // This is when the user has lost
       AfterRoundController.END_MESSAGE = "You ran out of time  :(";
       UserProfileManager.currentProfile.incrementLossesCount();
 
       UserProfileManager.currentProfile.resetConsecutiveWins();
 
     } else if (result == 1) {
-      // the user has won
+      // This is when the user has won
       AfterRoundController.END_MESSAGE = "Congratulations! You won  :)";
       UserProfileManager.currentProfile.incrementWinsCount();
 
       UserProfileManager.currentProfile.incrementConsecutiveWins();
 
+      // Checking the game time so that the badges can be updated if needed
       if (gameTime <= 30) {
         UserProfileManager.currentProfile.setBadgeTrue(0);
       }
@@ -466,12 +494,18 @@ public class CanvasController {
       if (gameTime <= 5) {
         UserProfileManager.currentProfile.setBadgeTrue(2);
       }
+
+      // Checking if they won in the last 5 seconds to update the 4th badge
       if ((gameTime == drawTime) || (gameTime == (drawTime - 1))) {
         UserProfileManager.currentProfile.setBadgeTrue(3);
       }
+
+      // Checking if the accuracy was 75% or higher to update the 5th badge
       if (gameConfidence >= 75) {
         UserProfileManager.currentProfile.setBadgeTrue(4);
       }
+
+      // Checking for consecutive wins to update the 6th or 7th badge
       if (UserProfileManager.currentProfile.getConsecutiveWins() == 3) {
         UserProfileManager.currentProfile.setBadgeTrue(5);
       }
@@ -480,6 +514,7 @@ public class CanvasController {
       }
     }
 
+    // Checking to update the 8th badge
     if (UserProfileManager.currentProfile.getWordHistory().size() == 200) {
       UserProfileManager.currentProfile.setBadgeTrue(7);
     }

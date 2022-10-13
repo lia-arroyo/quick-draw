@@ -55,7 +55,7 @@ public class App extends Application {
   }
 
   /**
-   * This method is invoked when the application starts. It loads and shows the "Canvas" scene.
+   * This method is invoked when the application starts. It loads and shows the "Title" scene.
    *
    * @param stage The primary stage of the application.
    * @throws IOException If "src/main/resources/fxml/canvas.fxml" is not found.
@@ -76,7 +76,7 @@ public class App extends Application {
     stage.setScene(scene);
     stage.show();
 
-    // Makes sure all threads are closed when the window closes
+    // Making sure all threads are closed when the window closes
     stage.setOnCloseRequest(
         e -> {
           // Automatically saving data on close

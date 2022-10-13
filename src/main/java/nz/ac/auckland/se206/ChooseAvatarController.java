@@ -16,6 +16,7 @@ public class ChooseAvatarController {
 
   @FXML private VBox avatarBox;
 
+  /** JavaFX calls this method once the GUI elements are loaded. */
   public void initialize() {
 
     // Displays the first image as the default image
@@ -49,11 +50,22 @@ public class ChooseAvatarController {
     }
   }
 
+  /**
+   * This method is called when the user clicks on the back button.
+   *
+   * @param event
+   */
   @FXML
   private void onGoBack(ActionEvent event) {
+    // Directing the user back to the create profile page
     goToCreateProfile(event);
   }
 
+  /**
+   * This method is called when the user clicks on an avatar.
+   *
+   * @param event
+   */
   @FXML
   private void onClickImage(ActionEvent event) {
     Button avatarButton = (Button) event.getSource();
