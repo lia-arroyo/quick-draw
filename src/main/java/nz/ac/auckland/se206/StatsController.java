@@ -69,10 +69,10 @@ public class StatsController {
    * components: accordion, and some title and anchored panes.
    */
   private void displayWordHistory() {
-    // Getting all the games and their statistics for each related to the user.
-    ArrayList<Game> games = currentProfile.getHistoryOfGames();
+    // Getting a copy of the games and their statistics for each related to the user.
+    ArrayList<Game> games = new ArrayList<>(currentProfile.getHistoryOfGames());
 
-    // Reversing order of history
+    // Reversing order of history (of the copy, not the actual history).
     Collections.reverse(games);
 
     // Iterating through each game
