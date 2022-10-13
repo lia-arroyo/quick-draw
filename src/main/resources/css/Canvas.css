@@ -28,4 +28,5 @@
 .zen-button:hover {
   -fx-underline: true;
   -fx-font-size: 24px;
+  -fx-background-color: transparent;
 }

@@ -61,6 +61,8 @@ public class CanvasController {
 
   @FXML private Label chosenWordLabel;
 
+  @FXML private Label zenChosenWordLabel;
+
   @FXML private Label timeLeft;
 
   @FXML private Label predictionList;
@@ -76,6 +78,8 @@ public class CanvasController {
   @FXML private Button switchButton;
 
   @FXML private Button speechButton;
+
+  @FXML private Button zenSpeechButton;
 
   @FXML private Button readyButton;
 
@@ -117,7 +121,7 @@ public class CanvasController {
   private double currentX;
   private double currentY;
 
-  private Color penColor;
+  private Color penColor = Color.BLACK;
   private Boolean eraser = false;
   private Boolean canvasIsEmpty = true;
 
@@ -143,12 +147,6 @@ public class CanvasController {
 
     predictionConfidence = DifficultyLevel.getPredictionConfidence();
 
-    // Setting the speech button icon to the speech image
-    Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
-    speechButton.setGraphic(new ImageView(icon));
-
-    // Displaying the chosen word to the user
-    chosenWordLabel.setText(CategorySelector.chosenWord);
     model = new DoodlePrediction();
 
     graphic = canvas.getGraphicsContext2D();
@@ -173,7 +171,7 @@ public class CanvasController {
             graphic.setLineWidth(size * 3);
 
           } else {
-            graphic.setStroke(Color.BLACK);
+            graphic.setStroke(penColor);
             graphic.setLineWidth(size);
           }
 
@@ -197,8 +195,15 @@ public class CanvasController {
    * initially, according to the game mode.
    */
   private void setupScreen() {
+    // Setting the speech button icon to the speech image
+    Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
+    speechButton.setGraphic(new ImageView(icon));
+    zenSpeechButton.setGraphic(new ImageView(icon));
+
     // When game mode is 'NORMAL'
     if (gameMode == 0) {
+      // Displaying the chosen word to the user
+      chosenWordLabel.setText(CategorySelector.chosenWord);
 
       // When game mode is 'HIDDEN WORD'
     } else if (gameMode == 1) {
@@ -214,6 +219,9 @@ public class CanvasController {
 
       zenBottomBox.setVisible(true);
       normalBottomBox.setVisible(false);
+
+      // Displaying the chosen word to the user
+      zenChosenWordLabel.setText(CategorySelector.chosenWord);
     }
   }
 
@@ -344,8 +352,9 @@ public class CanvasController {
             gameTime++;
 
             // If the timer reaches 0, we cancel the timer so that it stops, and we finish
-            // the round with 0 (lost)
-            if (seconds < 0) {
+            // the round with 0 (lost). If the game mode is 'ZEN' mode, then we don't have
+            // to cancel the round even if the timer reaches 0 seconds.
+            if (seconds < 0 && gameMode != 2) {
               timer.cancel();
               finishRound(0);
             }
@@ -464,32 +473,37 @@ public class CanvasController {
                   predictionList.setText(sb.toString());
                 });
 
-            // Checking if the top 3 predictions match the chosen word. If it does, then the
-            // round finishes with 1 (win) and we stop the timer.
-            for (int j = 0; j < accuracyIndex; j++) {
-              // Removing underscores if they exist in the string
-              String categoryName = predictions.get(j).getClassName().replaceAll("_", " ");
+            // Only checking for top n predictions if the current game mode is not 'ZEN'
+            // mode.
+            if (gameMode != 2) {
+              // Checking if the top n predictions match the chosen word. If it does, then the
+              // round finishes with 1 (win) and we stop the timer.
+              for (int j = 0; j < accuracyIndex; j++) {
+                // Removing underscores if they exist in the string
+                String categoryName = predictions.get(j).getClassName().replaceAll("_", " ");
 
-              double predictionPercentage = predictions.get(j).getProbability() * 100;
+                double predictionPercentage = predictions.get(j).getProbability() * 100;
 
-              if (categoryName.equals(CategorySelector.chosenWord)
-                  && !canvasIsEmpty
-                  && predictionPercentage >= predictionConfidence) {
+                if (categoryName.equals(CategorySelector.chosenWord)
+                    && !canvasIsEmpty
+                    && predictionPercentage >= predictionConfidence) {
 
-                // Checking if prediction is the new highest prediction percentage
-                if (predictionPercentage
-                    > UserProfileManager.currentProfile.getHighestPrediction()) {
-                  UserProfileManager.currentProfile.setHighestPredictionPercentage(
-                      predictionPercentage);
+                  // Checking if prediction is the new highest prediction percentage
+                  if (predictionPercentage
+                      > UserProfileManager.currentProfile.getHighestPrediction()) {
+                    UserProfileManager.currentProfile.setHighestPredictionPercentage(
+                        predictionPercentage);
+                  }
+
+                  gameConfidence = predictionPercentage;
+
+                  // Finishing the round
+                  finishRound(1);
+                  timer.cancel();
                 }
-
-                gameConfidence = predictionPercentage;
-
-                // Finishing the round
-                finishRound(1);
-                timer.cancel();
               }
             }
+
             return null;
           }
         };
@@ -551,16 +565,19 @@ public class CanvasController {
    * the brush, clicking the button will change the brush to the eraser, and vice versa.
    */
   @FXML
-  private void onSwitchBrushEraser() {
+  private void onSwitchBrushEraser(ActionEvent event) {
+
+    Button button = (Button) event.getSource();
+
     // Once eraser is pressed, button switches to "switch to brush"
     if (eraser == true) {
       eraser = false;
-      switchButton.setText("Switch to eraser");
+      button.setText("Switch to eraser");
 
       // Once brush is pressed, button switches to "switch to eraser"
     } else {
       eraser = true;
-      switchButton.setText("Switch to brush");
+      button.setText("Switch to brush");
     }
   }
 
