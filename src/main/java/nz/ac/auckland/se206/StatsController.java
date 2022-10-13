@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import nz.ac.auckland.se206.games.Game;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
@@ -79,9 +80,10 @@ public class StatsController {
           sb.append("Difficulty: " + game.getWordDifficulty() + "\n");
           sb.append("Result: " + (game.getResult() ? "Won" : "Lost"));
           Label label = new Label(sb.toString());
+          AnchorPane anchorPane = new AnchorPane(label);
 
           // Creating a titled pane
-          TitledPane dropdown = new TitledPane(game.getWord(), label);
+          TitledPane dropdown = new TitledPane(game.getWord(), anchorPane);
 
           // adding each dropdown to accordion
           wordHistoryAccordion.getPanes().add(dropdown);
