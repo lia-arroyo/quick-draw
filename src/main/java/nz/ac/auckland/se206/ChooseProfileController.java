@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -68,6 +69,11 @@ public class ChooseProfileController {
     if (UserProfileManager.userProfileList.size() > 1) {
 
       Alert alert = new Alert(AlertType.CONFIRMATION);
+
+      // Adding style to the alert
+      DialogPane dialogPane = alert.getDialogPane();
+      dialogPane.getStylesheets().add(this.getClass().getResource("/css/dialog.css").toString());
+
       alert.setTitle(null);
       alert.setHeaderText(null);
       alert.setContentText(
