@@ -98,6 +98,7 @@ public class StatsController {
 
           // Creating a titled pane
           TitledPane dropdown = new TitledPane(game.getWord(), anchorPane);
+          dropdown.setStyle("-fx-text-fill: " + (game.getResult() ? "green" : "red"));
 
           // adding each dropdown to accordion
           wordHistoryAccordion.getPanes().add(dropdown);
