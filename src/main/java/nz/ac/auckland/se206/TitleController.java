@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+/** This class handles any actions on the Title pages. */
 public class TitleController {
 
   @FXML private Pane pane;
@@ -18,6 +19,11 @@ public class TitleController {
   private Boolean noProfiles = false;
   private int imageIndex = 0;
 
+  /**
+   * This method will be called when the user loads the Title page.
+   *
+   * @throws IOException {@inheritDoc}
+   */
   public void initialize() throws IOException {
 
     File profiles = new File("./src/main/resources/profiles/profiles.json");
@@ -75,6 +81,7 @@ public class TitleController {
         800);
   }
 
+  /** This method handles the transition between title and create profile page. */
   private void moveToCreateProfile() {
 
     // Loads the scene for profile creation
@@ -86,6 +93,7 @@ public class TitleController {
     }
   }
 
+  /** This method handles the transition between title page and choose profile page. */
   private void moveToChooseProfile() {
 
     // Loads the scene for choosing profile

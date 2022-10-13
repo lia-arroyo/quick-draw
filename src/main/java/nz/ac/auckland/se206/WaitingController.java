@@ -18,6 +18,7 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
 
+/** This class handles all actions on the waiting page. */
 public class WaitingController {
 
   @FXML private Label chosenWord;
@@ -41,14 +42,15 @@ public class WaitingController {
     // Selecting a random word for user
     CategorySelector categorySelector = new CategorySelector();
 
-    Words wordsLevel =
-        UserProfileManager.userProfileList
-            .get(UserProfileManager.currentProfileIndex)
-            .getDifficultyLevel()
-            .getWordsLevel();
+    // getting the current word difficulty level
+    Words wordsLevel = UserProfileManager.currentProfile.getDifficultyLevel().getWordsLevel();
+
+    // assigning chosen word
     if (wordsLevel == DifficultyLevel.Words.E) {
+      // only easy words
       categorySelector.setNewChosenWord(Difficulty.E);
     } else if (wordsLevel == DifficultyLevel.Words.M) {
+      // easy or medium words
       double randomNumber = Math.random();
       if (randomNumber < 0.3) {
         categorySelector.setNewChosenWord(Difficulty.E);
@@ -56,6 +58,7 @@ public class WaitingController {
         categorySelector.setNewChosenWord(Difficulty.M);
       }
     } else if (wordsLevel == DifficultyLevel.Words.H) {
+      // easy, medium or hard words
       double randomNumber = Math.random();
       if (randomNumber < 0.1) {
         categorySelector.setNewChosenWord(Difficulty.E);
@@ -65,9 +68,11 @@ public class WaitingController {
         categorySelector.setNewChosenWord(Difficulty.H);
       }
     } else {
+      // only hard words
       categorySelector.setNewChosenWord(Difficulty.H);
     }
 
+    // updating the label
     chosenWord.setText(categorySelector.getChosenWord());
   }
 
@@ -85,6 +90,7 @@ public class WaitingController {
 
     String currentMode = new String();
 
+    // getting current game mode
     if (MainMenuController.gameMode == 0) {
       currentMode = "canvas";
     } else if (MainMenuController.gameMode == 2) {

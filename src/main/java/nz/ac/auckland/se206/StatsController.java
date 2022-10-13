@@ -17,6 +17,7 @@ import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.words.CategorySelector;
 
+/** This class will handle any actions on the Stats page. */
 public class StatsController {
   @FXML private Label statsTitleLabel;
   @FXML private Label winsLabel;
