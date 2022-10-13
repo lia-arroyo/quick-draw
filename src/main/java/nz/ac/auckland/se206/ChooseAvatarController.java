@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 
+/** This class is to handle any action on the Choose Avatar page. */
 public class ChooseAvatarController {
 
   @FXML private VBox avatarBox;
@@ -53,7 +54,7 @@ public class ChooseAvatarController {
   /**
    * This method is called when the user clicks on the back button.
    *
-   * @param event
+   * @param event the event handler result
    */
   @FXML
   private void onGoBack(ActionEvent event) {
@@ -64,10 +65,11 @@ public class ChooseAvatarController {
   /**
    * This method is called when the user clicks on an avatar.
    *
-   * @param event
+   * @param event event handler result
    */
   @FXML
   private void onClickImage(ActionEvent event) {
+    // getting scene information
     Button avatarButton = (Button) event.getSource();
     String avatarId = avatarButton.getId();
     String profileIndex = "";
@@ -75,17 +77,27 @@ public class ChooseAvatarController {
     for (int i = 0; i < avatarId.length(); i++) {
       // If the character is a number
       if (avatarId.charAt(i) >= 48 && avatarId.charAt(i) <= 57) {
-        profileIndex = profileIndex + avatarId.charAt(i);
+        StringBuilder sb = new StringBuilder();
+        sb.append(profileIndex);
+        sb.append(avatarId.charAt(i));
+        profileIndex = sb.toString();
       }
     }
 
+    // updating the profile index
     UserProfileManager.chosenProfileIndex = Integer.valueOf(profileIndex);
 
     // Loads the scene for profile creation
     goToCreateProfile(event);
   }
 
+  /**
+   * This method is called when the user wants to go to the create profile page.
+   *
+   * @param event the event handler result
+   */
   private void goToCreateProfile(ActionEvent event) {
+    // getting scene info
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
