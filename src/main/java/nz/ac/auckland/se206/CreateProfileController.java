@@ -28,12 +28,12 @@ public class CreateProfileController {
 
   @FXML private Pane pane;
 
-  @FXML ImageView avatarImage;
+  @FXML private ImageView avatarImage;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded.
    *
-   * @throws IOException
+   * @throws IOException {@inheritDoc}
    */
   public void initialize() throws IOException {
 
@@ -57,6 +57,12 @@ public class CreateProfileController {
     avatarImage.setImage(initialAvatar);
   }
 
+  /**
+   * This method is called when the user clicks on the add profile button.
+   *
+   * @param event the action event handler result
+   * @throws IOException {@inheritDoc}
+   */
   @FXML
   private void onAddProfile(ActionEvent event) throws IOException {
     // Getting the currently chosen profile image index
@@ -107,11 +113,18 @@ public class CreateProfileController {
     UserProfileManager.chosenProfileIndex = 1;
   }
 
+  /**
+   * This method is called when the user clicks the back button.
+   *
+   * @param event the action event handler result.
+   */
   @FXML
   private void onGoBack(ActionEvent event) {
+    // getting scene information
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
+    // switching to the previous scene
     try {
       sceneButtonIsIn.setRoot(App.loadFxml("choose_profile"));
     } catch (IOException e) {
@@ -119,8 +132,14 @@ public class CreateProfileController {
     }
   }
 
+  /**
+   * This method is called when the user selects an avatar.
+   *
+   * @param event the action event handler result
+   */
   @FXML
   private void onChooseAvatar(ActionEvent event) {
+    // getting scene information
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
@@ -136,11 +155,20 @@ public class CreateProfileController {
     }
   }
 
+  /**
+   * This method checks where the username that the user entered already exists for a different
+   * profile.
+   *
+   * @param userName the username that the user has just entered
+   * @return true if username is taken. false otherwise
+   * @throws IOException {@inheritDoc}
+   */
   private Boolean checkUserNameTaken(String userName) throws IOException {
     // Only checks if there is currently as least one user profile in the profile
     // list
     if (!UserProfileManager.userProfileList.isEmpty()) {
 
+      // checking against each profile in the list
       for (UserProfile user : UserProfileManager.userProfileList) {
         if (user.getUserName().equals(userName)) {
           return true;

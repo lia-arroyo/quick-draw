@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 
+/** This method is for handling any action on the Choose Profile page. */
 public class ChooseProfileController {
 
   @FXML private Button leftButton;
@@ -33,8 +34,8 @@ public class ChooseProfileController {
   /**
    * JavaFX calls this method once the GUI elements are loaded.
    *
-   * @throws URISyntaxException
-   * @throws IOException
+   * @throws URISyntaxException {@inheritDoc}
+   * @throws IOException {@inheritDoc}
    */
   public void initialize() throws IOException, URISyntaxException {
 
@@ -75,6 +76,7 @@ public class ChooseProfileController {
       DialogPane dialogPane = alert.getDialogPane();
       dialogPane.getStylesheets().add(this.getClass().getResource("/css/dialog.css").toString());
 
+      // alert content
       alert.setTitle(null);
       alert.setHeaderText(null);
       alert.setContentText(
@@ -167,10 +169,11 @@ public class ChooseProfileController {
 
   /** This method is invoked when the user clicks on the right arrow. */
   @FXML
-  // Displays the next user profile to the right of the current one in the array
-  // list unless the profile is the last profile, in which case the first profile
-  // is displayed
   private void onGoRight() {
+    // Displays the next user profile to the right of the current one in the array
+    // list unless the profile is the last profile, in which case the first profile
+    // is displayed
+
     if (UserProfileManager.currentProfileIndex + 1 == UserProfileManager.userProfileList.size()) {
       UserProfileManager.currentProfileIndex = 0;
       this.userNameLabel.setText(
@@ -188,8 +191,14 @@ public class ChooseProfileController {
     updateImage();
   }
 
+  /**
+   * This method is called when the user chooses a profile i.e. clicks on an avatar
+   *
+   * @param event the event handler result
+   */
   @FXML
   private void onSelectProfile(ActionEvent event) {
+    // getting scene information
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 

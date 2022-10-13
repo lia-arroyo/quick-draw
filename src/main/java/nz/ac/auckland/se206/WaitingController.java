@@ -18,6 +18,7 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
 
+/** This class handles all actions on the waiting page. */
 public class WaitingController {
 
   @FXML private Label chosenWord;
@@ -44,12 +45,13 @@ public class WaitingController {
     // Getting the difficulty level based on the users' chosen settings.
     Words wordsLevel = UserProfileManager.currentProfile.getDifficultyLevel().getWordsLevel();
 
-    // easy difficulty - selecting easy words only.
     if (wordsLevel == DifficultyLevel.Words.E) {
+      // only easy words
       categorySelector.setNewChosenWord(Difficulty.E);
 
       // medium difficulty - easy + medium words
     } else if (wordsLevel == DifficultyLevel.Words.M) {
+      // easy or medium words
       double randomNumber = Math.random();
 
       // 30% easy, 70% medium word
@@ -61,6 +63,7 @@ public class WaitingController {
 
       // hard difficulty - easy + medium + hard words
     } else if (wordsLevel == DifficultyLevel.Words.H) {
+      // easy, medium or hard words
       double randomNumber = Math.random();
 
       // 10% easy, 30% medium, 60% hard word
@@ -74,10 +77,11 @@ public class WaitingController {
 
       // master difficulty - hard words only
     } else {
+      // only hard words
       categorySelector.setNewChosenWord(Difficulty.H);
     }
 
-    // updating label
+    // updating the label
     chosenWord.setText(categorySelector.getChosenWord());
   }
 
@@ -95,6 +99,7 @@ public class WaitingController {
 
     String currentMode = new String();
 
+    // getting current game mode
     if (MainMenuController.gameMode == 0) {
       currentMode = "canvas";
     } else if (MainMenuController.gameMode == 2) {

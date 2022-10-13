@@ -35,20 +35,22 @@ public class AfterRoundController {
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. We first set the display label to
-   * the end message, which is either congratulating the player that they've won, or notifying them
-   * that they ran out of time.
+   * the end message, which is dependent on the previous game scenario. Then we update other
+   * components such as labels and the image view.
    *
    * @throws FileNotFoundException if the file cannot be found in the directory
    */
   public void initialize() throws FileNotFoundException {
 
-    // Setting speech button icon
+    // Setting speech button icon to the speech image
     Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
     speechButton.setGraphic(new ImageView(icon));
 
+    // Displaying the end message and also the chosen word to the user
     displayLabel.setText(END_MESSAGE);
     chosenWord.setText("[ " + CategorySelector.chosenWord + " ]");
 
+    // Also displaying the image that the user drew on the canvas
     File file = new File(System.getProperty("user.dir") + "/tmp/userImage.bmp/");
     image = new Image(file.toURI().toString());
     playerImage.setImage(image);
@@ -88,14 +90,15 @@ public class AfterRoundController {
    * This method is called when the player clicks on the restart button. The user is directed back
    * to the main menu like when they first open the game.
    *
-   * @param event when the button is pressed
+   * @param event the source of the button click
    */
   @FXML
   private void onRestartGame(ActionEvent event) {
+    // Getting the scene information from the button
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
-    // Loading the fxml file of the main menu
+    // Directing the user back to the main menu
     try {
       sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
     } catch (IOException e) {
@@ -104,19 +107,21 @@ public class AfterRoundController {
   }
 
   /**
-   * This method plays the sound to communicate with the player, when the player clicks the sound
+   * This method plays the sound to communicate with the player when the player clicks the sound
    * button.
    */
   @FXML
   private void onPlaySound() {
 
-    // Creates a background task to play text-to-speech
+    // Creating a background task to play text-to-speech
     Task<Void> speechTask =
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
-            // Setting the speech message to the end message (win / lose) and also notifying the
-            // user that they can save their image or restart the game.
+            /*
+             * Setting the speech message to the end message and also notifying the user
+             * that they can save their image or restart the game.
+             */
             TextToSpeech textToSpeech = new TextToSpeech();
             textToSpeech.speak(END_MESSAGE);
             textToSpeech.speak("You can save your image or restart the game");
@@ -124,7 +129,7 @@ public class AfterRoundController {
           }
         };
 
-    // Creates a thread to run the background task
+    // Creating a thread to run the background task
     Thread speechThread = new Thread(speechTask);
     speechThread.start();
   }

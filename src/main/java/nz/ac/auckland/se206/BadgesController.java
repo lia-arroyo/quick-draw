@@ -28,12 +28,10 @@ public class BadgesController {
 
   private UserProfile currentUser;
 
-  /**
-   * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
-   * the drawing, and we load the ML model.
-   */
+  /** JavaFX calls this method once the GUI elements are loaded. */
   public void initialize() {
 
+    // Setting the messages for the badge titles and badge details.
     badgeTitleList =
         Arrays.asList(
             "FAST DRAWER",
@@ -71,6 +69,7 @@ public class BadgesController {
 
     currentUser = UserProfileManager.currentProfile;
 
+    // Going through the VBox to access all the badge buttons within the VBox
     for (Node hbox : badgeBox.getChildren()) {
 
       HBox badgeRow = (HBox) hbox;
@@ -78,6 +77,7 @@ public class BadgesController {
       for (Node badge : badgeRow.getChildren()) {
         Button badgeButton = (Button) badge;
 
+        // Getting the image of the badge depending on the current badge index
         ImageView badgeImageView =
             new ImageView(
                 new Image(
@@ -88,12 +88,15 @@ public class BadgesController {
         badgeImageView.setFitWidth(badgeButton.getPrefWidth());
         badgeImageView.setFitHeight(badgeButton.getPrefHeight());
 
+        // If the player has not obtained the badge yet, the opacity will be set to 30%
+        // so that the user knows that they haven't obtained it yet.
         if (!currentUser.getBadges()[badgeIndex]) {
-          badgeImageView.setOpacity(0.4);
+          badgeImageView.setOpacity(0.3);
         }
 
         badgeButton.setGraphic(badgeImageView);
 
+        // Setting a FX id for the badge button for later use
         badgeButton.setId(String.format("badge_%d", badgeIndex));
 
         badgeIndex++;
@@ -109,11 +112,11 @@ public class BadgesController {
    */
   @FXML
   private void onGoBack(ActionEvent event) {
-    // Getting scene information
+    // Getting the scene information from the button
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
-    // Switching scenes to go back to the main menu
+    // Directing the user back to the main menu
     try {
       sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
 
@@ -133,14 +136,13 @@ public class BadgesController {
 
     Button badge = (Button) event.getSource();
 
-    // Getting the badge id from the clicked button (badge)
+    // Getting the badge id from the clicked badge button
     String badgeId = badge.getId().replaceAll("[^0-9]", "");
     int id = Integer.parseInt(badgeId);
 
-    // Making a new alert to display to the user
     Alert badgeDetail = new Alert(AlertType.INFORMATION);
 
-    // Apply style to the alert dialog
+    // Applying style to the alert dialog
     DialogPane dialogPane = badgeDetail.getDialogPane();
     dialogPane.getStylesheets().add(this.getClass().getResource("/css/dialog.css").toString());
 

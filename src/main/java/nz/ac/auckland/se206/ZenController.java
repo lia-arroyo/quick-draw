@@ -36,6 +36,7 @@ import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 
+/** This class handles all actions on the zen page. */
 public class ZenController {
   @FXML private Canvas canvas;
 
@@ -297,9 +298,15 @@ public class ZenController {
     penColor = penColorPicker.getValue();
   }
 
+  /**
+   * This method will be called when the user clicks on the back button
+   *
+   * @param event the action event handler result
+   */
   @FXML
   private void onGoBack(ActionEvent event) {
 
+    // confirming that the user wants to go back
     Alert alert = new Alert(AlertType.CONFIRMATION);
     alert.setTitle(null);
     alert.setHeaderText(null);
@@ -325,6 +332,12 @@ public class ZenController {
     }
   }
 
+  /**
+   * This method is called when the user clicks on the done button
+   *
+   * @param event the action event handler result
+   * @throws IOException {@inheritDoc}
+   */
   @FXML
   private void onDone(ActionEvent event) throws IOException {
     AfterRoundController.END_MESSAGE = "Nice drawing :)";
