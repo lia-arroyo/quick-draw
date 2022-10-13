@@ -3,16 +3,14 @@ package nz.ac.auckland.se206;
 import com.opencsv.exceptions.CsvException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
+import nz.ac.auckland.se206.games.Game;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.words.CategorySelector;
@@ -25,6 +23,7 @@ public class StatsController {
   @FXML private Label progressLabel;
   @FXML private ImageView userProfileImage;
   @FXML private ScrollPane wordHistoryScrollPane;
+  @FXML private Accordion wordHistoryAccordion;
   @FXML private ProgressBar wordProgressBar;
 
   private UserProfile currentProfile = UserProfileManager.currentProfile;
@@ -63,21 +62,30 @@ public class StatsController {
     updateProgress();
   }
 
-  /** This method will display the word history using a String Builder. */
+  /**
+   * This method will display the word history using the Game statistic history and the FXML
+   * components: accordion, and some title and anchored panes.
+   */
   private void displayWordHistory() {
-    StringBuilder builder = new StringBuilder();
+    // Getting all the games and their statistics for each related to the user.
+    ArrayList<Game> games = currentProfile.getHistoryOfGames();
 
-    // listing every word that the user has played.
-    for (String word : currentProfile.getWordHistory()) {
-      builder.append(word + "\n");
-    }
+    // Iterating through each game
+    games.forEach(
+        (game) -> {
 
-    // creating new label that resizes depending on length of above string
-    Label words = new Label(builder.toString());
-    words.setFont(new Font(20));
+          // setting up content for each dropdown pane
+          StringBuilder sb = new StringBuilder();
+          sb.append("Difficulty: " + game.getWordDifficulty() + "\n");
+          sb.append("Result: " + (game.getResult() ? "Won" : "Lost"));
+          Label label = new Label(sb.toString());
 
-    // adding the new resized label to the scroll pane
-    wordHistoryScrollPane.setContent(words);
+          // Creating a titled pane
+          TitledPane dropdown = new TitledPane(game.getWord(), label);
+
+          // adding each dropdown to accordion
+          wordHistoryAccordion.getPanes().add(dropdown);
+        });
   }
 
   /**

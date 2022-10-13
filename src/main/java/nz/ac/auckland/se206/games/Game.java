@@ -44,7 +44,7 @@ public class Game {
    *
    * @return true if won, false if loss.
    */
-  public boolean isWin() {
+  public boolean getResult() {
     return isWin;
   }
 }
