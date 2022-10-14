@@ -11,12 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import nz.ac.auckland.se206.difficulty.DifficultyLevel;
-import nz.ac.auckland.se206.difficulty.DifficultyLevel.Words;
-import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
-import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
 
 /** This class handles all actions on the waiting page. */
 public class WaitingController {
@@ -42,44 +38,7 @@ public class WaitingController {
     // Selecting a random word for user
     CategorySelector categorySelector = new CategorySelector();
 
-    // Getting the difficulty level based on the users' chosen settings.
-    Words wordsLevel = UserProfileManager.currentProfile.getDifficultyLevel().getWordsLevel();
-
-    if (wordsLevel == DifficultyLevel.Words.E) {
-      // only easy words
-      categorySelector.setNewChosenWord(Difficulty.E);
-
-      // medium difficulty - easy + medium words
-    } else if (wordsLevel == DifficultyLevel.Words.M) {
-      // easy or medium words
-      double randomNumber = Math.random();
-
-      // 30% easy, 70% medium word
-      if (randomNumber < 0.3) {
-        categorySelector.setNewChosenWord(Difficulty.E);
-      } else {
-        categorySelector.setNewChosenWord(Difficulty.M);
-      }
-
-      // hard difficulty - easy + medium + hard words
-    } else if (wordsLevel == DifficultyLevel.Words.H) {
-      // easy, medium or hard words
-      double randomNumber = Math.random();
-
-      // 10% easy, 30% medium, 60% hard word
-      if (randomNumber < 0.1) {
-        categorySelector.setNewChosenWord(Difficulty.E);
-      } else if (randomNumber < 0.4) {
-        categorySelector.setNewChosenWord(Difficulty.M);
-      } else {
-        categorySelector.setNewChosenWord(Difficulty.H);
-      }
-
-      // master difficulty - hard words only
-    } else {
-      // only hard words
-      categorySelector.setNewChosenWord(Difficulty.H);
-    }
+    categorySelector.setWordWithDifficulty();
 
     // updating the label
     chosenWord.setText(categorySelector.getChosenWord());
@@ -97,18 +56,9 @@ public class WaitingController {
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
-    String currentMode = new String();
-
-    // getting current game mode
-    if (MainMenuController.gameMode == 0) {
-      currentMode = "canvas";
-    } else if (MainMenuController.gameMode == 2) {
-      currentMode = "zen";
-    }
-
     // Switching scenes to the canvas page.
     try {
-      sceneButtonIsIn.setRoot(App.loadFxml(currentMode));
+      sceneButtonIsIn.setRoot(App.loadFxml("canvas"));
 
     } catch (IOException e) {
       e.printStackTrace();

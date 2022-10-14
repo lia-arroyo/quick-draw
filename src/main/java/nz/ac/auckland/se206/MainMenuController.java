@@ -80,7 +80,7 @@ public class MainMenuController {
     if (gameMode == 0 || gameMode == 2) {
       currentMode = "waiting";
     } else if (gameMode == 1) {
-      currentMode = "hidden_word";
+      currentMode = "canvas";
     }
 
     // Changing the scene to waiting screen
@@ -209,7 +209,8 @@ public class MainMenuController {
   @FXML
   private void onModeLeft() {
     if (gameMode == 0) {
-      // if the gamemode is on the first mode (i.e. normal mode), it returns to the last game mode.
+      // if the gamemode is on the first mode (i.e. normal mode), it returns to the
+      // last game mode.
       gameMode = 2;
     } else {
       gameMode--;
