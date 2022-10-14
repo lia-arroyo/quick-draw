@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
@@ -50,6 +53,8 @@ public class LeaderboardController {
 
   @FXML private Label winsFive;
 
+  @FXML private ChoiceBox<String> leaderboardStatistic;
+
   public void initialize() {
 
     ArrayList<UserProfile> leaderboardProfiles = new ArrayList<UserProfile>();
@@ -71,6 +76,7 @@ public class LeaderboardController {
       positionThree.setVisible(false);
       positionFour.setVisible(false);
       positionFive.setVisible(false);
+      leaderboardStatistic.setVisible(false);
       playerTwo.setText("It's quiet here ...");
 
     } else {
@@ -152,6 +158,11 @@ public class LeaderboardController {
           setBoldStyle(positionFive, playerFive, winsFive);
         }
       }
+
+      leaderboardStatistic.setValue("Wins");
+      ObservableList<String> statisticOptions =
+          FXCollections.observableArrayList("Badges", "Confidence", "Wins");
+      leaderboardStatistic.setItems(statisticOptions);
     }
   }
 
