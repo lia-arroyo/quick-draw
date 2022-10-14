@@ -41,3 +41,11 @@
   -fx-font-size: 16px;
   -fx-background-color: transparent;
 }
+
+.definition-box {
+  -fx-border-radius: 20px;
+  -fx-border-width: 5px;
+  -fx-border-color: black;
+  -fx-background-color: white;
+  -fx-background-radius: 20px;
+}
