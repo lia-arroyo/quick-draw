@@ -211,7 +211,7 @@
                <children>
                   <Label fx:id="definitionLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="210.0" maxWidth="530.0" prefHeight="210.0" prefWidth="550.0" text="Loading..." wrapText="true">
                      <font>
-                        <Font size="28.0" />
+                        <Font size="24.0" />
                      </font>
                      <HBox.margin>
                         <Insets />
@@ -235,6 +235,11 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Label fx:id="instructionLabel" alignment="CENTER" layoutX="170.0" layoutY="160.0" prefWidth="500.0" text="The definition for the hidden word is: ">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

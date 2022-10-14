@@ -72,6 +72,8 @@ public class CanvasController {
 
   @FXML private Label definitionLabel;
 
+  @FXML private Label instructionLabel;
+
   @FXML private Label closerFurtherLabel;
 
   @FXML private ImageView closerFurtherImage;
@@ -255,8 +257,10 @@ public class CanvasController {
     definitionPane.setVisible(false);
     canvasPane.setVisible(true);
 
-    // Also now the ready button won't be visible as it is not needed anymore
+    // Also now the instruction label and ready button won't be visible as it is not
+    // needed anymore
     readyButton.setVisible(false);
+    instructionLabel.setVisible(false);
 
     // Now the definition pane can be closed by the close button
     closeButton.setVisible(true);
