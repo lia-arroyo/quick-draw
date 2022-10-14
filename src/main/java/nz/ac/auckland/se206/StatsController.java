@@ -27,7 +27,9 @@ public class StatsController {
   @FXML private Label progressLabel;
   @FXML private ImageView userProfileImage;
   @FXML private Accordion wordHistoryAccordion;
-  @FXML private ProgressBar wordProgressBar;
+  @FXML private ProgressBar easyProgressBar;
+  @FXML private ProgressBar mediumProgressBar;
+  @FXML private ProgressBar hardProgressBar;
 
   private UserProfile currentProfile = UserProfileManager.currentProfile;
 
@@ -125,29 +127,28 @@ public class StatsController {
    * has played.
    */
   private void updateProgress() {
-    // Creating new category selector to get the number of total words
     CategorySelector categorySelector = null;
     try {
+      // Creating new category selector instance to get the number of total words
       categorySelector = new CategorySelector();
     } catch (IOException | RuntimeException | URISyntaxException | CsvException e) {
       throw new RuntimeException(e);
     }
 
-    // calculating the progress
-    int wordsPlayed = currentProfile.getWordHistory().size();
-    int wordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.E);
-    double progress = (double) wordsPlayed / wordsInTotal;
+    // calculating the number of words played for each difficulty
+    int easyWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.E).size();
+    int mediumWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.M).size();
+    int hardWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.H).size();
+
+    // calculating total number of words per difficulty
+    int easyWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.E);
+    int mediumWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.M);
+    int hardWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.H);
 
     // updating the actual progress bar
-    wordProgressBar.setProgress(progress);
-
-    // updating the text that goes with it
-    progressLabel.setText(
-        "You've played a total of "
-            + wordsPlayed
-            + " words, and have "
-            + (wordsInTotal - wordsPlayed)
-            + " words to go! Well done!");
+    easyProgressBar.setProgress((double) easyWordsPlayed / easyWordsInTotal);
+    mediumProgressBar.setProgress((double) mediumWordsPlayed / mediumWordsInTotal);
+    hardProgressBar.setProgress((double) hardWordsPlayed / hardWordsInTotal);
   }
 
   /**

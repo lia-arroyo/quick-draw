@@ -18,6 +18,8 @@ public class Game {
    * @param word the chosen word for the game
    * @param difficulty the difficulty of the chosen word
    * @param isWin the outcome of the game. true if won and false if loss.
+   * @param timePlayed the amount of time required to play
+   * @param accuracy the prediction percentage
    */
   public Game(
       String word,
