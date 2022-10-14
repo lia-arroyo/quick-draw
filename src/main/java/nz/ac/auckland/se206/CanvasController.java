@@ -27,6 +27,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -731,6 +732,11 @@ public class CanvasController {
 
     // confirming that the user wants to go back
     Alert alert = new Alert(AlertType.CONFIRMATION);
+
+    // Applying style to the alert dialog
+    DialogPane dialogPane = alert.getDialogPane();
+    dialogPane.getStylesheets().add(this.getClass().getResource("/css/dialog.css").toString());
+
     alert.setTitle(null);
     alert.setHeaderText(null);
     alert.setContentText("Are you sure you want to leave? You will lose your drawing!");
