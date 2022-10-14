@@ -24,7 +24,9 @@ public class StatsController {
   @FXML private Label winsLabel;
   @FXML private Label lossesLabel;
   @FXML private Label highestPredictionLabel;
-  @FXML private Label progressLabel;
+  @FXML private Label easyProgressLabel;
+  @FXML private Label mediumProgressLabel;
+  @FXML private Label hardProgressLabel;
   @FXML private ImageView userProfileImage;
   @FXML private Accordion wordHistoryAccordion;
   @FXML private ProgressBar easyProgressBar;
@@ -149,6 +151,11 @@ public class StatsController {
     easyProgressBar.setProgress((double) easyWordsPlayed / easyWordsInTotal);
     mediumProgressBar.setProgress((double) mediumWordsPlayed / mediumWordsInTotal);
     hardProgressBar.setProgress((double) hardWordsPlayed / hardWordsInTotal);
+
+    // updating the label alongside it with the actual value
+    easyProgressLabel.setText(Math.round(easyProgressBar.getProgress() * 100) + "%");
+    mediumProgressLabel.setText(Math.round(mediumProgressBar.getProgress() * 100) + "%");
+    hardProgressLabel.setText(Math.round(hardProgressBar.getProgress() * 100) + "%");
   }
 
   /**
