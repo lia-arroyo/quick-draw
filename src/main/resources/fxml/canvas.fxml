@@ -81,11 +81,20 @@
                                                 <Font name="Proxima Nova" size="36.0" />
                                              </font>
                                           </Label>
-                                          <Button fx:id="definitionButton" mnemonicParsing="false" onAction="#onViewDefinition" styleClass="definition-button" text="see definition..." textFill="#575757">
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </Button>
+                                          <HBox alignment="TOP_CENTER" prefHeight="10.0" prefWidth="200.0" spacing="40.0">
+                                             <children>
+                                                <Button fx:id="revealButton" mnemonicParsing="false" onAction="#onRevealFirstLetter" style="-fx-text-fill: #575757;" styleClass="definition-button" text="reveal first letter" textFill="#575757">
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
+                                                </Button>
+                                                <Button fx:id="definitionButton" mnemonicParsing="false" onAction="#onViewDefinition" styleClass="definition-button" text="see definition..." textFill="#575757">
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
+                                                </Button>
+                                             </children>
+                                          </HBox>
                                        </children>
                                     </VBox>
                                  </children>

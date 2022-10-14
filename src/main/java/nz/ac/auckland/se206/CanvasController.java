@@ -86,6 +86,8 @@ public class CanvasController {
 
   @FXML private Button definitionButton;
 
+  @FXML private Button revealButton;
+
   @FXML private Button closeButton;
 
   @FXML private Pane canvasPane;
@@ -272,6 +274,22 @@ public class CanvasController {
   private void onViewDefinition() {
     canvasPane.setOpacity(0.3);
     definitionPane.setVisible(true);
+  }
+
+  /**
+   * This method is called when the user clicks on the reveal first letter button. This will change
+   * the first letter of the underscore label from '_' to whatever the first letter of the chosen
+   * word is, and the button will then be disabled.
+   */
+  @FXML
+  private void onRevealFirstLetter() {
+    String underscore = underscoreLabel.getText();
+
+    String revealed = CategorySelector.chosenWord.charAt(0) + underscore.substring(1);
+
+    underscoreLabel.setText(revealed);
+
+    revealButton.setDisable(true);
   }
 
   /**
@@ -468,6 +486,11 @@ public class CanvasController {
     return predictions.size();
   }
 
+  /**
+   * This method is called when the definition needs to get displayed for the user. It creates a
+   * separate thread to do the API calling to retrieve the definition string, then changes the
+   * labels accordingly and sets the 'ready' button to visible.
+   */
   private void updateDefinitionLabel() {
     // Making a thread for initialising the dictionary and finding the definition
     Task<Void> updateTask =
