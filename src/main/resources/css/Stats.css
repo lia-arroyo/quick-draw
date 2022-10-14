@@ -25,3 +25,7 @@
   -fx-border-width: 2px;
   -fx-border-color: black;
 }
+
+.progress-bar .bar {
+  -fx-background-color: linear-gradient(to right, lightgreen, seagreen);
+}

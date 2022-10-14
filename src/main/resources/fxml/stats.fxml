@@ -79,7 +79,7 @@
             <Font size="34.0" />
          </font>
       </Label>
-      <ScrollPane fx:id="wordHistoryScrollPane" fitToWidth="true" layoutX="40.0" layoutY="340.0" prefHeight="280.0" prefWidth="360.0" styleClass="words-drawn">
+      <ScrollPane fx:id="wordHistoryScrollPane" fitToWidth="true" layoutX="40.0" layoutY="340.0" prefHeight="280.0" prefWidth="379.0" styleClass="words-drawn">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
