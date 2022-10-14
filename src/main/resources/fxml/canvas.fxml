@@ -81,7 +81,7 @@
                                                 <Font name="Proxima Nova" size="36.0" />
                                              </font>
                                           </Label>
-                                          <Button fx:id="definitionButton" mnemonicParsing="false" onAction="#onViewDefinition" styleClass="definition-button" text="see definition..." textFill="#575757" visible="false">
+                                          <Button fx:id="definitionButton" mnemonicParsing="false" onAction="#onViewDefinition" styleClass="definition-button" text="see definition..." textFill="#575757">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
@@ -200,7 +200,7 @@
          <children>
             <HBox alignment="TOP_RIGHT" layoutX="120.0" layoutY="200.0" prefHeight="240.0" prefWidth="600.0" styleClass="definition-box">
                <children>
-                  <Label alignment="CENTER" maxHeight="210.0" maxWidth="530.0" prefHeight="210.0" prefWidth="550.0" text="This is a definition for a word lol">
+                  <Label fx:id="definitionLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="210.0" maxWidth="530.0" prefHeight="210.0" prefWidth="550.0" text="Loading..." wrapText="true">
                      <font>
                         <Font size="28.0" />
                      </font>
@@ -218,7 +218,7 @@
                   <Insets right="7.0" top="7.0" />
                </padding>
             </HBox>
-            <Button fx:id="readyButton" layoutX="320.0" layoutY="470.0" mnemonicParsing="false" onAction="#onReady" prefHeight="50.0" prefWidth="200.0" text="I'm ready">
+            <Button fx:id="readyButton" layoutX="320.0" layoutY="470.0" mnemonicParsing="false" onAction="#onReady" prefHeight="50.0" prefWidth="200.0" text="I'm ready" visible="false">
                <font>
                   <Font size="24.0" />
                </font>

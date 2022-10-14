@@ -42,6 +42,7 @@ import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
+import nz.ac.auckland.se206.words.Dictionary;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and the corresponding
@@ -186,15 +187,17 @@ public class CanvasController {
         });
 
     setupScreen();
-
-    runCounter();
   }
 
   /**
    * This method is called in the initialize method of the canvas controller to set up the screen
    * initially, according to the game mode.
+   *
+   * @throws URISyntaxException
+   * @throws CsvException
+   * @throws IOException
    */
-  private void setupScreen() {
+  private void setupScreen() throws IOException, CsvException, URISyntaxException {
     // Setting the speech button icon to the speech image
     Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
     speechButton.setGraphic(new ImageView(icon));
@@ -204,16 +207,28 @@ public class CanvasController {
     if (gameMode == 0) {
       // Displaying the chosen word to the user
       chosenWordLabel.setText(CategorySelector.chosenWord);
+      runCounter();
 
       // When game mode is 'HIDDEN WORD'
     } else if (gameMode == 1) {
       // Disable the chosen word label and canvas pane, then show the definition pane.
       chosenWordLabel.setVisible(false);
       canvasPane.setVisible(false);
+      underscoreBox.setVisible(true);
       definitionPane.setVisible(true);
+
+      // Selecting a random word for user
+      CategorySelector categorySelector = new CategorySelector();
+      categorySelector.setWordWithDifficulty();
+
+      // Printing the word for presentation purposes
+      System.out.println(CategorySelector.chosenWord);
+
+      updateDefinitionLabel();
 
       // When game mode is 'ZEN'
     } else if (gameMode == 2) {
+
       zenTopPane.setVisible(true);
       timerTopBox.setVisible(false);
 
@@ -222,9 +237,16 @@ public class CanvasController {
 
       // Displaying the chosen word to the user
       zenChosenWordLabel.setText(CategorySelector.chosenWord);
+
+      runCounter();
     }
   }
 
+  /**
+   * This method is called when the user clicks on the I'm ready button when the definition is first
+   * displayed on the screen. It closes the definition pane, shows the canvas, and starts the
+   * counter just like in normal mode.
+   */
   @FXML
   private void onReady() {
     // Close the definition pane and show the canvas pane
@@ -238,14 +260,24 @@ public class CanvasController {
     closeButton.setVisible(true);
 
     underscoreBox.setVisible(true);
+
+    runCounter();
   }
 
+  /**
+   * This method is called when the user clicks on the see definition button in the canvas. The
+   * definition pane pops up until the user closes it again by pressing on the x button.
+   */
   @FXML
   private void onViewDefinition() {
     canvasPane.setOpacity(0.3);
     definitionPane.setVisible(true);
   }
 
+  /**
+   * This method is called when the user clicks on the x button. The definition pane closes and the
+   * canvas is shown to the user.
+   */
   @FXML
   private void onCloseDefinition() {
     definitionPane.setVisible(false);
@@ -436,6 +468,50 @@ public class CanvasController {
     return predictions.size();
   }
 
+  private void updateDefinitionLabel() {
+    // Making a thread for initialising the dictionary and finding the definition
+    Task<Void> updateTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+
+            CategorySelector categorySelector = new CategorySelector();
+
+            Dictionary dictionary = new Dictionary(CategorySelector.chosenWord);
+
+            while (!dictionary.getDefinitionExists()) {
+              // Selecting a random word for user again as definition does not exist
+              categorySelector.setWordWithDifficulty();
+              dictionary = new Dictionary(CategorySelector.chosenWord);
+              System.out.println(
+                  "Got a new word because the definition does not exist. The new word is: "
+                      + CategorySelector.chosenWord);
+            }
+
+            String definition = dictionary.getDefinition();
+
+            String underscored =
+                categorySelector.getChosenWord().replaceAll("-", "  ").replaceAll("[a-zA-Z]", "_ ");
+
+            // Updating the labels in the GUI and setting the ready button to visible so
+            // that the user can press it after everything has been prepared.
+            Platform.runLater(
+                () -> {
+                  definitionLabel.setText(definition);
+
+                  underscoreLabel.setText(underscored);
+
+                  readyButton.setVisible(true);
+                });
+
+            return null;
+          }
+        };
+
+    Thread predictionThread = new Thread(updateTask);
+    predictionThread.start();
+  }
+
   /**
    * This method updates the top 10 prediction list when called.
    *
@@ -609,7 +685,10 @@ public class CanvasController {
     speechThread.start();
   }
 
-  /** This method is called when the player changes the color on the color picker. */
+  /**
+   * This method is called when the player changes the color on the color picker. The penColor
+   * variable is updated.
+   */
   @FXML
   private void onChangeColor() {
     penColor = penColorPicker.getValue();
@@ -627,11 +706,7 @@ public class CanvasController {
     Alert alert = new Alert(AlertType.CONFIRMATION);
     alert.setTitle(null);
     alert.setHeaderText(null);
-    alert.setContentText(
-        String.format(
-            "Are you sure you want to leave? You will lose your drawing!",
-            UserProfileManager.currentProfile.getUserName()));
-
+    alert.setContentText("Are you sure you want to leave? You will lose your drawing!");
     Optional<ButtonType> result = alert.showAndWait();
 
     if (result.get() == ButtonType.OK) {
@@ -657,7 +732,7 @@ public class CanvasController {
    */
   @FXML
   private void onDone(ActionEvent event) throws IOException {
-    AfterRoundController.END_MESSAGE = "Nice drawing :)";
+    AfterRoundController.END_MESSAGE = "Nice drawing :P";
     saveCurrentSnapshotOnFile();
 
     /*

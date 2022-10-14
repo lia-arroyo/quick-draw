@@ -30,3 +30,14 @@
   -fx-font-size: 24px;
   -fx-background-color: transparent;
 }
+
+.definition-button {
+  -fx-background-color: transparent;
+  -fx-font-size: 16px;
+}
+
+.definition-button:hover {
+  -fx-underline: true;
+  -fx-font-size: 16px;
+  -fx-background-color: transparent;
+}
