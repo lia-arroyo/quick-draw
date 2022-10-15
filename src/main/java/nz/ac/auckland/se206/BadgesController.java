@@ -37,6 +37,9 @@ public class BadgesController {
    */
   public void initialize() {
 
+    // Once the user enters the badges page, there will be no more new badges to see
+    UserProfileManager.currentProfile.setHasNewBadge(false);
+
     // Initiate sound player
     soundPlayer = new SoundUtils();
 
