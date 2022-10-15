@@ -63,6 +63,7 @@ public class LeaderboardController {
 
   @FXML private ChoiceBox<String> leaderboardStatistic;
 
+  /** JavaFX calls this method once the GUI elements are loaded */
   public void initialize() {
     ArrayList<UserProfile> leaderboardProfiles = getProfiles(Statistic.WINS);
 
