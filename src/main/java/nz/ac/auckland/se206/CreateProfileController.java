@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
+import nz.ac.auckland.se206.util.SoundUtils;
 
 public class CreateProfileController {
 
@@ -30,6 +31,8 @@ public class CreateProfileController {
 
   @FXML private ImageView avatarImage;
 
+  private SoundUtils soundPlayer;
+
   /**
    * JavaFX calls this method once the GUI elements are loaded.
    *
@@ -37,7 +40,11 @@ public class CreateProfileController {
    */
   public void initialize() throws IOException {
 
-    // A user can only return to the main menu if there is at least one profile in the profile list
+    // Initate sound player
+    soundPlayer = new SoundUtils();
+
+    // A user can only return to the main menu if there is at least one profile in
+    // the profile list
     if (UserProfileManager.userProfileList.isEmpty()) {
       backButton.setVisible(false);
     }
@@ -65,6 +72,8 @@ public class CreateProfileController {
    */
   @FXML
   private void onAddProfile(ActionEvent event) throws IOException {
+    soundPlayer.playButtonSound();
+
     // Getting the currently chosen profile image index
     int profileIndex = UserProfileManager.chosenProfileIndex;
 
@@ -126,6 +135,7 @@ public class CreateProfileController {
 
     // switching to the previous scene
     try {
+      soundPlayer.playButtonSound();
       sceneButtonIsIn.setRoot(App.loadFxml("choose_profile"));
     } catch (IOException e) {
       e.printStackTrace();
@@ -149,6 +159,7 @@ public class CreateProfileController {
 
     // Loading the fxml file of the choose avatar page
     try {
+      soundPlayer.playButtonSound();
       sceneButtonIsIn.setRoot(App.loadFxml("choose_avatar"));
     } catch (IOException e) {
       e.printStackTrace();

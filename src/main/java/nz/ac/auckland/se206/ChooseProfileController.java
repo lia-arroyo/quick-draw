@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
+import nz.ac.auckland.se206.util.SoundUtils;
 
 /** This method is for handling any action on the Choose Profile page. */
 public class ChooseProfileController {
@@ -31,6 +32,8 @@ public class ChooseProfileController {
 
   @FXML private Label userNameLabel;
 
+  private SoundUtils soundPlayer;
+
   /**
    * JavaFX calls this method once the GUI elements are loaded.
    *
@@ -38,6 +41,9 @@ public class ChooseProfileController {
    * @throws IOException {@inheritDoc}
    */
   public void initialize() throws IOException, URISyntaxException {
+
+    // Initate sound player
+    soundPlayer = new SoundUtils();
 
     // The displayed profile is the first profile created by default unless a new
     // profile was just created
@@ -66,10 +72,13 @@ public class ChooseProfileController {
    */
   @FXML
   private void onDeleteUser() {
+    soundPlayer.playButtonSound();
+
     // Can only delete user profile if there are at least current user profiles
     if (UserProfileManager.userProfileList.size() > 1) {
 
-      // creating an alert to prevent users from accidentally losing all their progress.
+      // creating an alert to prevent users from accidentally losing all their
+      // progress.
       Alert alert = new Alert(AlertType.CONFIRMATION);
 
       // Adding style to the alert
@@ -90,6 +99,7 @@ public class ChooseProfileController {
 
       // when the user confirms that they want to delete
       if (result.get() == ButtonType.OK) {
+        soundPlayer.playButtonSound();
         UserProfileManager.userProfileList.remove(UserProfileManager.currentProfileIndex);
 
         // When deleted, the next user profile is displayed instead
@@ -100,24 +110,29 @@ public class ChooseProfileController {
                   .get(UserProfileManager.currentProfileIndex)
                   .getUserName());
         } else {
+
           this.userNameLabel.setText(
               UserProfileManager.userProfileList
                   .get(UserProfileManager.currentProfileIndex)
                   .getUserName());
         }
+      } else {
+        soundPlayer.playButtonSound();
       }
 
       // Changes the profile image to the one the user chose
       updateImage();
 
     } else {
-      // alerting user that they aren't allowed to delete profiles if its the only one left.
+      // alerting user that they aren't allowed to delete profiles if its the only one
+      // left.
       Alert alert = new Alert(AlertType.CONFIRMATION);
       alert.setTitle(null);
       alert.setHeaderText(null);
       alert.setContentText(
           "Sorry, you can't delete this profile. :( You must have at least one active profile. Create a new profile then try again.");
       Optional<ButtonType> result = alert.showAndWait();
+      soundPlayer.playButtonSound();
     }
 
     // If there is only one profile available, then we hide the arrow buttons.
@@ -137,6 +152,7 @@ public class ChooseProfileController {
 
     // Loads the scene for profile creation
     try {
+      soundPlayer.playButtonSound();
       sceneButtonIsIn.setRoot(App.loadFxml("create_profile"));
 
     } catch (IOException e) {
@@ -147,6 +163,8 @@ public class ChooseProfileController {
   /** This method is invoked when the user clicks on the left arrow. */
   @FXML
   private void onGoLeft() {
+    soundPlayer.playButtonSound();
+
     // Displays the next user profile to the left of the current one in the array
     // list unless the profile is the first profile, in which case the last profile
     // is displayed
@@ -170,6 +188,8 @@ public class ChooseProfileController {
   /** This method is invoked when the user clicks on the right arrow. */
   @FXML
   private void onGoRight() {
+    soundPlayer.playButtonSound();
+
     // Displays the next user profile to the right of the current one in the array
     // list unless the profile is the last profile, in which case the first profile
     // is displayed
@@ -198,6 +218,8 @@ public class ChooseProfileController {
    */
   @FXML
   private void onSelectProfile(ActionEvent event) {
+    soundPlayer.playButtonSound();
+
     // getting scene information
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();

@@ -15,6 +15,7 @@ import nz.ac.auckland.se206.difficulty.DifficultyLevel.Confidence;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Time;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel.Words;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
+import nz.ac.auckland.se206.util.SoundUtils;
 
 /** This method is to handle any actions on the Settings page. */
 public class SettingsController {
@@ -73,6 +74,7 @@ public class SettingsController {
 
   /** This method will be called when the Settings page starts up. */
   public void initialize() {
+
     // rendering the user's previously chosen settings
     String[] currentDifficulties = new String[4];
     currentDifficulties[0] =
@@ -222,6 +224,9 @@ public class SettingsController {
 
     // Changing the scene to waiting screen
     try {
+      SoundUtils soundPlayer = new SoundUtils();
+      soundPlayer.playButtonSound();
+
       sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
     } catch (IOException e) {
       e.printStackTrace();

@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.speech.TextToSpeech;
+import nz.ac.auckland.se206.util.SoundUtils;
 import nz.ac.auckland.se206.words.CategorySelector;
 
 /** This class handles all actions on the waiting page. */
@@ -58,6 +59,9 @@ public class WaitingController {
 
     // Switching scenes to the canvas page.
     try {
+      SoundUtils soundPlayer = new SoundUtils();
+      soundPlayer.playButtonSound();
+
       sceneButtonIsIn.setRoot(App.loadFxml("canvas"));
 
     } catch (IOException e) {

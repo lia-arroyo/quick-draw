@@ -9,13 +9,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import nz.ac.auckland.se206.games.Game;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
+import nz.ac.auckland.se206.util.SoundUtils;
 import nz.ac.auckland.se206.words.CategorySelector;
 
 /** This class will handle any actions on the Stats page. */
@@ -75,7 +80,8 @@ public class StatsController {
    * components: accordion, and some title and anchored panes.
    */
   private void displayWordHistory() {
-    // Getting a copy of the games and their statistics for each related to the user.
+    // Getting a copy of the games and their statistics for each related to the
+    // user.
     ArrayList<Game> games = new ArrayList<>(currentProfile.getHistoryOfGames());
 
     // Reversing order of history (of the copy, not the actual history).
@@ -171,6 +177,9 @@ public class StatsController {
 
     // going back to main menu page
     try {
+      SoundUtils soundPlayer = new SoundUtils();
+      soundPlayer.playButtonSound();
+
       currentScene.setRoot(App.loadFxml("main_menu"));
     } catch (IOException e) {
       throw new RuntimeException(e);
