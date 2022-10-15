@@ -140,7 +140,8 @@ public class CanvasController {
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. For the canvas controller, we create
-   * a listener for the drawing, and we load the ML model.
+   * a listener for the drawing, load the ML model, and set up the screen depending on the game
+   * mode.
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.
@@ -151,11 +152,8 @@ public class CanvasController {
 
     // Getting the current game mode and game variables
     gameMode = MainMenuController.gameMode;
-
     accuracyIndex = DifficultyLevel.getAccuracyIndex();
-
     drawTime = DifficultyLevel.getDrawTime();
-
     predictionConfidence = DifficultyLevel.getPredictionConfidence();
 
     model = new DoodlePrediction();
@@ -201,7 +199,7 @@ public class CanvasController {
 
   /**
    * This method is called in the initialize method of the canvas controller to set up the screen
-   * initially, according to the game mode.
+   * initially, depending to the game mode.
    *
    * @throws URISyntaxException
    * @throws CsvException
@@ -254,8 +252,8 @@ public class CanvasController {
 
   /**
    * This method is called when the user clicks on the I'm ready button when the definition is first
-   * displayed on the screen. It closes the definition pane, shows the canvas, and starts the
-   * counter just like in normal mode.
+   * displayed on the screen (only in hidden word mode). It closes the definition pane, shows the
+   * canvas, and starts the counter just like in a normal mode.
    */
   @FXML
   private void onReady() {
@@ -265,12 +263,12 @@ public class CanvasController {
     definitionPane.setVisible(false);
     canvasPane.setVisible(true);
 
-    // Also now the instruction label and ready button won't be visible as it is not
+    // The instruction label and ready button won't be visible now as it is not
     // needed anymore
     readyButton.setVisible(false);
     instructionLabel.setVisible(false);
 
-    // Now the definition pane can be closed by the close button
+    // The definition pane can now be closed by the close button
     closeButton.setVisible(true);
 
     underscoreBox.setVisible(true);
@@ -286,6 +284,7 @@ public class CanvasController {
   private void onViewDefinition() {
     soundPlayer.playButtonSound();
 
+    // The canvas opacity becomes low to give the definition pane a popup effect
     canvasPane.setOpacity(0.3);
     definitionPane.setVisible(true);
   }
@@ -293,7 +292,7 @@ public class CanvasController {
   /**
    * This method is called when the user clicks on the reveal first letter button. This will change
    * the first letter of the underscore label from '_' to whatever the first letter of the chosen
-   * word is, and the button will then be disabled.
+   * word is, and the button will then be disabled as the user only gets one hint.
    */
   @FXML
   private void onRevealFirstLetter() {
@@ -301,10 +300,13 @@ public class CanvasController {
 
     String underscore = underscoreLabel.getText();
 
+    // Making a new string by connecting the first letter of the chosen word and
+    // then the rest of the underscore label.
     String revealed = CategorySelector.chosenWord.charAt(0) + underscore.substring(1);
 
     underscoreLabel.setText(revealed);
 
+    // Disabling the button so that the player cannot click on it again
     revealButton.setDisable(true);
   }
 
@@ -328,6 +330,7 @@ public class CanvasController {
   private void onClear() {
     soundPlayer.playButtonSound();
 
+    // Clearing the canvas to the blank state
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     canvasIsEmpty = true;
 
@@ -371,6 +374,7 @@ public class CanvasController {
   private File saveCurrentSnapshotOnFile() throws IOException {
     final File tmpFolder = new File("tmp");
 
+    // If tmp folder doesn't exist already, a tmp folder is created
     if (!tmpFolder.exists()) {
       tmpFolder.mkdir();
     }
@@ -396,19 +400,21 @@ public class CanvasController {
     Timer timer = new Timer();
 
     // Decrementing variable seconds every second and updating the time left label.
-    // If seconds goes
-    // below
-    // 0, then we finish the round, notifying the player that they ran out of time.
+    // If seconds goes below 0, then we finish the round, notifying the player that
+    // they ran out of time.
     timer.scheduleAtFixedRate(
         new TimerTask() {
           private int seconds = secondsLeft + 1;
 
           public void run() {
 
-            // Every second, the time left label and model prediction is updated
+            // The time left label, model prediction, closer/further is updated every second
             Platform.runLater(
                 () -> {
                   updateCounter(seconds);
+
+                  // The prediction label and closer/further is only updated if the canvas is
+                  // empty
                   if (!canvasIsEmpty) {
                     try {
                       updatePrediction(timer, getCurrentSnapshot());
@@ -422,8 +428,8 @@ public class CanvasController {
             gameTime++;
 
             // If the timer reaches 0, we cancel the timer so that it stops, and we finish
-            // the round with 0 (lost). If the game mode is 'ZEN' mode, then we don't have
-            // to cancel the round even if the timer reaches 0 seconds.
+            // the round with 0 (lost). However, if the game mode is 'ZEN' mode, then we
+            // don't have to cancel the round even if the timer reaches 0 seconds.
             if (seconds < 0 && gameMode != 2) {
               timer.cancel();
               finishRound(0);
@@ -457,18 +463,22 @@ public class CanvasController {
     int previousIndex = predictionIndex;
     predictionIndex = getPredictionIndex();
 
+    // If the current prediction index is less than 10, it means that the chosen
+    // word is within the top 10 of the prediction list.
     if (predictionIndex < 10) {
       closerFurtherLabel.setText("TOP 10!");
       closerFurtherImage.setImage(
           new Image(this.getClass().getResource("/images/emojis/3.png").toString()));
     } else {
-      // Closer
+      // When the current prediction index is lower than the previous index, it means
+      // the player got closer to top 10.
       if (predictionIndex <= previousIndex) {
         closerFurtherLabel.setText("CLOSER");
         closerFurtherImage.setImage(
             new Image(this.getClass().getResource("/images/emojis/0.png").toString()));
 
-        // Further
+        // When the current prediction index is higher than the previous index, it means
+        // the player got further away from top 10.
       } else {
         closerFurtherLabel.setText("FURTHER");
         closerFurtherImage.setImage(
@@ -522,10 +532,15 @@ public class CanvasController {
 
             Dictionary dictionary = new Dictionary(CategorySelector.chosenWord);
 
+            // A loop that runs until we find a word with a definition
             while (!dictionary.getDefinitionExists()) {
               // Selecting a random word for user again as definition does not exist
               categorySelector.setWordWithDifficulty();
+
               dictionary = new Dictionary(CategorySelector.chosenWord);
+
+              // Notifying the console that a new word was found because the definition did
+              // not exist for the previous word (for presentation purposes).
               System.out.println(
                   "Got a new word because the definition does not exist. The new word is: "
                       + CategorySelector.chosenWord);
@@ -752,7 +767,7 @@ public class CanvasController {
   }
 
   /**
-   * This method will be called when the user clicks on the back button
+   * This method will be called when the user clicks on the back button in ZEN mode.
    *
    * @param event the action event handler result
    */
@@ -772,6 +787,7 @@ public class CanvasController {
     alert.setContentText("Are you sure you want to leave? You will lose your drawing!");
     Optional<ButtonType> result = alert.showAndWait();
 
+    // If the user confirms the alert dialog
     if (result.get() == ButtonType.OK) {
       soundPlayer.playButtonSound();
 
@@ -792,7 +808,7 @@ public class CanvasController {
   }
 
   /**
-   * This method is called when the user clicks on the done button
+   * This method is called when the user clicks on the done button in ZEN mode.
    *
    * @param event the action event handler result
    * @throws IOException {@inheritDoc}

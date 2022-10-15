@@ -93,14 +93,16 @@ public class AfterRoundController {
           new File(fileChooser.showSaveDialog(currentStage).toString() + ".png");
       // Saves image to chosen directory
       ImageIO.write(buffImage, "PNG", selectedDirectory);
+
     } catch (NullPointerException e) {
+      // If the user decides not to save the file, the console notifies us.
       System.err.println("User did not save the file");
     }
   }
 
   /**
    * This method is called when the player clicks on the restart button. The user is directed back
-   * to the main menu like when they first open the game.
+   * to the main menu.
    *
    * @param event the source of the button click
    */
