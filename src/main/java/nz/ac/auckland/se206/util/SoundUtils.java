@@ -77,7 +77,7 @@ public class SoundUtils {
             Media sound = new Media(path);
             gameMusicPlayer = new MediaPlayer(sound);
 
-            gameMusicPlayer.setVolume(0.4);
+            gameMusicPlayer.setVolume(0.8);
 
             gameMusicPlayer.setOnEndOfMedia(
                 new Runnable() {

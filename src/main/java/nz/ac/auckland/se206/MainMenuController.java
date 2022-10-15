@@ -27,6 +27,8 @@ import nz.ac.auckland.se206.util.SoundUtils;
 /** This class is to handle any actions from the Main Menu page. */
 public class MainMenuController {
 
+  public static int gameMode = 0;
+
   @FXML private Button speechButton;
 
   @FXML private ImageView profileImage;
@@ -38,8 +40,6 @@ public class MainMenuController {
   @FXML private Label gameModeLabel;
 
   private SoundUtils soundPlayer;
-
-  public static int gameMode = 0;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded.
