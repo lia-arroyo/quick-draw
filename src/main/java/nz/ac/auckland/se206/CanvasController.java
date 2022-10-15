@@ -671,7 +671,6 @@ public class CanvasController {
     Platform.runLater(
         () -> {
           try {
-
             saveCurrentSnapshotOnFile();
             canvas.getScene().setRoot(App.loadFxml("after_round"));
           } catch (IOException e) {
