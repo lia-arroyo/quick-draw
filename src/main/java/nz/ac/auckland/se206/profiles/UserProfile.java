@@ -16,6 +16,7 @@ public class UserProfile {
   private ArrayList<Game> historyOfGames = new ArrayList<>();
   private boolean[] badges = new boolean[8];
   private int consecutiveWins = 0;
+  private boolean hasNewBadge = false;
 
   /**
    * This is the constructor for the User Profile class to set usernames and such.
@@ -191,5 +192,13 @@ public class UserProfile {
 
   public void incrementConsecutiveWins() {
     this.consecutiveWins++;
+  }
+
+  public boolean getHasNewBadge() {
+    return this.hasNewBadge;
+  }
+
+  public void setHasNewBadge(boolean hasNewBadge) {
+    this.hasNewBadge = hasNewBadge;
   }
 }

@@ -623,6 +623,8 @@ public class CanvasController {
    */
   private void finishRound(int result) {
 
+    int badgesCountBefore = UserProfileManager.currentProfile.getBadgesCount();
+
     // Setting the message label that will be shown to the user depending on the
     // result
     if (result == 0) {
@@ -639,6 +641,12 @@ public class CanvasController {
 
       // check to see if this game qualifies for badges
       BadgesManager.checkForBadges(gameTime, drawTime, gameConfidence);
+    }
+
+    int badgesCountAfter = UserProfileManager.currentProfile.getBadgesCount();
+
+    if (badgesCountAfter > badgesCountBefore) {
+      UserProfileManager.currentProfile.setHasNewBadge(true);
     }
 
     // Saving game statistics

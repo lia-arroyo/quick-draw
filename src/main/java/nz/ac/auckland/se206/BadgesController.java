@@ -31,6 +31,8 @@ public class BadgesController {
   /** JavaFX calls this method once the GUI elements are loaded. */
   public void initialize() {
 
+    UserProfileManager.currentProfile.setHasNewBadge(false);
+
     // Setting the messages for the badge titles and badge details.
     badgeTitleList =
         Arrays.asList(
