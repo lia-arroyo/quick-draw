@@ -15,20 +15,13 @@ public class Game {
   /**
    * This is a constructor for setting the instance variables as stated below:
    *
-   * @param word the chosen word for the game
-   * @param difficulty the difficulty of the chosen word
    * @param isWin the outcome of the game. true if won and false if loss.
-   * @param timePlayed the amount of time required to play
+   * @param timePlayed the current time that the game is finished
    * @param accuracy the prediction percentage
    */
-  public Game(
-      String word,
-      CategorySelector.Difficulty difficulty,
-      boolean isWin,
-      LocalDateTime timePlayed,
-      double accuracy) {
-    this.word = word;
-    this.wordDifficulty = difficulty;
+  public Game(boolean isWin, LocalDateTime timePlayed, double accuracy) {
+    this.word = CategorySelector.chosenWord;
+    this.wordDifficulty = CategorySelector.currentDifficulty;
     this.isWin = isWin;
 
     // formatting date and time

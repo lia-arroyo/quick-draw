@@ -48,7 +48,7 @@ public class AfterRoundController {
 
     // Displaying the end message and also the chosen word to the user
     displayLabel.setText(END_MESSAGE);
-    chosenWord.setText("[ " + CategorySelector.chosenWord + " ]");
+    chosenWord.setText(CategorySelector.chosenWord);
 
     // Also displaying the image that the user drew on the canvas
     File file = new File(System.getProperty("user.dir") + "/tmp/userImage.bmp/");

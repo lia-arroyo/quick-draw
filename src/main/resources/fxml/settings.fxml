@@ -1,42 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.SettingsController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" stylesheets="@../css/Settings.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.SettingsController">
    <children>
-      <Label alignment="CENTER" layoutX="179.0" layoutY="52.0" prefHeight="105.0" prefWidth="482.0" text="Settings" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="220.0" layoutY="70.0" prefHeight="40.0" prefWidth="400.0" styleClass="title" text="Settings" textAlignment="CENTER">
          <font>
-            <Font size="72.0" />
+            <Font size="36.0" />
          </font>
       </Label>
-      <Slider fx:id="accuracySlider" layoutX="149.0" layoutY="238.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" prefHeight="52.0" prefWidth="543.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-      <Slider fx:id="confidenceSlider" layoutX="149.0" layoutY="558.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" prefHeight="52.0" prefWidth="543.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-      <Slider fx:id="wordsSlider" layoutX="149.0" layoutY="340.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" prefHeight="52.0" prefWidth="543.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-      <Slider fx:id="timeSlider" layoutX="149.0" layoutY="448.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" prefHeight="52.0" prefWidth="543.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-      <Label alignment="CENTER" layoutX="360.0" layoutY="202.0" prefHeight="36.0" prefWidth="120.0" text="Accuracy" textAlignment="CENTER">
+      <Button layoutX="15.0" layoutY="70.0" mnemonicParsing="false" onAction="#onGoBack" prefHeight="40.0" prefWidth="200.0" styleClass="back-button" text="&lt;  back" textFill="#575757">
          <font>
-            <Font size="18.0" />
+            <Font name="Proxima Nova" size="24.0" />
          </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="360.0" layoutY="304.0" prefHeight="36.0" prefWidth="120.0" text="Words" textAlignment="CENTER">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="361.0" layoutY="412.0" prefHeight="36.0" prefWidth="120.0" text="Time" textAlignment="CENTER">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="360.0" layoutY="522.0" prefHeight="36.0" prefWidth="120.0" text="Confidence" textAlignment="CENTER">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Button layoutX="76.0" layoutY="90.0" mnemonicParsing="false" onAction="#onReturn" prefHeight="30.0" prefWidth="73.0" text="Return" />
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Pane layoutX="220.0" layoutY="140.0" prefHeight="450.0" prefWidth="400.0" stylesheets="@../css/slider.css">
+         <children>
+            <VBox alignment="CENTER" prefHeight="450.0" prefWidth="400.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="36.0" prefWidth="120.0" style="-fx-font-size: 20px;" text="Accuracy" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Slider fx:id="accuracySlider" majorTickUnit="1.0" max="3.0" maxHeight="55.0" maxWidth="300.0" minHeight="55.0" minWidth="300.0" minorTickCount="0" prefHeight="55.0" prefWidth="300.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Slider>
+                  <Label alignment="CENTER" prefHeight="36.0" prefWidth="120.0" style="-fx-font-size: 20px;" text="Words" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Slider fx:id="wordsSlider" majorTickUnit="1.0" max="3.0" maxHeight="55.0" maxWidth="300.0" minorTickCount="0" prefHeight="55.0" prefWidth="300.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Slider>
+                  <Label alignment="CENTER" prefHeight="36.0" prefWidth="120.0" style="-fx-font-size: 20px;" text="Time" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Slider fx:id="timeSlider" majorTickUnit="1.0" max="3.0" maxHeight="55.0" maxWidth="300.0" minorTickCount="0" prefHeight="55.0" prefWidth="300.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Slider>
+                  <Label alignment="CENTER" prefHeight="36.0" prefWidth="120.0" style="-fx-font-size: 20px;" text="Confidence" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Slider fx:id="confidenceSlider" majorTickUnit="1.0" max="3.0" maxHeight="55.0" maxWidth="300.0" minorTickCount="0" prefHeight="55.0" prefWidth="300.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Slider>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
    </children>
 </Pane>
