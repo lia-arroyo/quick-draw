@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
+import nz.ac.auckland.se206.util.SoundUtils;
 
 public class BadgesController {
 
@@ -28,11 +29,16 @@ public class BadgesController {
 
   private UserProfile currentUser;
 
+  private SoundUtils soundPlayer;
+
   /** JavaFX calls this method once the GUI elements are loaded. */
   public void initialize() {
 
     // Once the user enters the badges page, there will be no more new badges to see
     UserProfileManager.currentProfile.setHasNewBadge(false);
+
+    // Initiate sound player
+    soundPlayer = new SoundUtils();
 
     // Setting the messages for the badge titles and badge details.
     badgeTitleList =
@@ -115,12 +121,14 @@ public class BadgesController {
    */
   @FXML
   private void onGoBack(ActionEvent event) {
+
     // Getting the scene information from the button
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
     // Directing the user back to the main menu
     try {
+      soundPlayer.playButtonSound();
       sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
 
     } catch (IOException e) {
@@ -136,6 +144,7 @@ public class BadgesController {
    */
   @FXML
   private void onShowBadgeDetails(ActionEvent event) {
+    soundPlayer.playBadgeSound();
 
     Button badge = (Button) event.getSource();
 

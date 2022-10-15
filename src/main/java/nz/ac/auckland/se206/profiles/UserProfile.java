@@ -17,6 +17,7 @@ public class UserProfile {
   private boolean[] badges = new boolean[8];
   private int consecutiveWins = 0;
   private boolean hasNewBadge = false;
+  private Boolean soundOn = true;
 
   /**
    * This is the constructor for the User Profile class to set usernames and such.
@@ -236,5 +237,12 @@ public class UserProfile {
    */
   public void setHasNewBadge(boolean hasNewBadge) {
     this.hasNewBadge = hasNewBadge;
+
+  public void setSoundOn(Boolean on) {
+    this.soundOn = on;
+  }
+
+  public Boolean isSoundOn() {
+    return this.soundOn;
   }
 }

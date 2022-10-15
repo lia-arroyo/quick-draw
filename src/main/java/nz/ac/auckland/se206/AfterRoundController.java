@@ -17,6 +17,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.speech.TextToSpeech;
+import nz.ac.auckland.se206.util.SoundUtils;
 import nz.ac.auckland.se206.words.CategorySelector;
 
 public class AfterRoundController {
@@ -30,6 +31,8 @@ public class AfterRoundController {
   @FXML private ImageView playerImage;
 
   @FXML private Button speechButton;
+
+  private SoundUtils soundPlayer;
 
   private Image image;
 
@@ -54,6 +57,13 @@ public class AfterRoundController {
     File file = new File(System.getProperty("user.dir") + "/tmp/userImage.bmp/");
     image = new Image(file.toURI().toString());
     playerImage.setImage(image);
+
+    // Initiate sound player
+    soundPlayer = new SoundUtils();
+
+    if (MainMenuController.gameMode != 2) {
+      soundPlayer.stopDrawingMusic();
+    }
   }
 
   /**
@@ -66,6 +76,8 @@ public class AfterRoundController {
    */
   @FXML
   private void onSaveImage(ActionEvent event) throws IOException {
+    soundPlayer.playButtonSound();
+
     Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     BufferedImage buffImage = SwingFXUtils.fromFXImage(image, null);
 
@@ -94,6 +106,8 @@ public class AfterRoundController {
    */
   @FXML
   private void onRestartGame(ActionEvent event) {
+    soundPlayer.playButtonSound();
+
     // Getting the scene information from the button
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();

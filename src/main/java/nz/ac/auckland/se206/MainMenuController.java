@@ -4,12 +4,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,9 +23,12 @@ import javafx.stage.Stage;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
+import nz.ac.auckland.se206.util.SoundUtils;
 
 /** This class is to handle any actions from the Main Menu page. */
 public class MainMenuController {
+
+  public static int gameMode = 0;
 
   @FXML private Button speechButton;
 
@@ -35,6 +43,8 @@ public class MainMenuController {
   @FXML private Circle alertCircle;
 
   public static int gameMode = 0;
+
+  private SoundUtils soundPlayer;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded.
@@ -68,6 +78,9 @@ public class MainMenuController {
     // Welcoming the user using a randomly-generated greeting
     setGreetingText(currentUser.getUserName());
 
+    // Initiate sound player
+    soundPlayer = new SoundUtils();
+
     updateGameMode();
   }
 
@@ -94,6 +107,12 @@ public class MainMenuController {
 
     // Changing the scene to waiting screen
     try {
+      soundPlayer.playButtonSound();
+
+      if (gameMode != 2) {
+        soundPlayer.playDrawingMusic();
+      }
+
       sceneButtonIsIn.setRoot(App.loadFxml(currentMode));
     } catch (IOException e) {
       e.printStackTrace();
@@ -113,6 +132,7 @@ public class MainMenuController {
 
     // changing to stats page
     try {
+      soundPlayer.playButtonSound();
       currentScene.setRoot(App.loadFxml("stats"));
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -126,8 +146,26 @@ public class MainMenuController {
    */
   @FXML
   private void onExitGame(ActionEvent event) {
-    Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-    currentStage.close();
+    soundPlayer.playButtonSound();
+
+    // Confirming that the user wants to exit
+    Alert alert = new Alert(AlertType.CONFIRMATION);
+
+    // Applying style to the alert dialog
+    DialogPane dialogPane = alert.getDialogPane();
+    dialogPane.getStylesheets().add(this.getClass().getResource("/css/dialog.css").toString());
+
+    alert.setTitle(null);
+    alert.setHeaderText(null);
+    alert.setContentText("Are you sure you want to exit the game?");
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.get() == ButtonType.OK) {
+      Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+      currentStage.close();
+    } else {
+      soundPlayer.playButtonSound();
+    }
   }
 
   /**
@@ -136,6 +174,7 @@ public class MainMenuController {
    */
   @FXML
   private void onPlaySound() {
+
     // Making a new thread for playing the sound
     Task<Void> speechTask =
         new Task<Void>() {
@@ -170,6 +209,7 @@ public class MainMenuController {
 
     // Change to choose profile page
     try {
+      soundPlayer.playButtonSound();
       currentScene.setRoot(App.loadFxml("choose_profile"));
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -189,6 +229,7 @@ public class MainMenuController {
 
     // Changing the scene to waiting screen
     try {
+      soundPlayer.playButtonSound();
       sceneButtonIsIn.setRoot(App.loadFxml("settings"));
     } catch (IOException e) {
       e.printStackTrace();
@@ -208,6 +249,7 @@ public class MainMenuController {
 
     // Change to My badges page
     try {
+      soundPlayer.playButtonSound();
       currentScene.setRoot(App.loadFxml("badges"));
     } catch (IOException e) {
       e.printStackTrace();
@@ -231,6 +273,8 @@ public class MainMenuController {
 
   @FXML
   private void onModeLeft() {
+    soundPlayer.playButtonSound();
+
     if (gameMode == 0) {
       // if the gamemode is on the first mode (i.e. normal mode), it returns to the
       // last game mode.
@@ -248,6 +292,8 @@ public class MainMenuController {
    */
   @FXML
   private void onModeRight() {
+    soundPlayer.playButtonSound();
+
     if (gameMode == 2) {
       // if the gamemode is the last one, it returns to the first one.
       gameMode = 0;
