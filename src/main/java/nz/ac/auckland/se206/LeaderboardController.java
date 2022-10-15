@@ -223,7 +223,23 @@ public class LeaderboardController {
         winsFive.setText(String.valueOf(podiumProfiles[4].getBadgesCount()));
       }
     } else {
-
+      winsText.setText("Highest Prediction");
+      winsOne.setText(String.valueOf(Math.round(podiumProfiles[0].getHighestPrediction())) + "%");
+      if (podiumProfiles.length > 1) {
+        winsTwo.setText(String.valueOf(Math.round(podiumProfiles[1].getHighestPrediction())) + "%");
+      }
+      if (podiumProfiles.length > 2) {
+        winsThree.setText(
+            String.valueOf(Math.round(podiumProfiles[2].getHighestPrediction())) + "%");
+      }
+      if (podiumProfiles.length > 3) {
+        winsFour.setText(
+            String.valueOf(Math.round(podiumProfiles[3].getHighestPrediction())) + "%");
+      }
+      if (podiumProfiles.length > 4) {
+        winsFive.setText(
+            String.valueOf(Math.round(podiumProfiles[4].getHighestPrediction())) + "%");
+      }
     }
   }
 
@@ -282,7 +298,31 @@ public class LeaderboardController {
 
       return podiumProfiles;
     } else {
-      return null;
+      Double[] userHighestPrediction = new Double[leaderboardProfiles.size()];
+      for (int i = 0; i < leaderboardProfiles.size(); i++) {
+        userHighestPrediction[i] = leaderboardProfiles.get(i).getHighestPrediction();
+      }
+      Arrays.sort(userHighestPrediction, Collections.reverseOrder());
+
+      int positions;
+      if (userHighestPrediction.length < 5) {
+        positions = userHighestPrediction.length;
+      } else {
+        positions = 5;
+      }
+
+      UserProfile[] podiumProfiles = new UserProfile[positions];
+      for (int i = 0; i < podiumProfiles.length; i++) {
+        for (int j = 0; j < leaderboardProfiles.size(); j++) {
+          if (leaderboardProfiles.get(j).getHighestPrediction() == userHighestPrediction[i]) {
+            podiumProfiles[i] = leaderboardProfiles.get(j);
+            leaderboardProfiles.remove(j);
+            break;
+          }
+        }
+      }
+
+      return podiumProfiles;
     }
   }
 
@@ -315,7 +355,11 @@ public class LeaderboardController {
         }
       }
     } else {
-
+      for (UserProfile userProfile : UserProfileManager.userProfileList) {
+        if (userProfile.getHighestPrediction() != 0) {
+          leaderboardProfiles.add(userProfile);
+        }
+      }
     }
     return leaderboardProfiles;
   }
