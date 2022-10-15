@@ -730,7 +730,7 @@ public class CanvasController {
   @FXML
   private void onGoBack(ActionEvent event) {
 
-    // confirming that the user wants to go back
+    // Confirming that the user wants to go back
     Alert alert = new Alert(AlertType.CONFIRMATION);
 
     // Applying style to the alert dialog

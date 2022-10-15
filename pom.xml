@@ -84,6 +84,12 @@
       <groupId>org.openjfx</groupId>
       <version>17.0.0.1</version>
     </dependency>
+	<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-media -->
+	<dependency>
+	    <groupId>org.openjfx</groupId>
+	    <artifactId>javafx-media</artifactId>
+	    <version>20-ea+4</version>
+	</dependency>
     <dependency>
       <artifactId>api</artifactId>
       <groupId>ai.djl</groupId>

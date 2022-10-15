@@ -4,12 +4,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +22,7 @@ import javafx.stage.Stage;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
+import nz.ac.auckland.se206.util.SoundUtils;
 
 /** This class is to handle any actions from the Main Menu page. */
 public class MainMenuController {
@@ -30,6 +36,8 @@ public class MainMenuController {
   @FXML private ImageView emojiImage;
 
   @FXML private Label gameModeLabel;
+
+  private SoundUtils soundPlayer;
 
   public static int gameMode = 0;
 
@@ -59,6 +67,9 @@ public class MainMenuController {
     // Welcoming the user using a randomly-generated greeting
     setGreetingText(currentUser.getUserName());
 
+    // Initiate sound player
+    soundPlayer = new SoundUtils();
+
     updateGameMode();
   }
 
@@ -85,6 +96,7 @@ public class MainMenuController {
 
     // Changing the scene to waiting screen
     try {
+      soundPlayer.playButtonSound();
       sceneButtonIsIn.setRoot(App.loadFxml(currentMode));
     } catch (IOException e) {
       e.printStackTrace();
@@ -104,6 +116,7 @@ public class MainMenuController {
 
     // changing to stats page
     try {
+      soundPlayer.playButtonSound();
       currentScene.setRoot(App.loadFxml("stats"));
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -117,8 +130,26 @@ public class MainMenuController {
    */
   @FXML
   private void onExitGame(ActionEvent event) {
-    Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-    currentStage.close();
+    soundPlayer.playButtonSound();
+
+    // Confirming that the user wants to exit
+    Alert alert = new Alert(AlertType.CONFIRMATION);
+
+    // Applying style to the alert dialog
+    DialogPane dialogPane = alert.getDialogPane();
+    dialogPane.getStylesheets().add(this.getClass().getResource("/css/dialog.css").toString());
+
+    alert.setTitle(null);
+    alert.setHeaderText(null);
+    alert.setContentText("Are you sure you want to exit the game?");
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.get() == ButtonType.OK) {
+      Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+      currentStage.close();
+    } else {
+      soundPlayer.playButtonSound();
+    }
   }
 
   /**
