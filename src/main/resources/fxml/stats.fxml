@@ -87,7 +87,7 @@
             <Accordion fx:id="wordHistoryAccordion" prefHeight="70.0" prefWidth="281.0" />
          </content>
       </ScrollPane>
-      <ProgressBar fx:id="easyProgressBar" layoutX="450.0" layoutY="340.0" prefHeight="41.0" prefWidth="295.0" progress="0.0" />
+      <ProgressBar fx:id="easyProgressBar" layoutX="450.0" layoutY="340.0" prefHeight="41.0" prefWidth="277.0" progress="0.0" />
       <Label alignment="TOP_LEFT" layoutX="450.0" layoutY="286.0" prefHeight="49.0" prefWidth="360.0" text="Your Progress">
          <font>
             <Font size="34.0" />
@@ -110,34 +110,34 @@
             </Button>
          </children>
       </HBox>
-      <Label alignment="CENTER" layoutX="450.0" layoutY="381.0" prefHeight="34.0" prefWidth="295.0" text="Easy">
+      <Label alignment="CENTER" layoutX="450.0" layoutY="381.0" prefHeight="34.0" prefWidth="277.0" text="Easy Words">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <ProgressBar fx:id="mediumProgressBar" layoutX="450.0" layoutY="450.0" prefHeight="41.0" prefWidth="295.0" progress="0.0" />
-      <Label alignment="CENTER" layoutX="450.0" layoutY="491.0" prefHeight="34.0" prefWidth="295.0" text="Medium">
+      <ProgressBar fx:id="mediumProgressBar" layoutX="450.0" layoutY="450.0" prefHeight="41.0" prefWidth="277.0" progress="0.0" />
+      <Label alignment="CENTER" layoutX="450.0" layoutY="491.0" prefHeight="34.0" prefWidth="295.0" text="Medium Words">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <ProgressBar fx:id="hardProgressBar" layoutX="450.0" layoutY="559.0" prefHeight="41.0" prefWidth="295.0" progress="0.0" />
-      <Label alignment="CENTER" layoutX="450.0" layoutY="600.0" prefHeight="34.0" prefWidth="295.0" text="Hard">
+      <ProgressBar fx:id="hardProgressBar" layoutX="450.0" layoutY="559.0" prefHeight="41.0" prefWidth="277.0" progress="0.0" />
+      <Label alignment="CENTER" layoutX="450.0" layoutY="600.0" prefHeight="34.0" prefWidth="295.0" text="Hard Words">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <Label fx:id="easyProgressLabel" alignment="CENTER" layoutX="745.0" layoutY="340.0" prefHeight="41.0" prefWidth="58.0" text="13%" textAlignment="CENTER">
+      <Label fx:id="easyProgressLabel" alignment="CENTER" layoutX="726.0" layoutY="340.0" prefHeight="41.0" prefWidth="77.0" text="100%" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="mediumProgressLabel" alignment="CENTER" layoutX="745.0" layoutY="450.0" prefHeight="41.0" prefWidth="58.0" text="13%" textAlignment="CENTER">
+      <Label fx:id="mediumProgressLabel" alignment="CENTER" layoutX="726.0" layoutY="450.0" prefHeight="41.0" prefWidth="77.0" text="13%" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="hardProgressLabel" alignment="CENTER" layoutX="745.0" layoutY="559.0" prefHeight="41.0" prefWidth="58.0" text="13%" textAlignment="CENTER">
+      <Label fx:id="hardProgressLabel" alignment="CENTER" layoutX="726.0" layoutY="559.0" prefHeight="41.0" prefWidth="77.0" text="13%" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
