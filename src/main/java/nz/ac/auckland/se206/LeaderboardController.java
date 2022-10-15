@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +18,12 @@ import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 
 public class LeaderboardController {
+
+  private enum Statistic {
+    BADGES,
+    CONFIDENCE,
+    WINS
+  }
 
   @FXML private Label positionText;
 
@@ -57,30 +65,134 @@ public class LeaderboardController {
 
   public void initialize() {
 
-    ArrayList<UserProfile> leaderboardProfiles = new ArrayList<UserProfile>();
-
-    for (UserProfile userProfile : UserProfileManager.userProfileList) {
-      if (userProfile.getWinsCount() != 0) {
-        leaderboardProfiles.add(userProfile);
-      }
-    }
+    ArrayList<UserProfile> leaderboardProfiles = getProfiles(Statistic.WINS);
 
     if (leaderboardProfiles.isEmpty()) {
 
-      positionText.setVisible(false);
-      playerText.setVisible(false);
-      winsText.setVisible(false);
-      positionOne.setVisible(false);
-      positionOne.setVisible(false);
-      positionTwo.setVisible(false);
-      positionThree.setVisible(false);
-      positionFour.setVisible(false);
-      positionFive.setVisible(false);
-      leaderboardStatistic.setVisible(false);
-      playerTwo.setText("It's quiet here ...");
+      setEmptyScene();
 
     } else {
 
+      UserProfile[] podiumProfiles = getPodiumProfiles(Statistic.WINS, leaderboardProfiles);
+
+      setPodium(Statistic.WINS, podiumProfiles);
+
+      setPodiumBold(getLeaderboardIndex(podiumProfiles));
+
+      leaderboardStatistic.setValue("Wins");
+      ObservableList<String> statisticOptions =
+          FXCollections.observableArrayList("Badges", "Confidence", "Wins");
+      leaderboardStatistic.setItems(statisticOptions);
+
+      leaderboardStatistic
+          .getSelectionModel()
+          .selectedIndexProperty()
+          .addListener(
+              new ChangeListener<Number>() {
+
+                @Override
+                public void changed(
+                    ObservableValue<? extends Number> observable,
+                    Number oldValue,
+                    Number newValue) {
+                  if ((double) newValue == 0) {
+
+                  } else if ((double) newValue == 1) {
+
+                  } else {
+                    if (leaderboardProfiles.isEmpty()) {
+
+                      setEmptyScene();
+
+                    } else {
+
+                      setPodium(Statistic.WINS, podiumProfiles);
+
+                      setPodiumBold(getLeaderboardIndex(podiumProfiles));
+                    }
+                  }
+                }
+              });
+    }
+  }
+
+  private void setPodiumBold(int leaderboardIndex) {
+    if (leaderboardIndex != -1) {
+      if (leaderboardIndex == 0) {
+        setBoldStyle(positionOne, playerOne, winsOne);
+      } else if (leaderboardIndex == 1) {
+        setBoldStyle(positionTwo, playerTwo, winsTwo);
+      } else if (leaderboardIndex == 2) {
+        setBoldStyle(positionThree, playerThree, winsThree);
+      } else if (leaderboardIndex == 3) {
+        setBoldStyle(positionFour, playerFour, winsFour);
+      } else {
+        setBoldStyle(positionFive, playerFive, winsFive);
+      }
+    }
+  }
+
+  private int getLeaderboardIndex(UserProfile[] podiumProfiles) {
+
+    int leaderboardIndex = -1;
+
+    for (int i = 0; i < podiumProfiles.length; i++) {
+      if (UserProfileManager.currentProfile.getUserName().equals(podiumProfiles[i].getUserName())) {
+        leaderboardIndex = i;
+        break;
+      }
+    }
+
+    return leaderboardIndex;
+  }
+
+  private void setPodium(Statistic statistic, UserProfile[] podiumProfiles) {
+
+    positionOne.setText("1");
+    playerOne.setText(podiumProfiles[0].getUserName());
+    if (podiumProfiles.length > 1) {
+      positionTwo.setText("2");
+      playerTwo.setText(podiumProfiles[1].getUserName());
+    }
+    if (podiumProfiles.length > 2) {
+      positionThree.setText("3");
+      playerThree.setText(podiumProfiles[2].getUserName());
+    }
+    if (podiumProfiles.length > 3) {
+      positionFour.setText("4");
+      playerFour.setText(podiumProfiles[3].getUserName());
+    }
+    if (podiumProfiles.length > 4) {
+      positionFive.setText("5");
+      playerFive.setText(podiumProfiles[4].getUserName());
+    }
+
+    if (statistic == Statistic.WINS) {
+
+      winsOne.setText(String.valueOf(podiumProfiles[0].getWinsCount()));
+      if (podiumProfiles.length > 1) {
+        winsTwo.setText(String.valueOf(podiumProfiles[1].getWinsCount()));
+      }
+      if (podiumProfiles.length > 2) {
+        winsThree.setText(String.valueOf(podiumProfiles[2].getWinsCount()));
+      }
+      if (podiumProfiles.length > 3) {
+        winsFour.setText(String.valueOf(podiumProfiles[3].getWinsCount()));
+      }
+      if (podiumProfiles.length > 4) {
+        winsFive.setText(String.valueOf(podiumProfiles[4].getWinsCount()));
+      }
+
+    } else if (statistic == Statistic.BADGES) {
+
+    } else {
+
+    }
+  }
+
+  private UserProfile[] getPodiumProfiles(
+      Statistic statistic, ArrayList<UserProfile> leaderboardProfiles) {
+    if (statistic == Statistic.WINS) {
       Integer[] userWins = new Integer[leaderboardProfiles.size()];
 
       for (int i = 0; i < leaderboardProfiles.size(); i++) {
@@ -109,64 +221,45 @@ public class LeaderboardController {
         }
       }
 
-      positionOne.setText("1");
-      playerOne.setText(podiumProfiles[0].getUserName());
-      winsOne.setText(String.valueOf(podiumProfiles[0].getWinsCount()));
-
-      if (podiumProfiles.length > 1) {
-        positionTwo.setText("2");
-        playerTwo.setText(podiumProfiles[1].getUserName());
-        winsTwo.setText(String.valueOf(podiumProfiles[1].getWinsCount()));
-      }
-      if (podiumProfiles.length > 2) {
-        positionThree.setText("3");
-        playerThree.setText(podiumProfiles[2].getUserName());
-        winsThree.setText(String.valueOf(podiumProfiles[2].getWinsCount()));
-      }
-      if (podiumProfiles.length > 3) {
-        positionFour.setText("4");
-        playerFour.setText(podiumProfiles[3].getUserName());
-        winsFour.setText(String.valueOf(podiumProfiles[3].getWinsCount()));
-      }
-      if (podiumProfiles.length > 4) {
-        positionFive.setText("5");
-        playerFive.setText(podiumProfiles[4].getUserName());
-        winsFive.setText(String.valueOf(podiumProfiles[4].getWinsCount()));
-      }
-
-      int leaderboardIndex = -1;
-
-      for (int i = 0; i < podiumProfiles.length; i++) {
-        if (UserProfileManager.currentProfile
-            .getUserName()
-            .equals(podiumProfiles[i].getUserName())) {
-          leaderboardIndex = i;
-          break;
-        }
-      }
-
-      if (leaderboardIndex != -1) {
-        if (leaderboardIndex == 0) {
-          setBoldStyle(positionOne, playerOne, winsOne);
-        } else if (leaderboardIndex == 1) {
-          setBoldStyle(positionTwo, playerTwo, winsTwo);
-        } else if (leaderboardIndex == 2) {
-          setBoldStyle(positionThree, playerThree, winsThree);
-        } else if (leaderboardIndex == 3) {
-          setBoldStyle(positionFour, playerFour, winsFour);
-        } else {
-          setBoldStyle(positionFive, playerFive, winsFive);
-        }
-      }
-
-      leaderboardStatistic.setValue("Wins");
-      ObservableList<String> statisticOptions =
-          FXCollections.observableArrayList("Badges", "Confidence", "Wins");
-      leaderboardStatistic.setItems(statisticOptions);
+      return podiumProfiles;
+    } else if (statistic == Statistic.BADGES) {
+      return null;
+    } else {
+      return null;
     }
   }
 
-  private static void setBoldStyle(Label positionText, Label playerText, Label winsText) {
+  private void setEmptyScene() {
+    positionText.setVisible(false);
+    playerText.setVisible(false);
+    winsText.setVisible(false);
+    positionOne.setVisible(false);
+    positionOne.setVisible(false);
+    positionTwo.setVisible(false);
+    positionThree.setVisible(false);
+    positionFour.setVisible(false);
+    positionFive.setVisible(false);
+    leaderboardStatistic.setVisible(false);
+    playerTwo.setText("It's quiet here ...");
+  }
+
+  private ArrayList<UserProfile> getProfiles(Statistic statistic) {
+    ArrayList<UserProfile> leaderboardProfiles = new ArrayList<UserProfile>();
+    if (statistic == Statistic.WINS) {
+      for (UserProfile userProfile : UserProfileManager.userProfileList) {
+        if (userProfile.getWinsCount() != 0) {
+          leaderboardProfiles.add(userProfile);
+        }
+      }
+      return leaderboardProfiles;
+    } else if (statistic == Statistic.BADGES) {
+      return leaderboardProfiles;
+    } else {
+      return leaderboardProfiles;
+    }
+  }
+
+  private void setBoldStyle(Label positionText, Label playerText, Label winsText) {
     String boldStyle = "-fx-font-weight: bold;";
     positionText.setStyle(boldStyle);
     playerText.setStyle(boldStyle);
