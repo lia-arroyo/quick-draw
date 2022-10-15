@@ -39,26 +39,28 @@ public class BadgesManager {
       UserProfileManager.currentProfile.setBadgeTrue(4);
     }
 
-    // Checking for consecutive wins to update the 6th or 7th badge
+    // Checking for consecutive wins to update the 6th badge
     if (UserProfileManager.currentProfile.getConsecutiveWins() == 3) {
       UserProfileManager.currentProfile.setBadgeTrue(5);
     }
+
+    // Checking for 10 consecutive wins to update the 7th badge
     if (UserProfileManager.currentProfile.getConsecutiveWins() == 10) {
       UserProfileManager.currentProfile.setBadgeTrue(6);
     }
 
     // Checking to update the 8th badge
     try {
-      // creating an instance of the CS to access total words in hashmap method
+      // Creating an instance of the CS to access total words in hashmap method
       CategorySelector categorySelector = new CategorySelector();
 
-      // checking if all easy words have been played.
+      // Checking if all easy words have been played.
       if (UserProfileManager.currentProfile.getWordHistory(CategorySelector.Difficulty.E).size() + 1
           == categorySelector.getTotalWordCount(CategorySelector.Difficulty.E)) {
         UserProfileManager.currentProfile.setBadgeTrue(7);
       }
 
-      // exception handling
+      // Exception handling
     } catch (IOException | CsvException | URISyntaxException e) {
       throw new RuntimeException(e);
     }

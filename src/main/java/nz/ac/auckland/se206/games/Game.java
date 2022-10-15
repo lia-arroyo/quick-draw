@@ -20,15 +20,16 @@ public class Game {
    * @param accuracy the prediction percentage
    */
   public Game(boolean isWin, LocalDateTime timePlayed, double accuracy) {
+    // Initialising our data
     this.word = CategorySelector.chosenWord;
     this.wordDifficulty = CategorySelector.currentDifficulty;
     this.isWin = isWin;
 
-    // formatting date and time
+    // Formatting date and time
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM YYYY hh:mm a");
     this.timePlayedFormatted = timePlayed.format(formatter);
 
-    // only updating accuracy if user has won
+    // Only updating accuracy if user has won
     if (accuracy != 0 && isWin) {
       this.accuracy = accuracy;
     }
