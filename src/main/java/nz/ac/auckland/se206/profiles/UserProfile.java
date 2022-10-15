@@ -3,6 +3,7 @@ package nz.ac.auckland.se206.profiles;
 import java.util.ArrayList;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel;
 import nz.ac.auckland.se206.games.Game;
+import nz.ac.auckland.se206.words.CategorySelector;
 
 public class UserProfile {
 
@@ -89,6 +90,29 @@ public class UserProfile {
     historyOfGames.forEach(
         game -> {
           wordHistory.add(game.getWord());
+        });
+
+    return wordHistory;
+  }
+
+  /**
+   * This method takes the history of games list and grabs the words related to the specific
+   * difficulty only.
+   *
+   * @param difficulty difficulty of word list
+   * @return the list of chosen difficulty words played by user
+   */
+  public ArrayList<String> getWordHistory(CategorySelector.Difficulty difficulty) {
+    ArrayList<String> wordHistory = new ArrayList<>();
+
+    // iterating through each game played
+    historyOfGames.forEach(
+        (game) -> {
+
+          // adding words with the same difficulty only
+          if (game.getWordDifficulty() == difficulty) {
+            wordHistory.add(game.getWord());
+          }
         });
 
     return wordHistory;
