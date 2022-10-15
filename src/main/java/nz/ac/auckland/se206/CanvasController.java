@@ -636,10 +636,10 @@ public class CanvasController {
       AfterRoundController.END_MESSAGE = "Congratulations! You won  :)";
       UserProfileManager.currentProfile.incrementWinsCount();
       UserProfileManager.currentProfile.incrementConsecutiveWins();
-
-      // check to see if this game qualifies for badges
-      BadgesManager.checkForBadges(gameTime, drawTime, gameConfidence);
     }
+
+    // check to see if this game qualifies for badges
+    BadgesManager.checkForBadges(gameTime, drawTime, gameConfidence);
 
     // Saving game statistics
     UserProfileManager.currentProfile.addGameToHistory(
