@@ -16,6 +16,11 @@ public class SoundUtils {
     playSound(path);
   }
 
+  public void playBadgeSound() {
+    String path = this.getClass().getResource("/sounds/badge-sound.mp3").toString();
+    playSound(path);
+  }
+
   private void playSound(String path) {
     Media sound = new Media(path);
     MediaPlayer mediaPlayer = new MediaPlayer(sound);
