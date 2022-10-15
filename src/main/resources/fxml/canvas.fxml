@@ -102,9 +102,9 @@
                         </HBox>
                      </children>
                   </StackPane>
-                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="750.0">
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="800.0">
                      <children>
-                        <Label fx:id="predictionList" maxHeight="360.0" maxWidth="190.0" minHeight="360.0" minWidth="190.0" prefHeight="360.0" prefWidth="190.0">
+                        <Label fx:id="predictionList" maxHeight="360.0" maxWidth="220.0" minHeight="360.0" minWidth="190.0" prefHeight="360.0" prefWidth="239.0">
                            <font>
                               <Font name="Proxima Nova" size="18.0" />
                            </font>
@@ -131,9 +131,6 @@
                            </right>
                         </BorderPane>
                      </children>
-                     <padding>
-                        <Insets left="20.0" right="20.0" />
-                     </padding>
                   </HBox>
                   <StackPane prefHeight="100.0" prefWidth="200.0">
                      <children>
