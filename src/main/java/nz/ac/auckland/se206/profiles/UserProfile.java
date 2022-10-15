@@ -74,6 +74,16 @@ public class UserProfile {
     return this.badges;
   }
 
+  public int getBadgesCount() {
+    int badgesCount = 0;
+    for (boolean hasBadge : this.badges) {
+      if (hasBadge) {
+        badgesCount++;
+      }
+    }
+    return badgesCount;
+  }
+
   public int getConsecutiveWins() {
     return this.consecutiveWins;
   }

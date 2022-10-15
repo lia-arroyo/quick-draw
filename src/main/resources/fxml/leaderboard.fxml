@@ -48,7 +48,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="winsText" alignment="CENTER" contentDisplay="CENTER" layoutX="630.0" layoutY="158.0" prefHeight="47.0" prefWidth="200.0" text="Number of Wins">
+      <Label fx:id="winsText" alignment="CENTER" contentDisplay="CENTER" layoutX="630.0" layoutY="158.0" prefHeight="47.0" prefWidth="200.0">
          <font>
             <Font size="24.0" />
          </font>

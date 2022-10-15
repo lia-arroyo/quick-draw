@@ -91,26 +91,28 @@ public class LeaderboardController {
                     ObservableValue<? extends Number> observable,
                     Number oldValue,
                     Number newValue) {
-                  if ((double) newValue == 0) {
+                  if ((int) newValue == 0) {
                     ArrayList<UserProfile> leaderboardProfiles = getProfiles(Statistic.BADGES);
 
                     if (leaderboardProfiles.isEmpty()) {
                       setEmptyScene();
 
                     } else {
+                      setPodiumRegular();
                       UserProfile[] podiumProfiles =
                           getPodiumProfiles(Statistic.BADGES, leaderboardProfiles);
                       setPodium(Statistic.BADGES, podiumProfiles);
                       setPodiumBold(getLeaderboardIndex(podiumProfiles));
                     }
 
-                  } else if ((double) newValue == 1) {
+                  } else if ((int) newValue == 1) {
                     ArrayList<UserProfile> leaderboardProfiles = getProfiles(Statistic.CONFIDENCE);
 
                     if (leaderboardProfiles.isEmpty()) {
                       setEmptyScene();
 
                     } else {
+                      setPodiumRegular();
                       UserProfile[] podiumProfiles =
                           getPodiumProfiles(Statistic.CONFIDENCE, leaderboardProfiles);
                       setPodium(Statistic.CONFIDENCE, podiumProfiles);
@@ -124,6 +126,7 @@ public class LeaderboardController {
                       setEmptyScene();
 
                     } else {
+                      setPodiumRegular();
                       UserProfile[] podiumProfiles =
                           getPodiumProfiles(Statistic.WINS, leaderboardProfiles);
                       setPodium(Statistic.WINS, podiumProfiles);
@@ -133,6 +136,14 @@ public class LeaderboardController {
                 }
               });
     }
+  }
+
+  private void setPodiumRegular() {
+    setRegularStyle(positionOne, playerOne, winsOne);
+    setRegularStyle(positionTwo, playerTwo, winsTwo);
+    setRegularStyle(positionThree, playerThree, winsThree);
+    setRegularStyle(positionFour, playerFour, winsFour);
+    setRegularStyle(positionFive, playerFive, winsFive);
   }
 
   private void setPodiumBold(int leaderboardIndex) {
@@ -182,6 +193,7 @@ public class LeaderboardController {
       playerFive.setText(podiumProfiles[4].getUserName());
     }
     if (statistic == Statistic.WINS) {
+      winsText.setText("Number of Wins");
       winsOne.setText(String.valueOf(podiumProfiles[0].getWinsCount()));
       if (podiumProfiles.length > 1) {
         winsTwo.setText(String.valueOf(podiumProfiles[1].getWinsCount()));
@@ -196,7 +208,20 @@ public class LeaderboardController {
         winsFive.setText(String.valueOf(podiumProfiles[4].getWinsCount()));
       }
     } else if (statistic == Statistic.BADGES) {
-
+      winsText.setText("Badges Earned");
+      winsOne.setText(String.valueOf(podiumProfiles[0].getBadgesCount()));
+      if (podiumProfiles.length > 1) {
+        winsTwo.setText(String.valueOf(podiumProfiles[1].getBadgesCount()));
+      }
+      if (podiumProfiles.length > 2) {
+        winsThree.setText(String.valueOf(podiumProfiles[2].getBadgesCount()));
+      }
+      if (podiumProfiles.length > 3) {
+        winsFour.setText(String.valueOf(podiumProfiles[3].getBadgesCount()));
+      }
+      if (podiumProfiles.length > 4) {
+        winsFive.setText(String.valueOf(podiumProfiles[4].getBadgesCount()));
+      }
     } else {
 
     }
@@ -231,7 +256,31 @@ public class LeaderboardController {
 
       return podiumProfiles;
     } else if (statistic == Statistic.BADGES) {
-      return null;
+      Integer[] userBadges = new Integer[leaderboardProfiles.size()];
+      for (int i = 0; i < leaderboardProfiles.size(); i++) {
+        userBadges[i] = leaderboardProfiles.get(i).getBadgesCount();
+      }
+      Arrays.sort(userBadges, Collections.reverseOrder());
+
+      int positions;
+      if (userBadges.length < 5) {
+        positions = userBadges.length;
+      } else {
+        positions = 5;
+      }
+
+      UserProfile[] podiumProfiles = new UserProfile[positions];
+      for (int i = 0; i < podiumProfiles.length; i++) {
+        for (int j = 0; j < leaderboardProfiles.size(); j++) {
+          if (leaderboardProfiles.get(j).getBadgesCount() == userBadges[i]) {
+            podiumProfiles[i] = leaderboardProfiles.get(j);
+            leaderboardProfiles.remove(j);
+            break;
+          }
+        }
+      }
+
+      return podiumProfiles;
     } else {
       return null;
     }
@@ -259,12 +308,23 @@ public class LeaderboardController {
           leaderboardProfiles.add(userProfile);
         }
       }
-      return leaderboardProfiles;
     } else if (statistic == Statistic.BADGES) {
-      return leaderboardProfiles;
+      for (UserProfile userProfile : UserProfileManager.userProfileList) {
+        if (userProfile.getBadgesCount() != 0) {
+          leaderboardProfiles.add(userProfile);
+        }
+      }
     } else {
-      return leaderboardProfiles;
+
     }
+    return leaderboardProfiles;
+  }
+
+  private void setRegularStyle(Label positionText, Label playerText, Label winsText) {
+    String regularStyle = "-fx-font-weight: normal;";
+    positionText.setStyle(regularStyle);
+    playerText.setStyle(regularStyle);
+    winsText.setStyle(regularStyle);
   }
 
   private void setBoldStyle(Label positionText, Label playerText, Label winsText) {
