@@ -158,6 +158,7 @@ public class MainMenuController {
    */
   @FXML
   private void onPlaySound() {
+
     // Making a new thread for playing the sound
     Task<Void> speechTask =
         new Task<Void>() {
@@ -192,6 +193,7 @@ public class MainMenuController {
 
     // Change to choose profile page
     try {
+      soundPlayer.playButtonSound();
       currentScene.setRoot(App.loadFxml("choose_profile"));
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -211,6 +213,7 @@ public class MainMenuController {
 
     // Changing the scene to waiting screen
     try {
+      soundPlayer.playButtonSound();
       sceneButtonIsIn.setRoot(App.loadFxml("settings"));
     } catch (IOException e) {
       e.printStackTrace();
@@ -230,6 +233,7 @@ public class MainMenuController {
 
     // Change to My badges page
     try {
+      soundPlayer.playButtonSound();
       currentScene.setRoot(App.loadFxml("badges"));
     } catch (IOException e) {
       e.printStackTrace();
@@ -239,6 +243,8 @@ public class MainMenuController {
   /** This method is called when the user presses the left button for choosing game mode. */
   @FXML
   private void onModeLeft() {
+    soundPlayer.playButtonSound();
+
     if (gameMode == 0) {
       // if the gamemode is on the first mode (i.e. normal mode), it returns to the
       // last game mode.
@@ -256,6 +262,8 @@ public class MainMenuController {
    */
   @FXML
   private void onModeRight() {
+    soundPlayer.playButtonSound();
+
     if (gameMode == 2) {
       // if the gamemode is the last one, it returns to the first one.
       gameMode = 0;
