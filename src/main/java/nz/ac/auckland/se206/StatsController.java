@@ -42,10 +42,10 @@ public class StatsController {
 
   /** This method is called when the Stats page is loaded. */
   public void initialize() {
-    // updating the title with the current profile's name
+    // Updating the title with the current profile's name
     statsTitleLabel.setText(currentProfile.getUserName() + "'s stats");
 
-    // updating the image to be the user's chosen avatar
+    // Updating the image to be the user's chosen avatar
     Image userAvatar =
         new Image(
             this.getClass()
@@ -54,7 +54,7 @@ public class StatsController {
                 .toString());
     userProfileImage.setImage(userAvatar);
 
-    // displaying other user-related statistics
+    // Displaying other user-related statistics
     updateStatistics();
   }
 
@@ -63,14 +63,14 @@ public class StatsController {
    * it on screen.
    */
   private void updateStatistics() {
-    // updating win and loss counts
+    // Updating win and loss counts
     winsLabel.setText(currentProfile.getWinsCount() + "");
     lossesLabel.setText(currentProfile.getLossesCount() + "");
 
-    // updating the highest prediction
+    // Updating the highest prediction
     highestPredictionLabel.setText(Math.round(currentProfile.getHighestPrediction()) + "%");
 
-    // updating the word history and progress
+    // Updating the word history and progress
     displayWordHistory();
     updateProgress();
   }
@@ -91,12 +91,12 @@ public class StatsController {
     games.forEach(
         (game) -> {
 
-          // setting up content for each dropdown pane
+          // Setting up content for each dropdown pane
           StringBuilder sb = new StringBuilder();
           sb.append("Played on " + game.getTimePlayed() + "\n");
           sb.append("Word Difficulty: ");
 
-          // word difficulty
+          // Adding the full word for each word difficulty
           switch (game.getWordDifficulty()) {
             case E:
               sb.append("Easy");
@@ -111,12 +111,12 @@ public class StatsController {
 
           sb.append("\nResult: " + (game.getResult() ? "Won" : "Lost") + "\n");
 
-          // if user has won, display accuracy as well.
+          // Display accuracy on winning words
           if (game.getResult()) {
             sb.append(String.format("Accuracy: %.2f%%", game.getAccuracy()));
           }
 
-          // adding contents to dropdown content
+          // Adding contents to dropdown content
           Label label = new Label(sb.toString());
           label.setPadding(new Insets(20));
           AnchorPane anchorPane = new AnchorPane(label);
@@ -125,7 +125,7 @@ public class StatsController {
           TitledPane dropdown = new TitledPane(game.getWord(), anchorPane);
           dropdown.setStyle("-fx-text-fill: " + (game.getResult() ? "green" : "red"));
 
-          // adding each dropdown to accordion
+          // Adding each dropdown to accordion
           wordHistoryAccordion.getPanes().add(dropdown);
         });
   }
@@ -140,22 +140,22 @@ public class StatsController {
       // Creating new category selector instance to get the number of total words
       CategorySelector categorySelector = new CategorySelector();
 
-      // calculating the number of words played for each difficulty
+      // Calculating the number of words played for each difficulty
       int easyWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.E).size();
       int mediumWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.M).size();
       int hardWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.H).size();
 
-      // calculating total number of words per difficulty
+      // Calculating total number of words per difficulty
       int easyWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.E);
       int mediumWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.M);
       int hardWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.H);
 
-      // updating the actual progress bar
+      // Updating the actual progress bar with the number of words played for each difficulty
       easyProgressBar.setProgress((double) easyWordsPlayed / easyWordsInTotal);
       mediumProgressBar.setProgress((double) mediumWordsPlayed / mediumWordsInTotal);
       hardProgressBar.setProgress((double) hardWordsPlayed / hardWordsInTotal);
 
-      // updating the label alongside it with the actual value
+      // Updating the label alongside it with the actual value for each of the three difficulties
       easyProgressLabel.setText(Math.round(easyProgressBar.getProgress() * 100) + "%");
       mediumProgressLabel.setText(Math.round(mediumProgressBar.getProgress() * 100) + "%");
       hardProgressLabel.setText(Math.round(hardProgressBar.getProgress() * 100) + "%");
@@ -172,15 +172,16 @@ public class StatsController {
    */
   @FXML
   private void onGoBack(ActionEvent event) {
-    // getting scene information
+    // Getting scene information
     Button button = (Button) event.getSource();
     Scene currentScene = button.getScene();
 
-    // going back to main menu page
     try {
+      // Playing the button sound on click
       SoundUtils soundPlayer = new SoundUtils();
       soundPlayer.playButtonSound();
 
+      // Going back to main menu page
       currentScene.setRoot(App.loadFxml("main_menu"));
     } catch (IOException e) {
       throw new RuntimeException(e);
