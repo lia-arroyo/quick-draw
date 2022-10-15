@@ -18,6 +18,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
@@ -39,6 +40,10 @@ public class MainMenuController {
 
   @FXML private Label gameModeLabel;
 
+  @FXML private Circle alertCircle;
+
+  public static int gameMode = 0;
+
   private SoundUtils soundPlayer;
 
   /**
@@ -47,6 +52,12 @@ public class MainMenuController {
    * @throws FileNotFoundException {@inheritDoc}
    */
   public void initialize() throws FileNotFoundException {
+
+    // If the user has new badges to see, there will be an alert shown, otherwise,
+    // no alert is shown
+    if (!UserProfileManager.currentProfile.getHasNewBadge()) {
+      alertCircle.setVisible(false);
+    }
 
     // Setting current user to the current profile
     UserProfile currentUser = UserProfileManager.currentProfile;

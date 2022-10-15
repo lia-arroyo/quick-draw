@@ -638,6 +638,9 @@ public class CanvasController {
    */
   private void finishRound(int result) {
 
+    // This is the amount of badges the user has before the game
+    int badgesCountBefore = UserProfileManager.currentProfile.getBadgesCount();
+
     // Setting the message label that will be shown to the user depending on the
     // result
     if (result == 0) {
@@ -651,6 +654,14 @@ public class CanvasController {
       AfterRoundController.END_MESSAGE = "Congratulations! You won  :)";
       UserProfileManager.currentProfile.incrementWinsCount();
       UserProfileManager.currentProfile.incrementConsecutiveWins();
+    }
+
+    // This is the amount of badges the user has after the game
+    int badgesCountAfter = UserProfileManager.currentProfile.getBadgesCount();
+
+    // Once the user has earned badges, there will be an alert shown to the user
+    if (badgesCountAfter > badgesCountBefore) {
+      UserProfileManager.currentProfile.setHasNewBadge(true);
     }
 
     // check to see if this game qualifies for badges
