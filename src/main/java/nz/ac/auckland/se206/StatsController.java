@@ -9,13 +9,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import nz.ac.auckland.se206.games.Game;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
+import nz.ac.auckland.se206.util.SoundUtils;
 import nz.ac.auckland.se206.words.CategorySelector;
 
 /** This class will handle any actions on the Stats page. */
@@ -75,7 +80,8 @@ public class StatsController {
    * components: accordion, and some title and anchored panes.
    */
   private void displayWordHistory() {
-    // Getting a copy of the games and their statistics for each related to the user.
+    // Getting a copy of the games and their statistics for each related to the
+    // user.
     ArrayList<Game> games = new ArrayList<>(currentProfile.getHistoryOfGames());
 
     // Reversing order of history (of the copy, not the actual history).
@@ -129,33 +135,34 @@ public class StatsController {
    * has played.
    */
   private void updateProgress() {
-    CategorySelector categorySelector = null;
+
     try {
       // Creating new category selector instance to get the number of total words
-      categorySelector = new CategorySelector();
+      CategorySelector categorySelector = new CategorySelector();
+
+      // calculating the number of words played for each difficulty
+      int easyWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.E).size();
+      int mediumWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.M).size();
+      int hardWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.H).size();
+
+      // calculating total number of words per difficulty
+      int easyWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.E);
+      int mediumWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.M);
+      int hardWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.H);
+
+      // updating the actual progress bar
+      easyProgressBar.setProgress((double) easyWordsPlayed / easyWordsInTotal);
+      mediumProgressBar.setProgress((double) mediumWordsPlayed / mediumWordsInTotal);
+      hardProgressBar.setProgress((double) hardWordsPlayed / hardWordsInTotal);
+
+      // updating the label alongside it with the actual value
+      easyProgressLabel.setText(Math.round(easyProgressBar.getProgress() * 100) + "%");
+      mediumProgressLabel.setText(Math.round(mediumProgressBar.getProgress() * 100) + "%");
+      hardProgressLabel.setText(Math.round(hardProgressBar.getProgress() * 100) + "%");
+
     } catch (IOException | RuntimeException | URISyntaxException | CsvException e) {
       throw new RuntimeException(e);
     }
-
-    // calculating the number of words played for each difficulty
-    int easyWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.E).size();
-    int mediumWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.M).size();
-    int hardWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.H).size();
-
-    // calculating total number of words per difficulty
-    int easyWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.E);
-    int mediumWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.M);
-    int hardWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.H);
-
-    // updating the actual progress bar
-    easyProgressBar.setProgress((double) easyWordsPlayed / easyWordsInTotal);
-    mediumProgressBar.setProgress((double) mediumWordsPlayed / mediumWordsInTotal);
-    hardProgressBar.setProgress((double) hardWordsPlayed / hardWordsInTotal);
-
-    // updating the label alongside it with the actual value
-    easyProgressLabel.setText(Math.round(easyProgressBar.getProgress() * 100) + "%");
-    mediumProgressLabel.setText(Math.round(mediumProgressBar.getProgress() * 100) + "%");
-    hardProgressLabel.setText(Math.round(hardProgressBar.getProgress() * 100) + "%");
   }
 
   /**
@@ -171,6 +178,9 @@ public class StatsController {
 
     // going back to main menu page
     try {
+      SoundUtils soundPlayer = new SoundUtils();
+      soundPlayer.playButtonSound();
+
       currentScene.setRoot(App.loadFxml("main_menu"));
     } catch (IOException e) {
       throw new RuntimeException(e);

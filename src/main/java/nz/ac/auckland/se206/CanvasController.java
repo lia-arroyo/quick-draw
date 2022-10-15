@@ -42,6 +42,7 @@ import nz.ac.auckland.se206.games.Game;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
+import nz.ac.auckland.se206.util.SoundUtils;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.Dictionary;
 
@@ -113,6 +114,8 @@ public class CanvasController {
 
   private DoodlePrediction model;
 
+  private SoundUtils soundPlayer;
+
   private int drawTime;
 
   private int accuracyIndex;
@@ -143,6 +146,8 @@ public class CanvasController {
    * @throws IOException If the model cannot be found on the file system.
    */
   public void initialize() throws ModelException, IOException, CsvException, URISyntaxException {
+    // Initiate sound player
+    soundPlayer = new SoundUtils();
 
     // Getting the current game mode and game variables
     gameMode = MainMenuController.gameMode;
@@ -254,6 +259,8 @@ public class CanvasController {
    */
   @FXML
   private void onReady() {
+    soundPlayer.playButtonSound();
+
     // Close the definition pane and show the canvas pane
     definitionPane.setVisible(false);
     canvasPane.setVisible(true);
@@ -277,6 +284,8 @@ public class CanvasController {
    */
   @FXML
   private void onViewDefinition() {
+    soundPlayer.playButtonSound();
+
     canvasPane.setOpacity(0.3);
     definitionPane.setVisible(true);
   }
@@ -288,6 +297,8 @@ public class CanvasController {
    */
   @FXML
   private void onRevealFirstLetter() {
+    soundPlayer.playRevealSound();
+
     String underscore = underscoreLabel.getText();
 
     String revealed = CategorySelector.chosenWord.charAt(0) + underscore.substring(1);
@@ -303,6 +314,8 @@ public class CanvasController {
    */
   @FXML
   private void onCloseDefinition() {
+    soundPlayer.playButtonSound();
+
     definitionPane.setVisible(false);
     canvasPane.setOpacity(1);
   }
@@ -313,6 +326,8 @@ public class CanvasController {
    */
   @FXML
   private void onClear() {
+    soundPlayer.playButtonSound();
+
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     canvasIsEmpty = true;
 
@@ -670,6 +685,7 @@ public class CanvasController {
    */
   @FXML
   private void onSwitchBrushEraser(ActionEvent event) {
+    soundPlayer.playButtonSound();
 
     Button button = (Button) event.getSource();
 
@@ -719,6 +735,8 @@ public class CanvasController {
    */
   @FXML
   private void onChangeColor() {
+    soundPlayer.playButtonSound();
+
     penColor = penColorPicker.getValue();
   }
 
@@ -729,8 +747,9 @@ public class CanvasController {
    */
   @FXML
   private void onGoBack(ActionEvent event) {
+    soundPlayer.playButtonSound();
 
-    // confirming that the user wants to go back
+    // Confirming that the user wants to go back
     Alert alert = new Alert(AlertType.CONFIRMATION);
 
     // Applying style to the alert dialog
@@ -743,6 +762,8 @@ public class CanvasController {
     Optional<ButtonType> result = alert.showAndWait();
 
     if (result.get() == ButtonType.OK) {
+      soundPlayer.playButtonSound();
+
       // Getting scene information
       Button button = (Button) event.getSource();
       Scene sceneButtonIsIn = button.getScene();
@@ -754,6 +775,8 @@ public class CanvasController {
       } catch (IOException e) {
         e.printStackTrace();
       }
+    } else {
+      soundPlayer.playButtonSound();
     }
   }
 
@@ -765,6 +788,8 @@ public class CanvasController {
    */
   @FXML
   private void onDone(ActionEvent event) throws IOException {
+    soundPlayer.playButtonSound();
+
     AfterRoundController.END_MESSAGE = "Nice drawing :P";
     saveCurrentSnapshotOnFile();
 

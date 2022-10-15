@@ -11,14 +11,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
+import nz.ac.auckland.se206.util.SoundUtils;
 
 /** This class is to handle any action on the Choose Avatar page. */
 public class ChooseAvatarController {
 
   @FXML private VBox avatarBox;
 
+  private SoundUtils soundPlayer;
+
   /** JavaFX calls this method once the GUI elements are loaded. */
   public void initialize() {
+
+    // Initiate sound player
+    soundPlayer = new SoundUtils();
 
     // Displays the first image as the default image
     int imageIndex = 1;
@@ -97,12 +103,14 @@ public class ChooseAvatarController {
    * @param event the event handler result
    */
   private void goToCreateProfile(ActionEvent event) {
+
     // getting scene info
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
     // Loads the scene for profile creation
     try {
+      soundPlayer.playButtonSound();
       sceneButtonIsIn.setRoot(App.loadFxml("create_profile"));
     } catch (IOException e) {
       e.printStackTrace();
