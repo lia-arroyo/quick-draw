@@ -4,6 +4,7 @@ import javafx.concurrent.Task;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import nz.ac.auckland.se206.profiles.UserProfileManager;
 
 public class SoundUtils {
 
@@ -101,8 +102,16 @@ public class SoundUtils {
   }
 
   private void playSound(String path) {
-    Media sound = new Media(path);
-    MediaPlayer mediaPlayer = new MediaPlayer(sound);
-    mediaPlayer.play();
+    if (UserProfileManager.currentProfile == null) {
+      Media sound = new Media(path);
+      MediaPlayer mediaPlayer = new MediaPlayer(sound);
+      mediaPlayer.play();
+    } else {
+      if (UserProfileManager.currentProfile.isSoundOn()) {
+        Media sound = new Media(path);
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+      }
+    }
   }
 }

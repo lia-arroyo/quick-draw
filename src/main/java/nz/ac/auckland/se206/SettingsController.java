@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
 import javafx.util.StringConverter;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel;
@@ -72,8 +73,13 @@ public class SettingsController {
 
   @FXML private Slider confidenceSlider;
 
+  @FXML private CheckBox soundBox;
+
   /** This method will be called when the Settings page starts up. */
   public void initialize() {
+
+    // Update checkbox
+    soundBox.setSelected(UserProfileManager.currentProfile.isSoundOn());
 
     // rendering the user's previously chosen settings
     String[] currentDifficulties = new String[4];
@@ -218,6 +224,10 @@ public class SettingsController {
    */
   @FXML
   private void onGoBack(ActionEvent event) {
+
+    // Saving the sound settings of the user
+    UserProfileManager.currentProfile.setSoundOn(soundBox.isSelected());
+
     // Getting the scene information
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();

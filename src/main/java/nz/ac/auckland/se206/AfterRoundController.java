@@ -60,6 +60,8 @@ public class AfterRoundController {
 
     // Initiate sound player
     soundPlayer = new SoundUtils();
+
+    soundPlayer.stopDrawingMusic();
   }
 
   /**

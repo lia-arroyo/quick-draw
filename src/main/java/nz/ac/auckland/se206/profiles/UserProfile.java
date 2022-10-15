@@ -16,6 +16,7 @@ public class UserProfile {
   private ArrayList<Game> historyOfGames = new ArrayList<>();
   private boolean[] badges = new boolean[8];
   private int consecutiveWins = 0;
+  private Boolean soundOn = true;
 
   /**
    * This is the constructor for the User Profile class to set usernames and such.
@@ -181,5 +182,13 @@ public class UserProfile {
 
   public void incrementConsecutiveWins() {
     this.consecutiveWins++;
+  }
+
+  public void setSoundOn(Boolean on) {
+    this.soundOn = on;
+  }
+
+  public Boolean isSoundOn() {
+    return this.soundOn;
   }
 }
