@@ -135,33 +135,34 @@ public class StatsController {
    * has played.
    */
   private void updateProgress() {
-    CategorySelector categorySelector = null;
+
     try {
       // Creating new category selector instance to get the number of total words
-      categorySelector = new CategorySelector();
+      CategorySelector categorySelector = new CategorySelector();
+
+      // calculating the number of words played for each difficulty
+      int easyWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.E).size();
+      int mediumWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.M).size();
+      int hardWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.H).size();
+
+      // calculating total number of words per difficulty
+      int easyWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.E);
+      int mediumWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.M);
+      int hardWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.H);
+
+      // updating the actual progress bar
+      easyProgressBar.setProgress((double) easyWordsPlayed / easyWordsInTotal);
+      mediumProgressBar.setProgress((double) mediumWordsPlayed / mediumWordsInTotal);
+      hardProgressBar.setProgress((double) hardWordsPlayed / hardWordsInTotal);
+
+      // updating the label alongside it with the actual value
+      easyProgressLabel.setText(Math.round(easyProgressBar.getProgress() * 100) + "%");
+      mediumProgressLabel.setText(Math.round(mediumProgressBar.getProgress() * 100) + "%");
+      hardProgressLabel.setText(Math.round(hardProgressBar.getProgress() * 100) + "%");
+
     } catch (IOException | RuntimeException | URISyntaxException | CsvException e) {
       throw new RuntimeException(e);
     }
-
-    // calculating the number of words played for each difficulty
-    int easyWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.E).size();
-    int mediumWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.M).size();
-    int hardWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.H).size();
-
-    // calculating total number of words per difficulty
-    int easyWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.E);
-    int mediumWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.M);
-    int hardWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.H);
-
-    // updating the actual progress bar
-    easyProgressBar.setProgress((double) easyWordsPlayed / easyWordsInTotal);
-    mediumProgressBar.setProgress((double) mediumWordsPlayed / mediumWordsInTotal);
-    hardProgressBar.setProgress((double) hardWordsPlayed / hardWordsInTotal);
-
-    // updating the label alongside it with the actual value
-    easyProgressLabel.setText(Math.round(easyProgressBar.getProgress() * 100) + "%");
-    mediumProgressLabel.setText(Math.round(mediumProgressBar.getProgress() * 100) + "%");
-    hardProgressLabel.setText(Math.round(hardProgressBar.getProgress() * 100) + "%");
   }
 
   /**
