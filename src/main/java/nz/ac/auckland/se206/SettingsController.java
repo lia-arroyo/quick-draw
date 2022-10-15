@@ -210,12 +210,12 @@ public class SettingsController {
   }
 
   /**
-   * This method is called when the user clicks on the return button.
+   * This method is called when the user clicks on the back button.
    *
-   * @param event the action event handler result
+   * @param event the source of the button click
    */
   @FXML
-  private void onReturn(ActionEvent event) {
+  private void onGoBack(ActionEvent event) {
     // Getting the scene information
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
