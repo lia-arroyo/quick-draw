@@ -27,7 +27,7 @@ public class SettingsController {
    * @param accuracyLevel the accuracy level the user chose
    */
   private static void updateUserAccuracyDifficulty(Accuracy accuracyLevel) {
-    // setting the accuracy level of the current user
+    // Setting the accuracy level of the current user and prompting to save to file
     UserProfileManager.currentProfile.getDifficultyLevel().setAccuracyLevel(accuracyLevel);
     UserProfileManager.saveToFile();
   }
@@ -38,7 +38,7 @@ public class SettingsController {
    * @param wordsLevel the word difficulty the user chose
    */
   private static void updateUserWordsDifficulty(Words wordsLevel) {
-    // setting the word difficulty setting
+    // Setting the word difficulty setting and prompting to save to file
     UserProfileManager.currentProfile.getDifficultyLevel().setWordsLevel(wordsLevel);
     UserProfileManager.saveToFile();
   }
@@ -49,7 +49,7 @@ public class SettingsController {
    * @param timeLevel time difficulty that the user chose
    */
   private static void updateUserTimeDifficulty(Time timeLevel) {
-    // setting the user time difficulty
+    // Setting the user time difficulty and saving info
     UserProfileManager.currentProfile.getDifficultyLevel().setTimeLevel(timeLevel);
     UserProfileManager.saveToFile();
   }
@@ -60,7 +60,7 @@ public class SettingsController {
    * @param confidenceLevel the confidence difficulty setting that user chose
    */
   private static void updateUserConfidenceDifficulty(Confidence confidenceLevel) {
-    // setting the confidence level
+    // Setting the confidence level
     UserProfileManager.currentProfile.getDifficultyLevel().setConfidenceLevel(confidenceLevel);
     UserProfileManager.saveToFile();
   }
@@ -78,10 +78,10 @@ public class SettingsController {
   /** This method will be called when the Settings page starts up. */
   public void initialize() {
 
-    // Update checkbox
+    // Updating sound fx checkbox
     soundBox.setSelected(UserProfileManager.currentProfile.isSoundOn());
 
-    // rendering the user's previously chosen settings
+    // Rendering the user's previously chosen settings
     String[] currentDifficulties = new String[4];
     currentDifficulties[0] =
         UserProfileManager.currentProfile.getDifficultyLevel().getAccuracyLevel().toString();
@@ -92,14 +92,14 @@ public class SettingsController {
     currentDifficulties[3] =
         UserProfileManager.currentProfile.getDifficultyLevel().getConfidenceLevel().toString();
 
-    // assigning slider properties to each setting
+    // Assigning slider properties to each setting
     Slider[] difficultySliders = new Slider[4];
     difficultySliders[0] = this.accuracySlider;
     difficultySliders[1] = this.wordsSlider;
     difficultySliders[2] = this.timeSlider;
     difficultySliders[3] = this.confidenceSlider;
 
-    // associating E,M,H, and Master to each slider
+    // Associating E,M,H, and Master to each slider
     for (int i = 0; i < 4; i++) {
       if (currentDifficulties[i] == "E") {
         difficultySliders[i].setValue((int) 0);
@@ -112,12 +112,14 @@ public class SettingsController {
       }
     }
 
-    // labelling each slide property depending on difficulty
+    // Labelling each slide property depending on difficulty
     for (int i = 0; i < 4; i++) {
+      // Formatting the label
       difficultySliders[i].setLabelFormatter(
           new StringConverter<Double>() {
             @Override
             public String toString(Double number) {
+              // Associating each number to a difficulty
               if (number == 0) {
                 return "Easy";
               } else if (number == 1) {
@@ -129,6 +131,7 @@ public class SettingsController {
               }
             }
 
+            // Overriding the inherited fromString method
             @Override
             public Double fromString(String string) {
               return null;
@@ -136,7 +139,7 @@ public class SettingsController {
           });
     }
 
-    // setting up the accuracy difficulty
+    // Setting up the accuracy difficulty
     difficultySliders[0]
         .valueProperty()
         .addListener(
@@ -144,6 +147,8 @@ public class SettingsController {
               @Override
               public void changed(
                   ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                // Updating each accuracy difficulty setting with each of the four difficulties
+                // depending on the new Value
                 if ((double) newValue == 0) {
                   updateUserAccuracyDifficulty(DifficultyLevel.Accuracy.E);
                 } else if ((double) newValue == 1) {
@@ -156,7 +161,7 @@ public class SettingsController {
               }
             });
 
-    // setting up the word difficulty slider
+    // Setting up the word difficulty slider
     difficultySliders[1]
         .valueProperty()
         .addListener(
@@ -164,6 +169,8 @@ public class SettingsController {
               @Override
               public void changed(
                   ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                // Updating the words difficulty level for each of the four word difficulty settings
+                // based on the new Value
                 if ((double) newValue == 0) {
                   updateUserWordsDifficulty(DifficultyLevel.Words.E);
                 } else if ((double) newValue == 1) {
@@ -176,7 +183,7 @@ public class SettingsController {
               }
             });
 
-    // setting up time difficulty slider
+    // Setting up time difficulty slider
     difficultySliders[2]
         .valueProperty()
         .addListener(
@@ -184,6 +191,8 @@ public class SettingsController {
               @Override
               public void changed(
                   ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                // Updating the timer duration depending on which time difficulty setting the user
+                // has chosen out of E, M, H and Master
                 if ((double) newValue == 0) {
                   updateUserTimeDifficulty(DifficultyLevel.Time.E);
                 } else if ((double) newValue == 1) {
@@ -196,7 +205,7 @@ public class SettingsController {
               }
             });
 
-    // updating confidence difficulty setting slider
+    // Updating confidence difficulty setting slider
     difficultySliders[3]
         .valueProperty()
         .addListener(
@@ -204,6 +213,8 @@ public class SettingsController {
               @Override
               public void changed(
                   ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                // Updating the confidence difficulty setting based on the new Value for each of the
+                // four difficulty settings: E, M, H, and Master
                 if ((double) newValue == 0) {
                   updateUserConfidenceDifficulty(DifficultyLevel.Confidence.E);
                 } else if ((double) newValue == 1) {
@@ -234,9 +245,11 @@ public class SettingsController {
 
     // Changing the scene to waiting screen
     try {
+      // Playing the sound associated to all buttons
       SoundUtils soundPlayer = new SoundUtils();
       soundPlayer.playButtonSound();
 
+      // Going back to main menu page
       sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
     } catch (IOException e) {
       e.printStackTrace();

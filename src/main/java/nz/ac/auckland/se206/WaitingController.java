@@ -38,7 +38,6 @@ public class WaitingController {
 
     // Selecting a random word for user
     CategorySelector categorySelector = new CategorySelector();
-
     categorySelector.setWordWithDifficulty();
 
     // updating the label
@@ -57,11 +56,13 @@ public class WaitingController {
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
-    // Switching scenes to the canvas page.
+    // Switching scenes to the canvas page
     try {
+      // Using sound utils to play button sound
       SoundUtils soundPlayer = new SoundUtils();
       soundPlayer.playButtonSound();
 
+      // Switching to next scene
       sceneButtonIsIn.setRoot(App.loadFxml("canvas"));
 
     } catch (IOException e) {

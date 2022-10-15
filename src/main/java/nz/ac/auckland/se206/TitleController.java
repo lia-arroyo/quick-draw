@@ -31,6 +31,7 @@ public class TitleController {
     SoundUtils soundPlayer = new SoundUtils();
     soundPlayer.playBackgroundMusic();
 
+    // Linking to the profile
     File profiles = new File("./src/main/resources/profiles/profiles.json");
 
     // Checks if a user profile file has been generated
@@ -39,10 +40,8 @@ public class TitleController {
       noProfiles = true;
 
       // Checks if the user profile file is empty or not
-    } else {
-      if (profiles.length() == 0) {
-        noProfiles = true;
-      }
+    } else if (profiles.length() == 0) {
+      noProfiles = true;
     }
 
     // Creates a timer for loading screen animation
@@ -65,10 +64,11 @@ public class TitleController {
 
               // Displays the current animation image
               titleImage.setImage(image);
+
               // Sets the next image of the animation to be displayed
               imageIndex++;
-            } else {
 
+            } else {
               // When the timer is up, load the profile creation page if there is no current
               // profiles, otherwise load the choose profile page
               if (noProfiles) {
@@ -78,6 +78,7 @@ public class TitleController {
                 moveToChooseProfile();
               }
 
+              // Ending the timer
               timer.cancel();
             }
           }

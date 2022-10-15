@@ -107,13 +107,17 @@ public class MainMenuController {
 
     // Changing the scene to waiting screen
     try {
+      // Playing the sound associated to buttons
       soundPlayer.playButtonSound();
 
       if (gameMode != 2) {
+        // Changing the background music to game music
         soundPlayer.playDrawingMusic();
       }
 
+      // Move to the actual game
       sceneButtonIsIn.setRoot(App.loadFxml(currentMode));
+
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -126,14 +130,17 @@ public class MainMenuController {
    */
   @FXML
   private void onSeeStats(ActionEvent event) {
-    // getting scene information
+    // Getting scene information
     Button button = (Button) event.getSource();
     Scene currentScene = button.getScene();
 
-    // changing to stats page
     try {
+      // Playing sound associated to buttons
       soundPlayer.playButtonSound();
+
+      // Changing to stats page
       currentScene.setRoot(App.loadFxml("stats"));
+
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -155,11 +162,13 @@ public class MainMenuController {
     DialogPane dialogPane = alert.getDialogPane();
     dialogPane.getStylesheets().add(this.getClass().getResource("/css/dialog.css").toString());
 
+    // Setting up alert window
     alert.setTitle(null);
     alert.setHeaderText(null);
     alert.setContentText("Are you sure you want to exit the game?");
     Optional<ButtonType> result = alert.showAndWait();
 
+    // Checking what the user has chosen
     if (result.get() == ButtonType.OK) {
       Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
       currentStage.close();
@@ -271,6 +280,7 @@ public class MainMenuController {
     }
   }
 
+  /** This method will be called when the user clicks on the game mode left button. */
   @FXML
   private void onModeLeft() {
     soundPlayer.playButtonSound();
@@ -295,7 +305,7 @@ public class MainMenuController {
     soundPlayer.playButtonSound();
 
     if (gameMode == 2) {
-      // if the gamemode is the last one, it returns to the first one.
+      // if the game mode is the last one, it returns to the first one.
       gameMode = 0;
     } else {
       gameMode++;
@@ -335,7 +345,8 @@ public class MainMenuController {
    * 'Zen' mode.
    */
   private void updateGameMode() {
-    // Checking the current game mode and updating the labels and logics accordingly
+    // Checking the current game mode and updating the labels and logics depending on the game mode
+    // that the user has chosen
     if (gameMode == 0) {
       gameModeLabel.setText("Normal");
     } else if (gameMode == 1) {
