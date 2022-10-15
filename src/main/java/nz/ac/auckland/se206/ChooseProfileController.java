@@ -126,12 +126,17 @@ public class ChooseProfileController {
     } else {
       // alerting user that they aren't allowed to delete profiles if its the only one
       // left.
-      Alert alert = new Alert(AlertType.CONFIRMATION);
+      Alert alert = new Alert(AlertType.INFORMATION);
+
+      // Applying style to the alert dialog
+      DialogPane dialogPane = alert.getDialogPane();
+      dialogPane.getStylesheets().add(this.getClass().getResource("/css/dialog.css").toString());
+
       alert.setTitle(null);
       alert.setHeaderText(null);
       alert.setContentText(
-          "Sorry, you can't delete this profile. :( You must have at least one active profile. Create a new profile then try again.");
-      Optional<ButtonType> result = alert.showAndWait();
+          "Sorry, you can't delete this profile :( \nYou must have at least one active profile.");
+      alert.showAndWait();
       soundPlayer.playButtonSound();
     }
 
