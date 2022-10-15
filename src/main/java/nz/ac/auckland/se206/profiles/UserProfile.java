@@ -237,6 +237,7 @@ public class UserProfile {
    */
   public void setHasNewBadge(boolean hasNewBadge) {
     this.hasNewBadge = hasNewBadge;
+  }
 
   public void setSoundOn(Boolean on) {
     this.soundOn = on;

@@ -42,8 +42,6 @@ public class MainMenuController {
 
   @FXML private Circle alertCircle;
 
-  public static int gameMode = 0;
-
   private SoundUtils soundPlayer;
 
   /**
