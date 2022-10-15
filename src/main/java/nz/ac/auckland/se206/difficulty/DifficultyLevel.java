@@ -5,6 +5,7 @@ import nz.ac.auckland.se206.profiles.UserProfileManager;
 /** This class is for all operations regarding the difficulty settings for the user. */
 public class DifficultyLevel {
 
+  /** This enum is for the four accuracy levels */
   public enum Accuracy {
     E,
     M,
@@ -12,6 +13,7 @@ public class DifficultyLevel {
     MA
   }
 
+  /** This enum is for the word difficulty settings */
   public enum Words {
     E,
     M,
@@ -19,6 +21,7 @@ public class DifficultyLevel {
     MA
   }
 
+  /** This enum is for the time settings */
   public enum Time {
     E,
     M,
@@ -26,6 +29,7 @@ public class DifficultyLevel {
     MA
   }
 
+  /** This enum is for the confidence (prediction percentage) difficulty settings */
   public enum Confidence {
     E,
     M,
@@ -39,11 +43,14 @@ public class DifficultyLevel {
    * @return the current accuracy level
    */
   public static int getAccuracyIndex() {
+    // Getting the current accuracy level of the current user
     Accuracy accuracyLevel =
         UserProfileManager.currentProfile.getDifficultyLevel().getAccuracyLevel();
 
     int accuracyIndex;
 
+    // Assigning different accuracy indices depending on the current accuracy difficulty level of
+    // the current user
     if (accuracyLevel == DifficultyLevel.Accuracy.E) {
       accuracyIndex = 5;
     } else if (accuracyLevel == DifficultyLevel.Accuracy.M) {
@@ -63,10 +70,13 @@ public class DifficultyLevel {
    * @return the current draw time
    */
   public static int getDrawTime() {
+    // Getting the current time difficulty level of user
     Time timeLevel = UserProfileManager.currentProfile.getDifficultyLevel().getTimeLevel();
 
     int drawTime;
 
+    // Assigning drawing time durations depending on the chosen difficulty level setting of the
+    // current user
     if (timeLevel == DifficultyLevel.Time.E) {
       drawTime = 60;
     } else if (timeLevel == DifficultyLevel.Time.M) {
@@ -86,11 +96,13 @@ public class DifficultyLevel {
    * @return the current prediction confidence
    */
   public static int getPredictionConfidence() {
+    // Getting the current confidence level of the current user
     Confidence confidenceLevel =
         UserProfileManager.currentProfile.getDifficultyLevel().getConfidenceLevel();
 
     int predictionConfidence;
 
+    // Updating prediction confidence depending on the difficulty level that the current user chose
     if (confidenceLevel == DifficultyLevel.Confidence.E) {
       predictionConfidence = 1;
     } else if (confidenceLevel == DifficultyLevel.Confidence.M) {
@@ -114,6 +126,7 @@ public class DifficultyLevel {
 
   /** This constructor is for initiating the different difficulty settings. */
   public DifficultyLevel() {
+    // Initialising to EASY level
     this.accuracyLevel = Accuracy.E;
     this.wordsLevel = Words.E;
     this.timeLevel = Time.E;

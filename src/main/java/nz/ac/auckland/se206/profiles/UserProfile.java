@@ -26,6 +26,7 @@ public class UserProfile {
    * @param profileIndex the avatar index
    */
   public UserProfile(String userName, int profileIndex) {
+    // Initialising variables based on user's input
     this.userName = userName;
     this.profileIndex = profileIndex;
     this.difficultyLevel = new DifficultyLevel();
@@ -88,7 +89,7 @@ public class UserProfile {
   public ArrayList<String> getWordHistory() {
     ArrayList<String> wordHistory = new ArrayList<>();
 
-    // iterating through each game and adding word to the list
+    // Iterating through each game and adding word to the list
     historyOfGames.forEach(
         game -> {
           wordHistory.add(game.getWord());
@@ -107,7 +108,7 @@ public class UserProfile {
   public ArrayList<String> getWordHistory(CategorySelector.Difficulty difficulty) {
     ArrayList<String> wordHistory = new ArrayList<>();
 
-    // iterating through each game played
+    // Iterating through each game played
     historyOfGames.forEach(
         (game) -> {
 
@@ -181,8 +182,12 @@ public class UserProfile {
    * @return the number of badges a user has
    */
   public int getBadgesCount() {
+    // Initialising badge count
     int badgesCount = 0;
+
+    // Iterating through all badges
     for (boolean hasBadge : this.badges) {
+      // Tallying up the badges that the user has achieved
       if (hasBadge) {
         badgesCount++;
       }
@@ -239,10 +244,20 @@ public class UserProfile {
     this.hasNewBadge = hasNewBadge;
   }
 
+  /**
+   * This is a method for turning the sound status to on and/or off.
+   *
+   * @param on true if sound is on, false if sound is off
+   */
   public void setSoundOn(Boolean on) {
     this.soundOn = on;
   }
 
+  /**
+   * This is a method for checking whether the sound is on or off.
+   *
+   * @return true if sound is on, false if sound is off
+   */
   public Boolean isSoundOn() {
     return this.soundOn;
   }
