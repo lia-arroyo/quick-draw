@@ -31,7 +31,10 @@ public class BadgesController {
 
   private SoundUtils soundPlayer;
 
-  /** JavaFX calls this method once the GUI elements are loaded. */
+  /**
+   * JavaFX calls this method once the GUI elements are loaded. The badge title and detail
+   * informations are put into the arraylist, and the information is applied to the GUI elements.
+   */
   public void initialize() {
 
     // Initiate sound player
@@ -71,6 +74,7 @@ public class BadgesController {
             "Win 10 times in a row to obtain this badge.",
             "Complete all easy mode words to obtain this badge.");
 
+    // Initialising the badge index from 0
     int badgeIndex = 0;
 
     currentUser = UserProfileManager.currentProfile;
@@ -80,6 +84,7 @@ public class BadgesController {
 
       HBox badgeRow = (HBox) hbox;
 
+      // Going through the HBox to access the badges in each row
       for (Node badge : badgeRow.getChildren()) {
         Button badgeButton = (Button) badge;
 

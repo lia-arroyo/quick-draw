@@ -77,18 +77,7 @@ public class ChooseAvatarController {
   private void onClickImage(ActionEvent event) {
     // getting scene information
     Button avatarButton = (Button) event.getSource();
-    String avatarId = avatarButton.getId();
-    String profileIndex = "";
-
-    for (int i = 0; i < avatarId.length(); i++) {
-      // If the character is a number
-      if (avatarId.charAt(i) >= 48 && avatarId.charAt(i) <= 57) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(profileIndex);
-        sb.append(avatarId.charAt(i));
-        profileIndex = sb.toString();
-      }
-    }
+    String profileIndex = avatarButton.getId().replaceAll("[^0-9]", "");
 
     // updating the profile index
     UserProfileManager.chosenProfileIndex = Integer.valueOf(profileIndex);

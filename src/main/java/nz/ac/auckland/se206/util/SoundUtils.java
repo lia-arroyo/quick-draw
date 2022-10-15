@@ -11,22 +11,36 @@ public class SoundUtils {
   private static MediaPlayer bgmPlayer;
   private static MediaPlayer gameMusicPlayer;
 
+  /** This method plays a 'click' sound when called to give a sound effect for buttons. */
   public void playButtonSound() {
 
     String path = this.getClass().getResource("/sounds/button-click.mp3").toString();
     playSound(path);
   }
 
+  /**
+   * This method plays a 'pop' sound when called to give a sound effect for revealing the first
+   * letter in the game.
+   */
   public void playRevealSound() {
     String path = this.getClass().getResource("/sounds/reveal-sound.mp3").toString();
     playSound(path);
   }
 
+  /**
+   * This method plays a 'click' sound when called to give a sound effect for clicking on the badges
+   * in the 'My badges' page.
+   */
   public void playBadgeSound() {
     String path = this.getClass().getResource("/sounds/badge-sound.mp3").toString();
     playSound(path);
   }
 
+  /**
+   * This method starts the background music thread and initialises the background music player when
+   * called. Once the thread starts, the music can be turned on and off by accessing the media
+   * player (bgmPlayer), which is a static variable.
+   */
   public void playBackgroundMusic() {
     String path = this.getClass().getResource("/sounds/bgm.mp3").toString();
 
@@ -40,18 +54,21 @@ public class SoundUtils {
           @Override
           protected Void call() throws Exception {
 
-            // Playing the music on loop
+            // Initialising the media player
             Media sound = new Media(path);
             bgmPlayer = new MediaPlayer(sound);
 
             bgmPlayer.setVolume(0.4);
 
+            // Whenever the music ends, the music starts from 0, which means the music is on
+            // a constant loop.
             bgmPlayer.setOnEndOfMedia(
                 new Runnable() {
                   public void run() {
                     bgmPlayer.seek(Duration.ZERO);
                   }
                 });
+
             bgmPlayer.play();
 
             return null;
@@ -63,28 +80,41 @@ public class SoundUtils {
     bgmThread.start();
   }
 
+  /**
+   * This method starts the drawing music thread and initialises the drawing music player when
+   * called. Once the thread starts, the music can be controlled by accessing gameMusicPlayer which
+   * is a static variable.
+   */
   public void playDrawingMusic() {
     String path = this.getClass().getResource("/sounds/canvas-music.mp3").toString();
 
+    // Stopping the background music as we need to play the drawing music
     bgmPlayer.stop();
 
+    /*
+     * Creating a new thread to play the drawing music in the back. When the music
+     * finishes, it replays again and again until it is stopped.
+     */
     Task<Void> soundTask =
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
 
-            // Playing the music on loop
+            // Initialising the media player
             Media sound = new Media(path);
             gameMusicPlayer = new MediaPlayer(sound);
 
             gameMusicPlayer.setVolume(0.8);
 
+            // Whenever the music ends, the music starts from 0, which means the music is on
+            // a constant loop.
             gameMusicPlayer.setOnEndOfMedia(
                 new Runnable() {
                   public void run() {
                     gameMusicPlayer.seek(Duration.ZERO);
                   }
                 });
+
             gameMusicPlayer.play();
 
             return null;
@@ -96,17 +126,28 @@ public class SoundUtils {
     gameMusicThread.start();
   }
 
+  /** This method stops the drawing music when called, and plays the background music again. */
   public void stopDrawingMusic() {
     gameMusicPlayer.stop();
     bgmPlayer.play();
   }
 
+  /**
+   * This method plays the audio when given the path of the audio file. It only plays if the user
+   * has sound effects on. If there is no current user then the sound effects are played anyways.
+   *
+   * @param path the path of the audio file
+   */
   private void playSound(String path) {
+
+    // Checking if there is no currently chosen profile
     if (UserProfileManager.currentProfile == null) {
+      // If there isn't, then we just play the sound effects
       Media sound = new Media(path);
       MediaPlayer mediaPlayer = new MediaPlayer(sound);
       mediaPlayer.play();
     } else {
+      // If there is, we check if the user has sound effects on
       if (UserProfileManager.currentProfile.isSoundOn()) {
         Media sound = new Media(path);
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
