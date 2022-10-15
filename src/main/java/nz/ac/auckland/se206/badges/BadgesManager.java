@@ -25,7 +25,7 @@ public class BadgesManager {
     }
 
     // Checking if they won in the last 5 seconds to update the 4th badge
-    if ((gameTime == drawTime) || (gameTime == (drawTime - 1))) {
+    if (gameTime >= drawTime - 5) {
       UserProfileManager.currentProfile.setBadgeTrue(3);
     }
 

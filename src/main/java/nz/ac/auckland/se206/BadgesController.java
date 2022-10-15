@@ -48,7 +48,7 @@ public class BadgesController {
             "Won a game under 30 seconds!",
             "Won a game under 15 seconds!",
             "Won a game under 5 seconds!",
-            "Won in the last 5 second!s",
+            "Won in the last 5 seconds!",
             "Got over 75% accuracy in a word!",
             "Had a 3 game winning streak!",
             "Had a 10 game winning streak!",
