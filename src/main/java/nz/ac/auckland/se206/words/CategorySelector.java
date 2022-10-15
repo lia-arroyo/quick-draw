@@ -19,6 +19,7 @@ import nz.ac.auckland.se206.profiles.UserProfileManager;
 /** This class is for all things to do with word selection for each round. */
 public class CategorySelector {
 
+  /** This is the enum for the difficulty levels of the words. */
   public enum Difficulty {
     E,
     M,
@@ -27,15 +28,16 @@ public class CategorySelector {
 
   public static String chosenWord;
   public static Difficulty currentDifficulty;
+
   private Map<Difficulty, List<String>> difficultyToCategories;
 
   /**
    * This constructor essentially reads the csv file full of words and parses it into a hashmap that
    * has each key as the 3 different difficulties - E, M, and H.
    *
-   * @throws IOException {@inheritDoc}
-   * @throws CsvException {@inheritDoc}
-   * @throws URISyntaxException {@inheritDoc}
+   * @throws IOException if the file cannot be found
+   * @throws CsvException if the csv file cannot be read
+   * @throws URISyntaxException if the URI is incorrect
    */
   public CategorySelector() throws IOException, CsvException, URISyntaxException {
     difficultyToCategories = new HashMap<>();
@@ -122,10 +124,10 @@ public class CategorySelector {
     Words wordsLevel = UserProfileManager.currentProfile.getDifficultyLevel().getWordsLevel();
 
     if (wordsLevel == DifficultyLevel.Words.E) {
-      // only easy words
+      // Only the easy words will be chosen
       setNewChosenWord(Difficulty.E);
 
-      // medium difficulty - easy + medium words
+      // Medium difficulty - easy + medium words
     } else if (wordsLevel == DifficultyLevel.Words.M) {
       // easy or medium words
       double randomNumber = Math.random();
@@ -137,7 +139,7 @@ public class CategorySelector {
         setNewChosenWord(Difficulty.M);
       }
 
-      // hard difficulty - easy + medium + hard words
+      // Hard difficulty - easy + medium + hard words
     } else if (wordsLevel == DifficultyLevel.Words.H) {
       // easy, medium or hard words
       double randomNumber = Math.random();
@@ -151,9 +153,9 @@ public class CategorySelector {
         setNewChosenWord(Difficulty.H);
       }
 
-      // master difficulty - hard words only
+      // Master difficulty - hard words only
     } else {
-      // only hard words
+      // Only the hard words will be chosen
       setNewChosenWord(Difficulty.H);
     }
   }
