@@ -31,6 +31,7 @@ public class BadgesController {
   /** JavaFX calls this method once the GUI elements are loaded. */
   public void initialize() {
 
+    // Once the user enters the badges page, there will be no more new badges to see
     UserProfileManager.currentProfile.setHasNewBadge(false);
 
     // Setting the messages for the badge titles and badge details.

@@ -164,10 +164,21 @@ public class UserProfile {
     this.historyOfGames.add(game);
   }
 
+  /**
+   * This is a getter method for getting the user badges, where true indicates that they have the
+   * badge and false indicates that they do not have the badge
+   *
+   * @return a boolean array of whether the user has the badge or not
+   */
   public boolean[] getBadges() {
     return this.badges;
   }
 
+  /**
+   * This method counts the number of badges the user has and return the number
+   *
+   * @return the number of badges a user has
+   */
   public int getBadgesCount() {
     int badgesCount = 0;
     for (boolean hasBadge : this.badges) {
@@ -178,26 +189,51 @@ public class UserProfile {
     return badgesCount;
   }
 
+  /**
+   * This is a setter method for indicating that the user has earned the badge by setting the index
+   * to true
+   *
+   * @param badgeIndex the index of the badge to set to true
+   */
   public void setBadgeTrue(int badgeIndex) {
     this.badges[badgeIndex] = true;
   }
 
+  /**
+   * This is a getter method for getting the number of consecutive wins the user is on
+   *
+   * @return the number of consecutive wins the user is on
+   */
   public int getConsecutiveWins() {
     return this.consecutiveWins;
   }
 
+  /** This method resets the number of consecutive wins when the user has lost a game */
   public void resetConsecutiveWins() {
     this.consecutiveWins = 0;
   }
 
+  /** This method increases the number of consecutive wins by one when the user has won a game */
   public void incrementConsecutiveWins() {
     this.consecutiveWins++;
   }
 
+  /**
+   * This is a getter method for getting the boolean value of whether the user has new badges to see
+   * or not
+   *
+   * @return value indicating whether the user has new badges to see or not
+   */
   public boolean getHasNewBadge() {
     return this.hasNewBadge;
   }
 
+  /**
+   * This is a setter method for setting the boolean value of whether the user has new badges to see
+   * or not
+   *
+   * @param hasNewBadge value indicating whether the user has new badges to see or not
+   */
   public void setHasNewBadge(boolean hasNewBadge) {
     this.hasNewBadge = hasNewBadge;
   }

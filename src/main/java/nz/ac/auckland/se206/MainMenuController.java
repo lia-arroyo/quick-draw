@@ -43,6 +43,8 @@ public class MainMenuController {
    */
   public void initialize() throws FileNotFoundException {
 
+    // If the user has new badges to see, there will be an alert shown, otherwise,
+    // no alert is shown
     if (!UserProfileManager.currentProfile.getHasNewBadge()) {
       alertCircle.setVisible(false);
     }
