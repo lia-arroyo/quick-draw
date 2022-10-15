@@ -167,6 +167,16 @@ public class UserProfile {
     return this.badges;
   }
 
+  public int getBadgesCount() {
+    int badgesCount = 0;
+    for (boolean hasBadge : this.badges) {
+      if (hasBadge) {
+        badgesCount++;
+      }
+    }
+    return badgesCount;
+  }
+
   public void setBadgeTrue(int badgeIndex) {
     this.badges[badgeIndex] = true;
   }

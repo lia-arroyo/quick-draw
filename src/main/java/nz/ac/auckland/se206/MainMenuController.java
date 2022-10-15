@@ -207,6 +207,20 @@ public class MainMenuController {
 
   /** This method is called when the user presses the left button for choosing game mode. */
   @FXML
+  private void onViewLeaderboard(ActionEvent event) {
+    // Getting the scene information
+    Button button = (Button) event.getSource();
+    Scene currentScene = button.getScene();
+
+    // Change to leaderboard page
+    try {
+      currentScene.setRoot(App.loadFxml("leaderboard"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @FXML
   private void onModeLeft() {
     if (gameMode == 0) {
       // if the gamemode is on the first mode (i.e. normal mode), it returns to the
