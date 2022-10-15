@@ -97,7 +97,10 @@ public class MainMenuController {
     // Changing the scene to waiting screen
     try {
       soundPlayer.playButtonSound();
-      soundPlayer.playDrawingMusic();
+
+      if (gameMode != 2) {
+        soundPlayer.playDrawingMusic();
+      }
 
       sceneButtonIsIn.setRoot(App.loadFxml(currentMode));
     } catch (IOException e) {

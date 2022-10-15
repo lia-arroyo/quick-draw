@@ -61,7 +61,9 @@ public class AfterRoundController {
     // Initiate sound player
     soundPlayer = new SoundUtils();
 
-    soundPlayer.stopDrawingMusic();
+    if (MainMenuController.gameMode != 2) {
+      soundPlayer.stopDrawingMusic();
+    }
   }
 
   /**
