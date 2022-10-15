@@ -4,105 +4,239 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" stylesheets="@../css/Canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.CanvasController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="840.0" stylesheets="@../css/Canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.CanvasController">
    <children>
-      <VBox alignment="CENTER" layoutX="20.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="800.0" spacing="20.0">
+      <Pane fx:id="canvasPane" prefHeight="600.0" prefWidth="840.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <VBox alignment="CENTER" layoutX="20.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="800.0" spacing="20.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="130.0">
+                  <StackPane maxHeight="100.0" prefHeight="100.0" prefWidth="800.0">
                      <children>
-                        <Label fx:id="closerFurtherLabel" alignment="CENTER" prefHeight="50.0" prefWidth="114.0">
+                        <Pane fx:id="zenTopPane" prefHeight="100.0" prefWidth="800.0" visible="false">
+                           <children>
+                              <Label fx:id="zenChosenWordLabel" alignment="CENTER" layoutX="130.0" layoutY="50.0" prefHeight="50.0" prefWidth="500.0">
+                                 <font>
+                                    <Font size="36.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutY="50.0" minHeight="50.0" minWidth="130.0" mnemonicParsing="false" onAction="#onGoBack" prefHeight="50.0" prefWidth="130.0" styleClass="zen-button" text="&lt;  back" textFill="#575757">
+                                 <font>
+                                    <Font name="Proxima Nova" size="24.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button layoutX="630.0" layoutY="50.0" minHeight="50.0" minWidth="130.0" mnemonicParsing="false" onAction="#onDone" prefHeight="50.0" prefWidth="130.0" styleClass="zen-button" text="done  &gt;" textFill="#575757">
+                                 <font>
+                                    <Font name="Proxima Nova" size="24.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                        </Pane>
+                        <HBox fx:id="timerTopBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="130.0">
+                                 <children>
+                                    <Label fx:id="closerFurtherLabel" alignment="CENTER" prefHeight="50.0" prefWidth="114.0">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fx:id="closerFurtherImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </VBox>
+                              <Label fx:id="timeLeft" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="160.0">
+                                 <font>
+                                    <Font name="Proxima Nova" size="48.0" />
+                                 </font>
+                              </Label>
+                              <StackPane maxHeight="100.0" maxWidth="400.0" prefHeight="100.0" prefWidth="400.0">
+                                 <children>
+                                    <Label fx:id="chosenWordLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="400.0" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="Proxima Nova" size="36.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox fx:id="underscoreBox" alignment="CENTER" prefHeight="100.0" prefWidth="400.0" visible="false">
+                                       <children>
+                                          <Label fx:id="underscoreLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="400.0" textAlignment="CENTER">
+                                             <font>
+                                                <Font name="Proxima Nova" size="36.0" />
+                                             </font>
+                                          </Label>
+                                          <HBox alignment="TOP_CENTER" prefHeight="10.0" prefWidth="200.0" spacing="40.0">
+                                             <children>
+                                                <Button fx:id="revealButton" mnemonicParsing="false" onAction="#onRevealFirstLetter" style="-fx-text-fill: #575757;" styleClass="definition-button" text="reveal first letter" textFill="#575757">
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
+                                                </Button>
+                                                <Button fx:id="definitionButton" mnemonicParsing="false" onAction="#onViewDefinition" styleClass="definition-button" text="see definition..." textFill="#575757">
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </HBox>
+                     </children>
+                  </StackPane>
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="800.0">
+                     <children>
+                        <Label fx:id="predictionList" maxHeight="360.0" maxWidth="220.0" minHeight="360.0" minWidth="190.0" prefHeight="360.0" prefWidth="239.0">
                            <font>
-                              <Font name="System Bold" size="24.0" />
+                              <Font name="Proxima Nova" size="18.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="closerFurtherImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                        <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="canvasPane">
+                           <center>
+                              <Canvas fx:id="canvas" height="360.0" styleClass="canvas" width="560.0" BorderPane.alignment="CENTER">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Canvas>
+                           </center>
+                           <top>
+                              <Line endX="660.0" startX="100.0" BorderPane.alignment="CENTER" />
+                           </top>
+                           <bottom>
+                              <Line endX="660.0" startX="100.0" BorderPane.alignment="CENTER" />
+                           </bottom>
+                           <left>
+                              <Line endX="100.0" startX="100.0" startY="360.0" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <Line endX="-100.0" endY="360.0" startX="-100.0" BorderPane.alignment="CENTER" />
+                           </right>
+                        </BorderPane>
                      </children>
-                  </VBox>
-                  <Label fx:id="timeLeft" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="160.0">
-                     <font>
-                        <Font name="Proxima Nova" size="48.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="chosenWordLabel" contentDisplay="CENTER" prefHeight="48.0" prefWidth="400.0" textAlignment="CENTER">
-                     <font>
-                        <Font name="Proxima Nova" size="36.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="750.0">
-               <children>
-                  <Label fx:id="predictionList" maxHeight="360.0" maxWidth="190.0" minHeight="360.0" minWidth="190.0" prefHeight="360.0" prefWidth="190.0">
-                     <font>
-                        <Font name="Proxima Nova" size="18.0" />
-                     </font>
-                  </Label>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="canvasPane">
-                     <center>
-                        <Canvas fx:id="canvas" height="360.0" styleClass="canvas" width="560.0" BorderPane.alignment="CENTER">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Canvas>
-                     </center>
-                     <top>
-                        <Line endX="660.0" startX="100.0" BorderPane.alignment="CENTER" />
-                     </top>
-                     <bottom>
-                        <Line endX="660.0" startX="100.0" BorderPane.alignment="CENTER" />
-                     </bottom>
-                     <left>
-                        <Line endX="100.0" startX="100.0" startY="360.0" BorderPane.alignment="CENTER" />
-                     </left>
-                     <right>
-                        <Line endX="-100.0" endY="360.0" startX="-100.0" BorderPane.alignment="CENTER" />
-                     </right>
-                  </BorderPane>
+                  </HBox>
+                  <StackPane prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <HBox fx:id="zenBottomBox" alignment="CENTER" prefHeight="100.0" prefWidth="800.0" spacing="50.0" styleClass="button-box" visible="false">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#onSwitchBrushEraser" prefHeight="50.0" prefWidth="200.0" text="Switch to eraser">
+                                 <font>
+                                    <Font name="Proxima Nova" size="18.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="clearButton1" mnemonicParsing="false" onAction="#onClear" prefHeight="50.0" prefWidth="200.0" text="Clear canvas">
+                                 <font>
+                                    <Font name="Proxima Nova" size="18.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <ColorPicker fx:id="penColorPicker" onAction="#onChangeColor" prefHeight="50.0" promptText="AJDksJDW" styleClass="color-picker">
+                                 <value>
+                                    <Color />
+                                 </value>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ColorPicker>
+                              <Button fx:id="zenSpeechButton" layoutX="556.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlaySound" prefHeight="50.0" prefWidth="50.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox fx:id="normalBottomBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                           <children>
+                              <Button fx:id="switchButton" mnemonicParsing="false" onAction="#onSwitchBrushEraser" prefHeight="50.0" prefWidth="200.0" text="Switch to eraser">
+                                 <font>
+                                    <Font name="Proxima Nova" size="18.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClear" prefHeight="50.0" prefWidth="200.0" text="Clear canvas">
+                                 <font>
+                                    <Font name="Proxima Nova" size="18.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="speechButton" layoutX="556.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlaySound" prefHeight="50.0" prefWidth="50.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </StackPane>
                </children>
                <padding>
-                  <Insets left="20.0" right="20.0" />
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+            </VBox>
+         </children>
+      </Pane>
+      <Pane fx:id="definitionPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+         <children>
+            <HBox alignment="TOP_RIGHT" layoutX="120.0" layoutY="200.0" prefHeight="240.0" prefWidth="600.0" styleClass="definition-box">
                <children>
-                  <Button fx:id="switchButton" mnemonicParsing="false" onAction="#onSwitchBrushEraser" prefHeight="50.0" prefWidth="200.0" text="Switch to eraser">
+                  <Label fx:id="definitionLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="210.0" maxWidth="530.0" prefHeight="210.0" prefWidth="550.0" text="Loading..." wrapText="true">
                      <font>
-                        <Font name="Proxima Nova" size="18.0" />
+                        <Font size="24.0" />
                      </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClear" prefHeight="50.0" prefWidth="200.0" text="Clear canvas">
-                     <font>
-                        <Font name="Proxima Nova" size="18.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="speechButton" layoutX="556.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlaySound" prefHeight="50.0" prefWidth="50.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Button fx:id="closeButton" alignment="CENTER" contentDisplay="TOP" layoutX="570.0" layoutY="210.0" maxHeight="30.0" maxWidth="30.0" mnemonicParsing="false" onAction="#onCloseDefinition" prefHeight="30.0" prefWidth="30.0" text="X" visible="false">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
                </children>
+               <padding>
+                  <Insets right="7.0" top="7.0" />
+               </padding>
             </HBox>
+            <Button fx:id="readyButton" layoutX="320.0" layoutY="470.0" mnemonicParsing="false" onAction="#onReady" prefHeight="50.0" prefWidth="200.0" text="I'm ready" visible="false">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label fx:id="instructionLabel" alignment="CENTER" layoutX="170.0" layoutY="160.0" prefWidth="500.0" text="The definition for the hidden word is: ">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
          </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-      </VBox>
+      </Pane>
    </children>
-</Pane>
+</StackPane>

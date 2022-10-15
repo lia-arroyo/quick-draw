@@ -12,8 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel;
+import nz.ac.auckland.se206.difficulty.DifficultyLevel.Words;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 
+/** This class is for all things to do with word selection for each round. */
 public class CategorySelector {
 
   public enum Difficulty {
@@ -23,16 +26,26 @@ public class CategorySelector {
   }
 
   public static String chosenWord;
-
+  public static Difficulty currentDifficulty;
   private Map<Difficulty, List<String>> difficultyToCategories;
 
+  /**
+   * This constructor essentially reads the csv file full of words and parses it into a hashmap that
+   * has each key as the 3 different difficulties - E, M, and H.
+   *
+   * @throws IOException {@inheritDoc}
+   * @throws CsvException {@inheritDoc}
+   * @throws URISyntaxException {@inheritDoc}
+   */
   public CategorySelector() throws IOException, CsvException, URISyntaxException {
     difficultyToCategories = new HashMap<>();
 
+    // initialising each key,value pair for hashmap
     for (Difficulty difficulty : Difficulty.values()) {
       difficultyToCategories.put(difficulty, new ArrayList<>());
     }
 
+    // reading the file and adding each word to the hashmap.
     for (String[] line : getLines()) {
       difficultyToCategories.get(Difficulty.valueOf(line[1])).add(line[0]);
     }
@@ -77,10 +90,11 @@ public class CategorySelector {
   /**
    * This method sets a new chosen category and updates the static variable.
    *
-   * @param difficulty the difficultry of the cateogry (E, M or H)
+   * @param difficulty the difficultly of the category (E, M or H)
    */
   public void setNewChosenWord(Difficulty difficulty) {
     CategorySelector.chosenWord = getRandomCategory(difficulty);
+    CategorySelector.currentDifficulty = difficulty;
   }
 
   /**
@@ -92,7 +106,55 @@ public class CategorySelector {
     return CategorySelector.chosenWord;
   }
 
+  /**
+   * This method calculates the amount of words in the hashmap given the difficulty.
+   *
+   * @param difficulty difficulty of word list desired
+   * @return the number of entries in this word list
+   */
   public int getTotalWordCount(Difficulty difficulty) {
     return difficultyToCategories.get(difficulty).size();
+  }
+
+  /** This method sets the chosen word depending on the current user's difficulty level. */
+  public void setWordWithDifficulty() {
+    // Getting the difficulty level based on the users' chosen settings.
+    Words wordsLevel = UserProfileManager.currentProfile.getDifficultyLevel().getWordsLevel();
+
+    if (wordsLevel == DifficultyLevel.Words.E) {
+      // only easy words
+      setNewChosenWord(Difficulty.E);
+
+      // medium difficulty - easy + medium words
+    } else if (wordsLevel == DifficultyLevel.Words.M) {
+      // easy or medium words
+      double randomNumber = Math.random();
+
+      // 30% easy, 70% medium word
+      if (randomNumber < 0.3) {
+        setNewChosenWord(Difficulty.E);
+      } else {
+        setNewChosenWord(Difficulty.M);
+      }
+
+      // hard difficulty - easy + medium + hard words
+    } else if (wordsLevel == DifficultyLevel.Words.H) {
+      // easy, medium or hard words
+      double randomNumber = Math.random();
+
+      // 10% easy, 30% medium, 60% hard word
+      if (randomNumber < 0.1) {
+        setNewChosenWord(Difficulty.E);
+      } else if (randomNumber < 0.4) {
+        setNewChosenWord(Difficulty.M);
+      } else {
+        setNewChosenWord(Difficulty.H);
+      }
+
+      // master difficulty - hard words only
+    } else {
+      // only hard words
+      setNewChosenWord(Difficulty.H);
+    }
   }
 }

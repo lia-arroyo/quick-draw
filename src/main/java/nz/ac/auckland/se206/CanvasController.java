@@ -9,29 +9,41 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javax.imageio.ImageIO;
+import nz.ac.auckland.se206.badges.BadgesManager;
 import nz.ac.auckland.se206.difficulty.DifficultyLevel;
-import nz.ac.auckland.se206.difficulty.DifficultyLevel.Accuracy;
-import nz.ac.auckland.se206.difficulty.DifficultyLevel.Confidence;
-import nz.ac.auckland.se206.difficulty.DifficultyLevel.Time;
+import nz.ac.auckland.se206.games.Game;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
+import nz.ac.auckland.se206.words.Dictionary;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and the corresponding
@@ -51,17 +63,51 @@ public class CanvasController {
 
   @FXML private Label chosenWordLabel;
 
+  @FXML private Label zenChosenWordLabel;
+
   @FXML private Label timeLeft;
 
   @FXML private Label predictionList;
+
+  @FXML private Label underscoreLabel;
+
+  @FXML private Label definitionLabel;
+
+  @FXML private Label instructionLabel;
+
+  @FXML private Label closerFurtherLabel;
+
+  @FXML private ImageView closerFurtherImage;
 
   @FXML private Button switchButton;
 
   @FXML private Button speechButton;
 
-  @FXML private Label closerFurtherLabel;
+  @FXML private Button zenSpeechButton;
 
-  @FXML private ImageView closerFurtherImage;
+  @FXML private Button readyButton;
+
+  @FXML private Button definitionButton;
+
+  @FXML private Button revealButton;
+
+  @FXML private Button closeButton;
+
+  @FXML private Pane canvasPane;
+
+  @FXML private Pane definitionPane;
+
+  @FXML private Pane zenTopPane;
+
+  @FXML private HBox timerTopBox;
+
+  @FXML private VBox underscoreBox;
+
+  @FXML private HBox normalBottomBox;
+
+  @FXML private HBox zenBottomBox;
+
+  @FXML private ColorPicker penColorPicker;
 
   private GraphicsContext graphic;
 
@@ -81,79 +127,37 @@ public class CanvasController {
   private double currentX;
   private double currentY;
 
+  private Color penColor = Color.BLACK;
   private Boolean eraser = false;
   private Boolean canvasIsEmpty = true;
 
   private int predictionIndex = 340;
 
+  private int gameMode = 0;
+
   /**
-   * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
-   * the drawing, and we load the ML model.
+   * JavaFX calls this method once the GUI elements are loaded. For the canvas controller, we create
+   * a listener for the drawing, and we load the ML model.
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.
    */
   public void initialize() throws ModelException, IOException, CsvException, URISyntaxException {
 
-    Accuracy accuracyLevel =
-        UserProfileManager.userProfileList
-            .get(UserProfileManager.currentProfileIndex)
-            .getDifficultyLevel()
-            .getAccuracyLevel();
-    if (accuracyLevel == DifficultyLevel.Accuracy.E) {
-      this.accuracyIndex = 5;
-    } else if (accuracyLevel == DifficultyLevel.Accuracy.M) {
-      this.accuracyIndex = 3;
-    } else if (accuracyLevel == DifficultyLevel.Accuracy.H) {
-      this.accuracyIndex = 2;
-    } else {
-      this.accuracyIndex = 1;
-    }
+    // Getting the current game mode and game variables
+    gameMode = MainMenuController.gameMode;
 
-    Time timeLevel =
-        UserProfileManager.userProfileList
-            .get(UserProfileManager.currentProfileIndex)
-            .getDifficultyLevel()
-            .getTimeLevel();
-    if (timeLevel == DifficultyLevel.Time.E) {
-      this.drawTime = 60;
-    } else if (timeLevel == DifficultyLevel.Time.M) {
-      this.drawTime = 45;
-    } else if (timeLevel == DifficultyLevel.Time.H) {
-      this.drawTime = 30;
-    } else {
-      this.drawTime = 15;
-    }
+    accuracyIndex = DifficultyLevel.getAccuracyIndex();
 
-    Confidence confidenceLevel =
-        UserProfileManager.userProfileList
-            .get(UserProfileManager.currentProfileIndex)
-            .getDifficultyLevel()
-            .getConfidenceLevel();
-    if (confidenceLevel == DifficultyLevel.Confidence.E) {
-      this.predictionConfidence = 1;
-    } else if (confidenceLevel == DifficultyLevel.Confidence.M) {
-      this.predictionConfidence = 10;
-    } else if (confidenceLevel == DifficultyLevel.Confidence.H) {
-      this.predictionConfidence = 25;
-    } else {
-      this.predictionConfidence = 50;
-    }
+    drawTime = DifficultyLevel.getDrawTime();
 
-    // Setting speech button icon
-    Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
-    speechButton.setGraphic(new ImageView(icon));
+    predictionConfidence = DifficultyLevel.getPredictionConfidence();
 
-    // Displaying chosen word
-    chosenWordLabel.setText(CategorySelector.chosenWord);
     model = new DoodlePrediction();
-
-    // Adding the chosen word to the history of current user
-    UserProfileManager.currentProfile.addWordToHistory(CategorySelector.chosenWord);
 
     graphic = canvas.getGraphicsContext2D();
 
-    // save coordinates when mouse is pressed on the canvas
+    // Saving coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
         e -> {
           currentX = e.getX();
@@ -162,7 +166,7 @@ public class CanvasController {
 
     canvas.setOnMouseDragged(
         e -> {
-          // Brush size (you can change this, it should not be too small or too large).
+          // This is the brush size
           final double size = 6.0;
 
           final double x = e.getX() - size / 2;
@@ -173,24 +177,140 @@ public class CanvasController {
             graphic.setLineWidth(size * 3);
 
           } else {
-            graphic.setStroke(Color.BLACK);
+            graphic.setStroke(penColor);
             graphic.setLineWidth(size);
           }
 
-          // Create a line that goes from the point (currentX, currentY) and (x,y)
+          // Creating a line that goes from the point (currentX, currentY) and (x,y)
           graphic.strokeLine(currentX, currentY, x, y);
 
-          // update the coordinates
+          // Updating the coordinates
           currentX = x;
           currentY = y;
 
           canvasIsEmpty = false;
         });
 
+    setupScreen();
+  }
+
+  /**
+   * This method is called in the initialize method of the canvas controller to set up the screen
+   * initially, according to the game mode.
+   *
+   * @throws URISyntaxException
+   * @throws CsvException
+   * @throws IOException
+   */
+  private void setupScreen() throws IOException, CsvException, URISyntaxException {
+    // Setting the speech button icon to the speech image
+    Image icon = new Image(this.getClass().getResource("/images/sound.png").toString());
+    speechButton.setGraphic(new ImageView(icon));
+    zenSpeechButton.setGraphic(new ImageView(icon));
+
+    // When game mode is 'NORMAL'
+    if (gameMode == 0) {
+      // Displaying the chosen word to the user
+      chosenWordLabel.setText(CategorySelector.chosenWord);
+      runCounter();
+
+      // When game mode is 'HIDDEN WORD'
+    } else if (gameMode == 1) {
+      // Disable the chosen word label and canvas pane, then show the definition pane.
+      chosenWordLabel.setVisible(false);
+      canvasPane.setVisible(false);
+      underscoreBox.setVisible(true);
+      definitionPane.setVisible(true);
+
+      // Selecting a random word for user
+      CategorySelector categorySelector = new CategorySelector();
+      categorySelector.setWordWithDifficulty();
+
+      // Printing the word for presentation purposes
+      System.out.println(CategorySelector.chosenWord);
+
+      updateDefinitionLabel();
+
+      // When game mode is 'ZEN'
+    } else if (gameMode == 2) {
+
+      zenTopPane.setVisible(true);
+      timerTopBox.setVisible(false);
+
+      zenBottomBox.setVisible(true);
+      normalBottomBox.setVisible(false);
+
+      // Displaying the chosen word to the user
+      zenChosenWordLabel.setText(CategorySelector.chosenWord);
+
+      runCounter();
+    }
+  }
+
+  /**
+   * This method is called when the user clicks on the I'm ready button when the definition is first
+   * displayed on the screen. It closes the definition pane, shows the canvas, and starts the
+   * counter just like in normal mode.
+   */
+  @FXML
+  private void onReady() {
+    // Close the definition pane and show the canvas pane
+    definitionPane.setVisible(false);
+    canvasPane.setVisible(true);
+
+    // Also now the instruction label and ready button won't be visible as it is not
+    // needed anymore
+    readyButton.setVisible(false);
+    instructionLabel.setVisible(false);
+
+    // Now the definition pane can be closed by the close button
+    closeButton.setVisible(true);
+
+    underscoreBox.setVisible(true);
+
     runCounter();
   }
 
-  /** This method is called when the "Clear" button is pressed. */
+  /**
+   * This method is called when the user clicks on the see definition button in the canvas. The
+   * definition pane pops up until the user closes it again by pressing on the x button.
+   */
+  @FXML
+  private void onViewDefinition() {
+    canvasPane.setOpacity(0.3);
+    definitionPane.setVisible(true);
+  }
+
+  /**
+   * This method is called when the user clicks on the reveal first letter button. This will change
+   * the first letter of the underscore label from '_' to whatever the first letter of the chosen
+   * word is, and the button will then be disabled.
+   */
+  @FXML
+  private void onRevealFirstLetter() {
+    String underscore = underscoreLabel.getText();
+
+    String revealed = CategorySelector.chosenWord.charAt(0) + underscore.substring(1);
+
+    underscoreLabel.setText(revealed);
+
+    revealButton.setDisable(true);
+  }
+
+  /**
+   * This method is called when the user clicks on the x button. The definition pane closes and the
+   * canvas is shown to the user.
+   */
+  @FXML
+  private void onCloseDefinition() {
+    definitionPane.setVisible(false);
+    canvasPane.setOpacity(1);
+  }
+
+  /**
+   * This method is called when the "Clear" button is pressed. It will empty the canvas and also
+   * reset the prediction list and the closer/further section.
+   */
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -205,7 +325,7 @@ public class CanvasController {
   }
 
   /**
-   * Get the current snapshot of the canvas.
+   * This method gets the current snapshot of the canvas.
    *
    * @return The BufferedImage corresponding to the current canvas content.
    */
@@ -213,22 +333,22 @@ public class CanvasController {
     final Image snapshot = canvas.snapshot(null, null);
     final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
 
-    // Convert into a binary image.
-    final BufferedImage imageBinary =
-        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+    // Converting into a color image.
+    final BufferedImage buffered =
+        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
 
-    final Graphics2D graphics = imageBinary.createGraphics();
+    final Graphics2D graphics = buffered.createGraphics();
 
     graphics.drawImage(image, 0, 0, null);
 
     // To release memory we dispose.
     graphics.dispose();
 
-    return imageBinary;
+    return buffered;
   }
 
   /**
-   * Save the current snapshot on a bitmap file.
+   * This method saves the current snapshot on a bitmap file.
    *
    * @return The file of the saved image.
    * @throws IOException If the image cannot be saved.
@@ -250,7 +370,8 @@ public class CanvasController {
 
   /**
    * This method is responsible for running the timer. The timer is used to notify the user how much
-   * time they have left, and it is also used to refresh the model predictions every second.
+   * time they have left, and it is also used to refresh the model predictions and the
+   * closer/further section every second.
    */
   private void runCounter() {
 
@@ -265,7 +386,7 @@ public class CanvasController {
     // 0, then we finish the round, notifying the player that they ran out of time.
     timer.scheduleAtFixedRate(
         new TimerTask() {
-          int seconds = secondsLeft + 1;
+          private int seconds = secondsLeft + 1;
 
           public void run() {
 
@@ -286,8 +407,9 @@ public class CanvasController {
             gameTime++;
 
             // If the timer reaches 0, we cancel the timer so that it stops, and we finish
-            // the round with 0 (lost)
-            if (seconds < 0) {
+            // the round with 0 (lost). If the game mode is 'ZEN' mode, then we don't have
+            // to cancel the round even if the timer reaches 0 seconds.
+            if (seconds < 0 && gameMode != 2) {
               timer.cancel();
               finishRound(0);
             }
@@ -299,16 +421,12 @@ public class CanvasController {
 
   /**
    * This method updates the counter shown to the user by receiving the current time left as input.
-   * When the time reaches 0, the text shows "Time up".
    *
    * @param timeLeft the amount of time left in seconds
    */
   private void updateCounter(int timeLeft) {
     if (timeLeft >= 0) {
       this.timeLeft.setText(String.format("%d", timeLeft));
-    } else {
-      // Displays if there is no time left
-      this.timeLeft.setText("Time up");
     }
   }
 
@@ -317,7 +435,7 @@ public class CanvasController {
    * the user's drawing is getting closer to the top 10, then we display 'closer', if it goes
    * further away then we display 'further'.
    *
-   * @throws TranslateException
+   * @throws TranslateException when an error occurs during the processing of an input or output
    */
   private void updateCloserFurther() throws TranslateException {
 
@@ -330,13 +448,13 @@ public class CanvasController {
           new Image(this.getClass().getResource("/images/emojis/3.png").toString()));
     } else {
       // Closer
-      if (predictionIndex < previousIndex) {
+      if (predictionIndex <= previousIndex) {
         closerFurtherLabel.setText("CLOSER");
         closerFurtherImage.setImage(
             new Image(this.getClass().getResource("/images/emojis/0.png").toString()));
 
         // Further
-      } else if (predictionIndex > previousIndex) {
+      } else {
         closerFurtherLabel.setText("FURTHER");
         closerFurtherImage.setImage(
             new Image(this.getClass().getResource("/images/emojis/8.png").toString()));
@@ -344,6 +462,12 @@ public class CanvasController {
     }
   }
 
+  /**
+   * This method returns the current prediction index of the chosen word in the prediction list.
+   *
+   * @return the current prediction index of the chosen word
+   * @throws TranslateException when an error occurs during the processing of an input or output
+   */
   private int getPredictionIndex() throws TranslateException {
     List<Classifications.Classification> predictions =
         model.getPredictions(getCurrentSnapshot(), 340);
@@ -352,6 +476,8 @@ public class CanvasController {
 
     int currentIndex = 0;
 
+    // Going through the whole prediction list to look for the index of the chosen
+    // word
     for (Classifications.Classification category : predictions) {
       if (category.getClassName().equals(chosenWord)) {
         return currentIndex;
@@ -360,7 +486,58 @@ public class CanvasController {
       currentIndex++;
     }
 
-    return 340;
+    // If for some reason the word is not found, we return the size of the
+    // prediction list.
+    return predictions.size();
+  }
+
+  /**
+   * This method is called when the definition needs to get displayed for the user. It creates a
+   * separate thread to do the API calling to retrieve the definition string, then changes the
+   * labels accordingly and sets the 'ready' button to visible.
+   */
+  private void updateDefinitionLabel() {
+    // Making a thread for initialising the dictionary and finding the definition
+    Task<Void> updateTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+
+            CategorySelector categorySelector = new CategorySelector();
+
+            Dictionary dictionary = new Dictionary(CategorySelector.chosenWord);
+
+            while (!dictionary.getDefinitionExists()) {
+              // Selecting a random word for user again as definition does not exist
+              categorySelector.setWordWithDifficulty();
+              dictionary = new Dictionary(CategorySelector.chosenWord);
+              System.out.println(
+                  "Got a new word because the definition does not exist. The new word is: "
+                      + CategorySelector.chosenWord);
+            }
+
+            String definition = dictionary.getDefinition();
+
+            String underscored =
+                categorySelector.getChosenWord().replaceAll("-", "  ").replaceAll("[a-zA-Z]", "_ ");
+
+            // Updating the labels in the GUI and setting the ready button to visible so
+            // that the user can press it after everything has been prepared.
+            Platform.runLater(
+                () -> {
+                  definitionLabel.setText(definition);
+
+                  underscoreLabel.setText(underscored);
+
+                  readyButton.setVisible(true);
+                });
+
+            return null;
+          }
+        };
+
+    Thread predictionThread = new Thread(updateTask);
+    predictionThread.start();
   }
 
   /**
@@ -400,32 +577,37 @@ public class CanvasController {
                   predictionList.setText(sb.toString());
                 });
 
-            // Checking if the top 3 predictions match the chosen word. If it does, then the
-            // round finishes with 1 (win) and we stop the timer.
-            for (int j = 0; j < accuracyIndex; j++) {
-              // Removing underscores if they exist in the string
-              String categoryName = predictions.get(j).getClassName().replaceAll("_", " ");
+            // Only checking for top n predictions if the current game mode is not 'ZEN'
+            // mode.
+            if (gameMode != 2) {
+              // Checking if the top n predictions match the chosen word. If it does, then the
+              // round finishes with 1 (win) and we stop the timer.
+              for (int j = 0; j < accuracyIndex; j++) {
+                // Removing underscores if they exist in the string
+                String categoryName = predictions.get(j).getClassName().replaceAll("_", " ");
 
-              double predictionPercentage = predictions.get(j).getProbability() * 100;
+                double predictionPercentage = predictions.get(j).getProbability() * 100;
 
-              if (categoryName.equals(CategorySelector.chosenWord)
-                  && !canvasIsEmpty
-                  && predictionPercentage >= predictionConfidence) {
+                if (categoryName.equals(CategorySelector.chosenWord)
+                    && !canvasIsEmpty
+                    && predictionPercentage >= predictionConfidence) {
 
-                // Checking if prediction is the new highest prediction percentage
-                if (predictionPercentage
-                    > UserProfileManager.currentProfile.getHighestPrediction()) {
-                  UserProfileManager.currentProfile.setHighestPredictionPercentage(
-                      predictionPercentage);
+                  // Checking if prediction is the new highest prediction percentage
+                  if (predictionPercentage
+                      > UserProfileManager.currentProfile.getHighestPrediction()) {
+                    UserProfileManager.currentProfile.setHighestPredictionPercentage(
+                        predictionPercentage);
+                  }
+
+                  gameConfidence = predictionPercentage;
+
+                  // Finishing the round
+                  finishRound(1);
+                  timer.cancel();
                 }
-
-                gameConfidence = predictionPercentage;
-
-                // Finishing the round
-                finishRound(1);
-                timer.cancel();
               }
             }
+
             return null;
           }
         };
@@ -444,45 +626,24 @@ public class CanvasController {
     // Setting the message label that will be shown to the user depending on the
     // result
     if (result == 0) {
-      // the user has lost
+      // This is when the user has lost
       AfterRoundController.END_MESSAGE = "You ran out of time  :(";
       UserProfileManager.currentProfile.incrementLossesCount();
-
       UserProfileManager.currentProfile.resetConsecutiveWins();
 
     } else if (result == 1) {
-      // the user has won
+      // This is when the user has won
       AfterRoundController.END_MESSAGE = "Congratulations! You won  :)";
       UserProfileManager.currentProfile.incrementWinsCount();
-
       UserProfileManager.currentProfile.incrementConsecutiveWins();
 
-      if (gameTime <= 30) {
-        UserProfileManager.currentProfile.getBadges()[0] = true;
-      }
-      if (gameTime <= 15) {
-        UserProfileManager.currentProfile.getBadges()[1] = true;
-      }
-      if (gameTime <= 5) {
-        UserProfileManager.currentProfile.getBadges()[2] = true;
-      }
-      if ((gameTime == drawTime) || (gameTime == (drawTime - 1))) {
-        UserProfileManager.currentProfile.getBadges()[3] = true;
-      }
-      if (gameConfidence >= 75) {
-        UserProfileManager.currentProfile.getBadges()[4] = true;
-      }
-      if (UserProfileManager.currentProfile.getConsecutiveWins() == 3) {
-        UserProfileManager.currentProfile.getBadges()[6] = true;
-      }
-      if (UserProfileManager.currentProfile.getConsecutiveWins() == 10) {
-        UserProfileManager.currentProfile.getBadges()[7] = true;
-      }
+      // check to see if this game qualifies for badges
+      BadgesManager.checkForBadges(gameTime, drawTime, gameConfidence);
     }
 
-    if (UserProfileManager.currentProfile.getWordHistory().size() == 200) {
-      UserProfileManager.currentProfile.getBadges()[5] = true;
-    }
+    // Saving game statistics
+    UserProfileManager.currentProfile.addGameToHistory(
+        new Game((result == 1), LocalDateTime.now(), gameConfidence));
 
     // Ensuring that statistics are saved to file after each round.
     UserProfileManager.saveToFile();
@@ -508,16 +669,19 @@ public class CanvasController {
    * the brush, clicking the button will change the brush to the eraser, and vice versa.
    */
   @FXML
-  private void onSwitchBrushEraser() {
+  private void onSwitchBrushEraser(ActionEvent event) {
+
+    Button button = (Button) event.getSource();
+
     // Once eraser is pressed, button switches to "switch to brush"
     if (eraser == true) {
       eraser = false;
-      switchButton.setText("Switch to eraser");
+      button.setText("Switch to eraser");
 
       // Once brush is pressed, button switches to "switch to eraser"
     } else {
       eraser = true;
-      switchButton.setText("Switch to brush");
+      button.setText("Switch to brush");
     }
   }
 
@@ -547,5 +711,75 @@ public class CanvasController {
 
     Thread speechThread = new Thread(speechTask);
     speechThread.start();
+  }
+
+  /**
+   * This method is called when the player changes the color on the color picker. The penColor
+   * variable is updated.
+   */
+  @FXML
+  private void onChangeColor() {
+    penColor = penColorPicker.getValue();
+  }
+
+  /**
+   * This method will be called when the user clicks on the back button
+   *
+   * @param event the action event handler result
+   */
+  @FXML
+  private void onGoBack(ActionEvent event) {
+
+    // confirming that the user wants to go back
+    Alert alert = new Alert(AlertType.CONFIRMATION);
+
+    // Applying style to the alert dialog
+    DialogPane dialogPane = alert.getDialogPane();
+    dialogPane.getStylesheets().add(this.getClass().getResource("/css/dialog.css").toString());
+
+    alert.setTitle(null);
+    alert.setHeaderText(null);
+    alert.setContentText("Are you sure you want to leave? You will lose your drawing!");
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.get() == ButtonType.OK) {
+      // Getting scene information
+      Button button = (Button) event.getSource();
+      Scene sceneButtonIsIn = button.getScene();
+
+      // Switching scenes to the canvas page.
+      try {
+        sceneButtonIsIn.setRoot(App.loadFxml("main_menu"));
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  /**
+   * This method is called when the user clicks on the done button
+   *
+   * @param event the action event handler result
+   * @throws IOException {@inheritDoc}
+   */
+  @FXML
+  private void onDone(ActionEvent event) throws IOException {
+    AfterRoundController.END_MESSAGE = "Nice drawing :P";
+    saveCurrentSnapshotOnFile();
+
+    /*
+     * Getting the snapshot of the current canvas so that the user can see their art
+     * after the round and decide if they should save it or not. Also moving the
+     * user to the next scene (after_round) as the round finished.
+     */
+    Platform.runLater(
+        () -> {
+          try {
+            canvas.getScene().setRoot(App.loadFxml("after_round"));
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
   }
 }

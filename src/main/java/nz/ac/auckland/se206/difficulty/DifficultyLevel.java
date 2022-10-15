@@ -1,5 +1,8 @@
 package nz.ac.auckland.se206.difficulty;
 
+import nz.ac.auckland.se206.profiles.UserProfileManager;
+
+/** This class is for all operations regarding the difficulty settings for the user. */
 public class DifficultyLevel {
 
   public enum Accuracy {
@@ -30,6 +33,77 @@ public class DifficultyLevel {
     MA
   }
 
+  /**
+   * This method returns the current accuracy level setting of the user.
+   *
+   * @return the current accuracy level
+   */
+  public static int getAccuracyIndex() {
+    Accuracy accuracyLevel =
+        UserProfileManager.currentProfile.getDifficultyLevel().getAccuracyLevel();
+
+    int accuracyIndex;
+
+    if (accuracyLevel == DifficultyLevel.Accuracy.E) {
+      accuracyIndex = 5;
+    } else if (accuracyLevel == DifficultyLevel.Accuracy.M) {
+      accuracyIndex = 3;
+    } else if (accuracyLevel == DifficultyLevel.Accuracy.H) {
+      accuracyIndex = 2;
+    } else {
+      accuracyIndex = 1;
+    }
+
+    return accuracyIndex;
+  }
+
+  /**
+   * This method returns the current time level setting of the user.
+   *
+   * @return the current draw time
+   */
+  public static int getDrawTime() {
+    Time timeLevel = UserProfileManager.currentProfile.getDifficultyLevel().getTimeLevel();
+
+    int drawTime;
+
+    if (timeLevel == DifficultyLevel.Time.E) {
+      drawTime = 60;
+    } else if (timeLevel == DifficultyLevel.Time.M) {
+      drawTime = 45;
+    } else if (timeLevel == DifficultyLevel.Time.H) {
+      drawTime = 30;
+    } else {
+      drawTime = 15;
+    }
+
+    return drawTime;
+  }
+
+  /**
+   * This method returns the current confidence level setting of the user.
+   *
+   * @return the current prediction confidence
+   */
+  public static int getPredictionConfidence() {
+    Confidence confidenceLevel =
+        UserProfileManager.currentProfile.getDifficultyLevel().getConfidenceLevel();
+
+    int predictionConfidence;
+
+    if (confidenceLevel == DifficultyLevel.Confidence.E) {
+      predictionConfidence = 1;
+    } else if (confidenceLevel == DifficultyLevel.Confidence.M) {
+      predictionConfidence = 10;
+    } else if (confidenceLevel == DifficultyLevel.Confidence.H) {
+      predictionConfidence = 25;
+    } else {
+      predictionConfidence = 50;
+    }
+
+    return predictionConfidence;
+  }
+
   private Accuracy accuracyLevel;
 
   private Words wordsLevel;
@@ -38,6 +112,7 @@ public class DifficultyLevel {
 
   private Confidence confidenceLevel;
 
+  /** This constructor is for initiating the different difficulty settings. */
   public DifficultyLevel() {
     this.accuracyLevel = Accuracy.E;
     this.wordsLevel = Words.E;
@@ -45,34 +120,74 @@ public class DifficultyLevel {
     this.confidenceLevel = Confidence.E;
   }
 
+  /**
+   * This getter method is for the accuracy level that the user has chosen.
+   *
+   * @return the accuracy level
+   */
   public Accuracy getAccuracyLevel() {
     return this.accuracyLevel;
   }
 
+  /**
+   * This getter method is for the word difficulty level that the user has chosen.
+   *
+   * @return the words difficulty
+   */
   public Words getWordsLevel() {
     return this.wordsLevel;
   }
 
+  /**
+   * This getter method is for the time difficulty level setting.
+   *
+   * @return the time level
+   */
   public Time getTimeLevel() {
     return this.timeLevel;
   }
 
+  /**
+   * This getter method is for the confidence level difficulty setting.
+   *
+   * @return the confidence level
+   */
   public Confidence getConfidenceLevel() {
     return this.confidenceLevel;
   }
 
+  /**
+   * This method is for setting the accuracy level difficulty setting that is chosen by the user.
+   *
+   * @param accuracyLevel the accuracy level that the user chose
+   */
   public void setAccuracyLevel(Accuracy accuracyLevel) {
     this.accuracyLevel = accuracyLevel;
   }
 
+  /**
+   * This method is for setting the word level difficulty setting chosen by the user.
+   *
+   * @param wordsLevel the word difficulty level that the user chose
+   */
   public void setWordsLevel(Words wordsLevel) {
     this.wordsLevel = wordsLevel;
   }
 
+  /**
+   * This setter method is for the time difficulty level that the user has chosen.
+   *
+   * @param timeLevel the time level difficulty
+   */
   public void setTimeLevel(Time timeLevel) {
     this.timeLevel = timeLevel;
   }
 
+  /**
+   * This setter method is for the confidence level setting that the user has chosen.
+   *
+   * @param confidenceLevel the confidence level that the user chose.
+   */
   public void setConfidenceLevel(Confidence confidenceLevel) {
     this.confidenceLevel = confidenceLevel;
   }

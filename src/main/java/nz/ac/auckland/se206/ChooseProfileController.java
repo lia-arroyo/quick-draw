@@ -10,11 +10,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 
+/** This method is for handling any action on the Choose Profile page. */
 public class ChooseProfileController {
 
   @FXML private Button leftButton;
@@ -32,8 +34,8 @@ public class ChooseProfileController {
   /**
    * JavaFX calls this method once the GUI elements are loaded.
    *
-   * @throws URISyntaxException
-   * @throws IOException
+   * @throws URISyntaxException {@inheritDoc}
+   * @throws IOException {@inheritDoc}
    */
   public void initialize() throws IOException, URISyntaxException {
 
@@ -67,16 +69,26 @@ public class ChooseProfileController {
     // Can only delete user profile if there are at least current user profiles
     if (UserProfileManager.userProfileList.size() > 1) {
 
+      // creating an alert to prevent users from accidentally losing all their progress.
       Alert alert = new Alert(AlertType.CONFIRMATION);
+
+      // Adding style to the alert
+      DialogPane dialogPane = alert.getDialogPane();
+      dialogPane.getStylesheets().add(this.getClass().getResource("/css/dialog.css").toString());
+
+      // alert content
       alert.setTitle(null);
       alert.setHeaderText(null);
       alert.setContentText(
           String.format(
               "Are you sure you want to delete %s?",
-              UserProfileManager.currentProfile.getUserName()));
+              UserProfileManager.userProfileList
+                  .get(UserProfileManager.currentProfileIndex)
+                  .getUserName()));
 
       Optional<ButtonType> result = alert.showAndWait();
 
+      // when the user confirms that they want to delete
       if (result.get() == ButtonType.OK) {
         UserProfileManager.userProfileList.remove(UserProfileManager.currentProfileIndex);
 
@@ -97,6 +109,15 @@ public class ChooseProfileController {
 
       // Changes the profile image to the one the user chose
       updateImage();
+
+    } else {
+      // alerting user that they aren't allowed to delete profiles if its the only one left.
+      Alert alert = new Alert(AlertType.CONFIRMATION);
+      alert.setTitle(null);
+      alert.setHeaderText(null);
+      alert.setContentText(
+          "Sorry, you can't delete this profile. :( You must have at least one active profile. Create a new profile then try again.");
+      Optional<ButtonType> result = alert.showAndWait();
     }
 
     // If there is only one profile available, then we hide the arrow buttons.
@@ -148,10 +169,11 @@ public class ChooseProfileController {
 
   /** This method is invoked when the user clicks on the right arrow. */
   @FXML
-  // Displays the next user profile to the right of the current one in the array
-  // list unless the profile is the last profile, in which case the first profile
-  // is displayed
   private void onGoRight() {
+    // Displays the next user profile to the right of the current one in the array
+    // list unless the profile is the last profile, in which case the first profile
+    // is displayed
+
     if (UserProfileManager.currentProfileIndex + 1 == UserProfileManager.userProfileList.size()) {
       UserProfileManager.currentProfileIndex = 0;
       this.userNameLabel.setText(
@@ -169,8 +191,14 @@ public class ChooseProfileController {
     updateImage();
   }
 
+  /**
+   * This method is called when the user chooses a profile i.e. clicks on an avatar
+   *
+   * @param event the event handler result
+   */
   @FXML
   private void onSelectProfile(ActionEvent event) {
+    // getting scene information
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 

@@ -11,13 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import nz.ac.auckland.se206.difficulty.DifficultyLevel;
-import nz.ac.auckland.se206.difficulty.DifficultyLevel.Words;
-import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
-import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
 
+/** This class handles all actions on the waiting page. */
 public class WaitingController {
 
   @FXML private Label chosenWord;
@@ -41,33 +38,9 @@ public class WaitingController {
     // Selecting a random word for user
     CategorySelector categorySelector = new CategorySelector();
 
-    Words wordsLevel =
-        UserProfileManager.userProfileList
-            .get(UserProfileManager.currentProfileIndex)
-            .getDifficultyLevel()
-            .getWordsLevel();
-    if (wordsLevel == DifficultyLevel.Words.E) {
-      categorySelector.setNewChosenWord(Difficulty.E);
-    } else if (wordsLevel == DifficultyLevel.Words.M) {
-      double randomNumber = Math.random();
-      if (randomNumber < 0.3) {
-        categorySelector.setNewChosenWord(Difficulty.E);
-      } else {
-        categorySelector.setNewChosenWord(Difficulty.M);
-      }
-    } else if (wordsLevel == DifficultyLevel.Words.H) {
-      double randomNumber = Math.random();
-      if (randomNumber < 0.1) {
-        categorySelector.setNewChosenWord(Difficulty.E);
-      } else if (randomNumber < 0.4) {
-        categorySelector.setNewChosenWord(Difficulty.M);
-      } else {
-        categorySelector.setNewChosenWord(Difficulty.H);
-      }
-    } else {
-      categorySelector.setNewChosenWord(Difficulty.H);
-    }
+    categorySelector.setWordWithDifficulty();
 
+    // updating the label
     chosenWord.setText(categorySelector.getChosenWord());
   }
 
@@ -83,17 +56,9 @@ public class WaitingController {
     Button button = (Button) event.getSource();
     Scene sceneButtonIsIn = button.getScene();
 
-    String currentMode = new String();
-
-    if (MainMenuController.gameMode == 0) {
-      currentMode = "canvas";
-    } else if (MainMenuController.gameMode == 2) {
-      currentMode = "zen";
-    }
-
     // Switching scenes to the canvas page.
     try {
-      sceneButtonIsIn.setRoot(App.loadFxml(currentMode));
+      sceneButtonIsIn.setRoot(App.loadFxml("canvas"));
 
     } catch (IOException e) {
       e.printStackTrace();

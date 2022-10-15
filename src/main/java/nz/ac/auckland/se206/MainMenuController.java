@@ -18,6 +18,7 @@ import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
+/** This class is to handle any actions from the Main Menu page. */
 public class MainMenuController {
 
   @FXML private Button speechButton;
@@ -35,7 +36,7 @@ public class MainMenuController {
   /**
    * JavaFX calls this method once the GUI elements are loaded.
    *
-   * @throws FileNotFoundException
+   * @throws FileNotFoundException {@inheritDoc}
    */
   public void initialize() throws FileNotFoundException {
 
@@ -75,10 +76,11 @@ public class MainMenuController {
 
     String currentMode = new String();
 
+    // assigning game modes
     if (gameMode == 0 || gameMode == 2) {
       currentMode = "waiting";
     } else if (gameMode == 1) {
-      currentMode = "hidden_word";
+      currentMode = "canvas";
     }
 
     // Changing the scene to waiting screen
@@ -165,6 +167,11 @@ public class MainMenuController {
     }
   }
 
+  /**
+   * This method is called when the user wants to change settings i.e. when they click the button
+   *
+   * @param event the action event handler result
+   */
   @FXML
   private void onChangeSettings(ActionEvent event) {
     // Getting the scene information
@@ -179,6 +186,11 @@ public class MainMenuController {
     }
   }
 
+  /**
+   * This method is called when the user wants to view the badges by clicking the badges button.
+   *
+   * @param event this action event handler result
+   */
   @FXML
   private void onViewBadges(ActionEvent event) {
     // Getting the scene information
@@ -193,6 +205,7 @@ public class MainMenuController {
     }
   }
 
+  /** This method is called when the user presses the left button for choosing game mode. */
   @FXML
   private void onViewLeaderboard(ActionEvent event) {
     // Getting the scene information
@@ -210,6 +223,8 @@ public class MainMenuController {
   @FXML
   private void onModeLeft() {
     if (gameMode == 0) {
+      // if the gamemode is on the first mode (i.e. normal mode), it returns to the
+      // last game mode.
       gameMode = 2;
     } else {
       gameMode--;
@@ -218,9 +233,14 @@ public class MainMenuController {
     updateGameMode();
   }
 
+  /**
+   * This method is called when the user clicks on the right button when trying to switch game
+   * modes.
+   */
   @FXML
   private void onModeRight() {
     if (gameMode == 2) {
+      // if the gamemode is the last one, it returns to the first one.
       gameMode = 0;
     } else {
       gameMode++;

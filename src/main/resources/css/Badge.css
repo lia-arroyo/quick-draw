@@ -1,9 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500&display=swap");
-
 * {
   -fx-text-color: black;
   -fx-text-base-color: black;
+  -fx-text-background-color: black;
   -fx-font-family: "Inter Tight", sans-serif;
+}
+
+.badge-box {
+  -fx-border-color: black;
+  -fx-border-radius: 20px;
+  -fx-border-width: 5px;
 }
 
 .back-button {
@@ -17,15 +22,11 @@
   -fx-font-size: 24px;
 }
 
-.words-drawn {
-  -fx-font-size: 16px;
+.button {
+  -fx-background-color: transparent;
+  -fx-border-width: 0px;
 }
 
-.image-box {
-  -fx-border-width: 2px;
-  -fx-border-color: black;
-}
-
-.progress-bar .bar {
-  -fx-background-color: linear-gradient(to right, lightgreen, seagreen);
+.h-box > .button {
+  -fx-background-radius: 50%;
 }

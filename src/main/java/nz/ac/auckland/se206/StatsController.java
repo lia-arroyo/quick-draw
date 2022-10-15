@@ -3,32 +3,39 @@ package nz.ac.auckland.se206;
 import com.opencsv.exceptions.CsvException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
+import javafx.scene.layout.AnchorPane;
+import nz.ac.auckland.se206.games.Game;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.words.CategorySelector;
 
+/** This class will handle any actions on the Stats page. */
 public class StatsController {
   @FXML private Label statsTitleLabel;
   @FXML private Label winsLabel;
   @FXML private Label lossesLabel;
   @FXML private Label highestPredictionLabel;
-  @FXML private Label progressLabel;
+  @FXML private Label easyProgressLabel;
+  @FXML private Label mediumProgressLabel;
+  @FXML private Label hardProgressLabel;
   @FXML private ImageView userProfileImage;
-  @FXML private ScrollPane wordHistoryScrollPane;
-  @FXML private ProgressBar wordProgressBar;
+  @FXML private Accordion wordHistoryAccordion;
+  @FXML private ProgressBar easyProgressBar;
+  @FXML private ProgressBar mediumProgressBar;
+  @FXML private ProgressBar hardProgressBar;
 
   private UserProfile currentProfile = UserProfileManager.currentProfile;
 
+  /** This method is called when the Stats page is loaded. */
   public void initialize() {
     // updating the title with the current profile's name
     statsTitleLabel.setText(currentProfile.getUserName() + "'s stats");
@@ -63,21 +70,58 @@ public class StatsController {
     updateProgress();
   }
 
-  /** This method will display the word history using a String Builder. */
+  /**
+   * This method will display the word history using the Game statistic history and the FXML
+   * components: accordion, and some title and anchored panes.
+   */
   private void displayWordHistory() {
-    StringBuilder builder = new StringBuilder();
+    // Getting a copy of the games and their statistics for each related to the user.
+    ArrayList<Game> games = new ArrayList<>(currentProfile.getHistoryOfGames());
 
-    // listing every word that the user has played.
-    for (String word : currentProfile.getWordHistory()) {
-      builder.append(word + "\n");
-    }
+    // Reversing order of history (of the copy, not the actual history).
+    Collections.reverse(games);
 
-    // creating new label that resizes depending on length of above string
-    Label words = new Label(builder.toString());
-    words.setFont(new Font(20));
+    // Iterating through each game
+    games.forEach(
+        (game) -> {
 
-    // adding the new resized label to the scroll pane
-    wordHistoryScrollPane.setContent(words);
+          // setting up content for each dropdown pane
+          StringBuilder sb = new StringBuilder();
+          sb.append("Played on " + game.getTimePlayed() + "\n");
+          sb.append("Word Difficulty: ");
+
+          // word difficulty
+          switch (game.getWordDifficulty()) {
+            case E:
+              sb.append("Easy");
+              break;
+            case M:
+              sb.append("Medium");
+              break;
+            case H:
+              sb.append("Hard");
+              break;
+          }
+
+          sb.append("\nResult: " + (game.getResult() ? "Won" : "Lost") + "\n");
+
+          // if user has won, display accuracy as well.
+          if (game.getResult()) {
+            sb.append(String.format("Accuracy: %.2f%%", game.getAccuracy()));
+          }
+
+          // adding contents to dropdown content
+          Label label = new Label(sb.toString());
+          label.setPadding(new Insets(20));
+          AnchorPane anchorPane = new AnchorPane(label);
+
+          // Creating a titled pane
+          TitledPane dropdown = new TitledPane(game.getWord(), anchorPane);
+          dropdown.setStyle("-fx-text-fill: " + (game.getResult() ? "green" : "red"));
+
+          // adding each dropdown to accordion
+          wordHistoryAccordion.getPanes().add(dropdown);
+        });
   }
 
   /**
@@ -85,29 +129,33 @@ public class StatsController {
    * has played.
    */
   private void updateProgress() {
-    // Creating new category selector to get the number of total words
     CategorySelector categorySelector = null;
     try {
+      // Creating new category selector instance to get the number of total words
       categorySelector = new CategorySelector();
     } catch (IOException | RuntimeException | URISyntaxException | CsvException e) {
       throw new RuntimeException(e);
     }
 
-    // calculating the progress
-    int wordsPlayed = currentProfile.getWordHistory().size();
-    int wordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.E);
-    double progress = (double) wordsPlayed / wordsInTotal;
+    // calculating the number of words played for each difficulty
+    int easyWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.E).size();
+    int mediumWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.M).size();
+    int hardWordsPlayed = currentProfile.getWordHistory(CategorySelector.Difficulty.H).size();
+
+    // calculating total number of words per difficulty
+    int easyWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.E);
+    int mediumWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.M);
+    int hardWordsInTotal = categorySelector.getTotalWordCount(CategorySelector.Difficulty.H);
 
     // updating the actual progress bar
-    wordProgressBar.setProgress(progress);
+    easyProgressBar.setProgress((double) easyWordsPlayed / easyWordsInTotal);
+    mediumProgressBar.setProgress((double) mediumWordsPlayed / mediumWordsInTotal);
+    hardProgressBar.setProgress((double) hardWordsPlayed / hardWordsInTotal);
 
-    // updating the text that goes with it
-    progressLabel.setText(
-        "You've played a total of "
-            + wordsPlayed
-            + " words, and have "
-            + (wordsInTotal - wordsPlayed)
-            + " words to go! Well done!");
+    // updating the label alongside it with the actual value
+    easyProgressLabel.setText(Math.round(easyProgressBar.getProgress() * 100) + "%");
+    mediumProgressLabel.setText(Math.round(mediumProgressBar.getProgress() * 100) + "%");
+    hardProgressLabel.setText(Math.round(hardProgressBar.getProgress() * 100) + "%");
   }
 
   /**

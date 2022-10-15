@@ -8,6 +8,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/**
+ * This class is for the user profile manager, and is for all operations related to the user profile
+ * such as saving, etc.
+ */
 public class UserProfileManager {
 
   public static ArrayList<UserProfile> userProfileList;
