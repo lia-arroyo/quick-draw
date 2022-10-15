@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import nz.ac.auckland.se206.util.SoundUtils;
 
 /** This class handles any actions on the Title pages. */
 public class TitleController {
@@ -25,6 +26,10 @@ public class TitleController {
    * @throws IOException {@inheritDoc}
    */
   public void initialize() throws IOException {
+
+    // Playing the background music
+    SoundUtils soundPlayer = new SoundUtils();
+    soundPlayer.playBackgroundMusic();
 
     File profiles = new File("./src/main/resources/profiles/profiles.json");
 

@@ -97,6 +97,8 @@ public class MainMenuController {
     // Changing the scene to waiting screen
     try {
       soundPlayer.playButtonSound();
+      soundPlayer.playDrawingMusic();
+
       sceneButtonIsIn.setRoot(App.loadFxml(currentMode));
     } catch (IOException e) {
       e.printStackTrace();
