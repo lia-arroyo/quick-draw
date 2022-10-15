@@ -448,13 +448,13 @@ public class CanvasController {
           new Image(this.getClass().getResource("/images/emojis/3.png").toString()));
     } else {
       // Closer
-      if (predictionIndex < previousIndex) {
+      if (predictionIndex <= previousIndex) {
         closerFurtherLabel.setText("CLOSER");
         closerFurtherImage.setImage(
             new Image(this.getClass().getResource("/images/emojis/0.png").toString()));
 
         // Further
-      } else if (predictionIndex > previousIndex) {
+      } else {
         closerFurtherLabel.setText("FURTHER");
         closerFurtherImage.setImage(
             new Image(this.getClass().getResource("/images/emojis/8.png").toString()));
