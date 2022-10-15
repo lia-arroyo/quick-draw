@@ -64,15 +64,12 @@ public class LeaderboardController {
   @FXML private ChoiceBox<String> leaderboardStatistic;
 
   public void initialize() {
-
     ArrayList<UserProfile> leaderboardProfiles = getProfiles(Statistic.WINS);
 
     if (leaderboardProfiles.isEmpty()) {
-
       setEmptyScene();
 
     } else {
-
       UserProfile[] podiumProfiles = getPodiumProfiles(Statistic.WINS, leaderboardProfiles);
 
       setPodium(Statistic.WINS, podiumProfiles);
@@ -89,25 +86,47 @@ public class LeaderboardController {
           .selectedIndexProperty()
           .addListener(
               new ChangeListener<Number>() {
-
                 @Override
                 public void changed(
                     ObservableValue<? extends Number> observable,
                     Number oldValue,
                     Number newValue) {
                   if ((double) newValue == 0) {
+                    ArrayList<UserProfile> leaderboardProfiles = getProfiles(Statistic.BADGES);
 
-                  } else if ((double) newValue == 1) {
-
-                  } else {
                     if (leaderboardProfiles.isEmpty()) {
-
                       setEmptyScene();
 
                     } else {
+                      UserProfile[] podiumProfiles =
+                          getPodiumProfiles(Statistic.BADGES, leaderboardProfiles);
+                      setPodium(Statistic.BADGES, podiumProfiles);
+                      setPodiumBold(getLeaderboardIndex(podiumProfiles));
+                    }
 
+                  } else if ((double) newValue == 1) {
+                    ArrayList<UserProfile> leaderboardProfiles = getProfiles(Statistic.CONFIDENCE);
+
+                    if (leaderboardProfiles.isEmpty()) {
+                      setEmptyScene();
+
+                    } else {
+                      UserProfile[] podiumProfiles =
+                          getPodiumProfiles(Statistic.CONFIDENCE, leaderboardProfiles);
+                      setPodium(Statistic.CONFIDENCE, podiumProfiles);
+                      setPodiumBold(getLeaderboardIndex(podiumProfiles));
+                    }
+
+                  } else {
+                    ArrayList<UserProfile> leaderboardProfiles = getProfiles(Statistic.WINS);
+
+                    if (leaderboardProfiles.isEmpty()) {
+                      setEmptyScene();
+
+                    } else {
+                      UserProfile[] podiumProfiles =
+                          getPodiumProfiles(Statistic.WINS, leaderboardProfiles);
                       setPodium(Statistic.WINS, podiumProfiles);
-
                       setPodiumBold(getLeaderboardIndex(podiumProfiles));
                     }
                   }
@@ -133,21 +152,17 @@ public class LeaderboardController {
   }
 
   private int getLeaderboardIndex(UserProfile[] podiumProfiles) {
-
     int leaderboardIndex = -1;
-
     for (int i = 0; i < podiumProfiles.length; i++) {
       if (UserProfileManager.currentProfile.getUserName().equals(podiumProfiles[i].getUserName())) {
         leaderboardIndex = i;
         break;
       }
     }
-
     return leaderboardIndex;
   }
 
   private void setPodium(Statistic statistic, UserProfile[] podiumProfiles) {
-
     positionOne.setText("1");
     playerOne.setText(podiumProfiles[0].getUserName());
     if (podiumProfiles.length > 1) {
@@ -166,9 +181,7 @@ public class LeaderboardController {
       positionFive.setText("5");
       playerFive.setText(podiumProfiles[4].getUserName());
     }
-
     if (statistic == Statistic.WINS) {
-
       winsOne.setText(String.valueOf(podiumProfiles[0].getWinsCount()));
       if (podiumProfiles.length > 1) {
         winsTwo.setText(String.valueOf(podiumProfiles[1].getWinsCount()));
@@ -182,7 +195,6 @@ public class LeaderboardController {
       if (podiumProfiles.length > 4) {
         winsFive.setText(String.valueOf(podiumProfiles[4].getWinsCount()));
       }
-
     } else if (statistic == Statistic.BADGES) {
 
     } else {
@@ -194,15 +206,12 @@ public class LeaderboardController {
       Statistic statistic, ArrayList<UserProfile> leaderboardProfiles) {
     if (statistic == Statistic.WINS) {
       Integer[] userWins = new Integer[leaderboardProfiles.size()];
-
       for (int i = 0; i < leaderboardProfiles.size(); i++) {
         userWins[i] = leaderboardProfiles.get(i).getWinsCount();
       }
-
       Arrays.sort(userWins, Collections.reverseOrder());
 
       int positions;
-
       if (userWins.length < 5) {
         positions = userWins.length;
       } else {
@@ -210,7 +219,6 @@ public class LeaderboardController {
       }
 
       UserProfile[] podiumProfiles = new UserProfile[positions];
-
       for (int i = 0; i < podiumProfiles.length; i++) {
         for (int j = 0; j < leaderboardProfiles.size(); j++) {
           if (leaderboardProfiles.get(j).getWinsCount() == userWins[i]) {
