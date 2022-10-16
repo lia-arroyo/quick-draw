@@ -65,4 +65,23 @@ public class BadgesManager {
       throw new RuntimeException(e);
     }
   }
+
+  /** This method checks whether the current user can qualify for the last badge */
+  public static void checkLastBadge() {
+    // Checking to update the 8th badge
+    try {
+      // Creating an instance of the CS to access total words in hashmap method
+      CategorySelector categorySelector = new CategorySelector();
+
+      // Checking if all easy words have been played.
+      if (UserProfileManager.currentProfile.getWordHistory(CategorySelector.Difficulty.E).size() + 1
+          == categorySelector.getTotalWordCount(CategorySelector.Difficulty.E)) {
+        UserProfileManager.currentProfile.setBadgeTrue(7);
+      }
+
+      // Exception handling
+    } catch (IOException | CsvException | URISyntaxException e) {
+      throw new RuntimeException(e);
+    }
+  }
 }
