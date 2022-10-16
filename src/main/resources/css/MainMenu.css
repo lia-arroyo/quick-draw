@@ -2,6 +2,7 @@
 
 * {
   -fx-text-color: black;
+  -fx-font-weight: bold;
   -fx-text-base-color: black;
   -fx-font-family: "Inter Tight", sans-serif;
 }

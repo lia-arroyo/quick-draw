@@ -14,8 +14,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.shape.Line;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
+import nz.ac.auckland.se206.util.SoundUtils;
 
 public class LeaderboardController {
 
@@ -29,7 +31,7 @@ public class LeaderboardController {
 
   @FXML private Label playerText;
 
-  @FXML private Label winsText;
+  @FXML private Label statsLabel;
 
   @FXML private Label playerOne;
 
@@ -61,13 +63,20 @@ public class LeaderboardController {
 
   @FXML private Label winsFive;
 
+  @FXML private Line dividerLine;
+
   @FXML private ChoiceBox<String> leaderboardStatistic;
+
+  private SoundUtils soundPlayer;
 
   /**
    * This method loads the leaderboard of the stat user wins by default, or displays a message if
    * there is no leaderboard to show
    */
   public void initialize() {
+    // Initiate the sound player
+    soundPlayer = new SoundUtils();
+
     // Gets the user profiles that are eligible for leaderboard positions
     ArrayList<UserProfile> leaderboardProfiles = getProfiles(Statistic.WINS);
 
@@ -103,6 +112,8 @@ public class LeaderboardController {
                     ObservableValue<? extends Number> observable,
                     Number oldValue,
                     Number newValue) {
+                  soundPlayer.playButtonSound();
+
                   if ((int) newValue == 0) {
                     // Gets the user profiles that are eligible for leaderboard positions
                     ArrayList<UserProfile> leaderboardProfiles = getProfiles(Statistic.BADGES);
@@ -251,7 +262,7 @@ public class LeaderboardController {
     }
     if (statistic == Statistic.WINS) {
       // Changes the leaderboard page to show the stat number of wins
-      winsText.setText("Number of Wins");
+      statsLabel.setText("Number of Wins");
       // Sets the user stats of place 1 in the podium
       winsOne.setText(String.valueOf(podiumProfiles[0].getWinsCount()));
       if (podiumProfiles.length > 1) {
@@ -272,7 +283,7 @@ public class LeaderboardController {
       }
     } else if (statistic == Statistic.BADGES) {
       // Changes the leaderboard page to show the stat number of badges
-      winsText.setText("Badges Earned");
+      statsLabel.setText("Badges Earned");
       // Sets the user stats of place 1 in the podium
       winsOne.setText(String.valueOf(podiumProfiles[0].getBadgesCount()));
       if (podiumProfiles.length > 1) {
@@ -293,7 +304,7 @@ public class LeaderboardController {
       }
     } else {
       // Changes the leaderboard page to show the stat highest prediction
-      winsText.setText("Highest Prediction");
+      statsLabel.setText("Highest Prediction");
       // Sets the user stats of place 1 in the podium
       winsOne.setText(String.valueOf(Math.round(podiumProfiles[0].getHighestPrediction())) + "%");
       if (podiumProfiles.length > 1) {
@@ -434,7 +445,7 @@ public class LeaderboardController {
     // Titles set to invisible
     positionText.setVisible(false);
     playerText.setVisible(false);
-    winsText.setVisible(false);
+    statsLabel.setVisible(false);
     // Positions set to invisible
     positionOne.setVisible(false);
     positionOne.setVisible(false);
@@ -446,6 +457,7 @@ public class LeaderboardController {
     leaderboardStatistic.setVisible(false);
     // Displays message to show
     playerTwo.setText("It's quiet here ...");
+    dividerLine.setVisible(false);
   }
 
   /**
@@ -488,14 +500,14 @@ public class LeaderboardController {
    *
    * @param positionText the position of the row in the leaderboard
    * @param playerText the player in the position of the row in the leaderboards
-   * @param winsText the stat of the player
+   * @param statsLabel the stat of the player
    */
-  private void setRegularStyle(Label positionText, Label playerText, Label winsText) {
+  private void setRegularStyle(Label positionText, Label playerText, Label statsLabel) {
     // Sets the font style to regular style
     String regularStyle = "-fx-font-weight: normal;";
     positionText.setStyle(regularStyle);
     playerText.setStyle(regularStyle);
-    winsText.setStyle(regularStyle);
+    statsLabel.setStyle(regularStyle);
   }
 
   /**
@@ -503,14 +515,14 @@ public class LeaderboardController {
    *
    * @param positionText the position of the row in the leaderboard
    * @param playerText the player in the position of the row in the leaderboards
-   * @param winsText the stat of the player
+   * @param statsLabel the stat of the player
    */
-  private void setBoldStyle(Label positionText, Label playerText, Label winsText) {
+  private void setBoldStyle(Label positionText, Label playerText, Label statsLabel) {
     // Sets the font style to bold
     String boldStyle = "-fx-font-weight: bold;";
     positionText.setStyle(boldStyle);
     playerText.setStyle(boldStyle);
-    winsText.setStyle(boldStyle);
+    statsLabel.setStyle(boldStyle);
   }
 
   /**
@@ -519,13 +531,14 @@ public class LeaderboardController {
    * @param event the button that is pressed to return to main menu
    */
   @FXML
-  private void onReturn(ActionEvent event) {
+  private void onGoBack(ActionEvent event) {
     // Getting the scene information
     Button button = (Button) event.getSource();
     Scene currentScene = button.getScene();
 
     // Change to main menu page
     try {
+      soundPlayer.playButtonSound();
       currentScene.setRoot(App.loadFxml("main_menu"));
     } catch (IOException e) {
       throw new RuntimeException(e);

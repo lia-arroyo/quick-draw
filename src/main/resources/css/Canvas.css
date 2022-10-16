@@ -2,6 +2,7 @@
   -fx-text-color: black;
   -fx-text-base-color: black;
   -fx-font-family: "Inter Tight", sans-serif;
+  -fx-font-weight: bold;
 }
 
 .button {

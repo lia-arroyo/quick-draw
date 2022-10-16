@@ -272,6 +272,7 @@ public class MainMenuController {
 
     // Change to leaderboard page
     try {
+      soundPlayer.playButtonSound();
       currentScene.setRoot(App.loadFxml("leaderboard"));
     } catch (IOException e) {
       e.printStackTrace();
@@ -343,7 +344,8 @@ public class MainMenuController {
    * 'Zen' mode.
    */
   private void updateGameMode() {
-    // Checking the current game mode and updating the labels and logics depending on the game mode
+    // Checking the current game mode and updating the labels and logics depending
+    // on the game mode
     // that the user has chosen
     if (gameMode == 0) {
       gameModeLabel.setText("Normal");
