@@ -19,6 +19,7 @@ import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.util.SoundUtils;
 
+/** This class is to handle any actions on the Badges page. */
 public class BadgesController {
 
   @FXML private VBox badgeBox;
@@ -33,7 +34,7 @@ public class BadgesController {
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. The badge title and detail
-   * informations are put into the arraylist, and the information is applied to the GUI elements.
+   * information are put into the arraylist, and the information is applied to the GUI elements.
    */
   public void initialize() {
 
@@ -183,9 +184,9 @@ public class BadgesController {
                     .getResource(String.format("/images/badges/%d.png", id))
                     .toString()));
 
+    // Displaying badges as icon on the alert
     badgeImage.setFitWidth(70);
     badgeImage.setFitHeight(70);
-
     badgeDetail.setGraphic(badgeImage);
 
     badgeDetail.showAndWait();

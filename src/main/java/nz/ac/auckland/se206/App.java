@@ -22,6 +22,11 @@ import nz.ac.auckland.se206.profiles.UserProfileManager;
  */
 public class App extends Application {
 
+  /**
+   * This method is for launching the Quick Draw application
+   *
+   * @param args The arguments passed in through the command line
+   */
   public static void main(final String[] args) {
     launch();
   }
@@ -38,6 +43,11 @@ public class App extends Application {
     return new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml")).load();
   }
 
+  /**
+   * This method deals with the Gson reading of the JSON file which contains all of our user data.
+   *
+   * @throws IOException input/output exception if file not found
+   */
   private static void loadProfilesFromJson() throws IOException {
     // Reading the JSON file
     Gson gson = new Gson();
@@ -50,6 +60,7 @@ public class App extends Application {
       UserProfile[] users = gson.fromJson(jsonString, UserProfile[].class);
       UserProfileManager.userProfileList = new ArrayList<>(Arrays.asList(users));
     } else {
+      // Initialising an empty array list
       UserProfileManager.userProfileList = new ArrayList<>();
     }
   }
@@ -71,8 +82,8 @@ public class App extends Application {
 
     loadProfilesFromJson();
 
+    // Initiating app on title page
     final Scene scene = new Scene(loadFxml("title"), 840, 680);
-
     stage.setScene(scene);
     stage.show();
 
