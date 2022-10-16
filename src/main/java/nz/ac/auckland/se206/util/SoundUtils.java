@@ -58,7 +58,7 @@ public class SoundUtils {
             Media sound = new Media(path);
             bgmPlayer = new MediaPlayer(sound);
 
-            bgmPlayer.setVolume(0.4);
+            bgmPlayer.setVolume(0.2);
 
             // Whenever the music ends, the music starts from 0, which means the music is on
             // a constant loop.
@@ -104,7 +104,7 @@ public class SoundUtils {
             Media sound = new Media(path);
             gameMusicPlayer = new MediaPlayer(sound);
 
-            gameMusicPlayer.setVolume(0.8);
+            gameMusicPlayer.setVolume(0.3);
 
             // Whenever the music ends, the music starts from 0, which means the music is on
             // a constant loop.
