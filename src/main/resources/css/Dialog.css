@@ -1,6 +1,7 @@
 * {
   -fx-text-color: black;
   -fx-text-base-color: black;
+  -fx-font-weight: bold;
   -fx-font-family: "Inter Tight", sans-serif;
 }
 

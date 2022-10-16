@@ -7,28 +7,28 @@
   -fx-font-family: "Inter Tight", sans-serif;
 }
 
-.badge-box {
-  -fx-border-color: black;
-  -fx-border-radius: 20px;
-  -fx-border-width: 5px;
-}
-
 .back-button {
   -fx-border-color: transparent;
   -fx-background-color: transparent;
   -fx-font-size: 24px;
+  -fx-font-weight: bold;
 }
 
 .back-button:hover {
   -fx-underline: true;
   -fx-font-size: 24px;
+  -fx-font-weight: bold;
 }
 
-.button {
+.stats-picker {
   -fx-background-color: transparent;
-  -fx-border-width: 0px;
+  -fx-border-color: black;
+  -fx-border-width: 2px;
+  -fx-border-radius: 5px;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
 }
 
-.h-box > .button {
-  -fx-background-radius: 50%;
+.bold-labels {
+  -fx-font-weight: bold;
 }
