@@ -671,6 +671,9 @@ public class CanvasController {
       UserProfileManager.currentProfile.incrementConsecutiveWins();
     }
 
+    // check to see if this game qualifies for badges
+    BadgesManager.checkForBadges(gameTime, drawTime, gameConfidence);
+
     // This is the amount of badges the user has after the game
     int badgesCountAfter = UserProfileManager.currentProfile.getBadgesCount();
 
@@ -678,9 +681,6 @@ public class CanvasController {
     if (badgesCountAfter > badgesCountBefore) {
       UserProfileManager.currentProfile.setHasNewBadge(true);
     }
-
-    // check to see if this game qualifies for badges
-    BadgesManager.checkForBadges(gameTime, drawTime, gameConfidence);
 
     // Saving game statistics
     UserProfileManager.currentProfile.addGameToHistory(
