@@ -18,7 +18,7 @@ import nz.ac.auckland.se206.difficulty.DifficultyLevel.Words;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 import nz.ac.auckland.se206.util.SoundUtils;
 
-/** This method is to handle any actions on the Settings page. */
+/** This class is to handle any actions on the Settings page. */
 public class SettingsController {
 
   /**
@@ -169,7 +169,8 @@ public class SettingsController {
               @Override
               public void changed(
                   ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                // Updating the words difficulty level for each of the four word difficulty settings
+                // Updating the words difficulty level for each of the four word difficulty
+                // settings
                 // based on the new Value
                 if ((double) newValue == 0) {
                   updateUserWordsDifficulty(DifficultyLevel.Words.E);
@@ -191,7 +192,8 @@ public class SettingsController {
               @Override
               public void changed(
                   ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                // Updating the timer duration depending on which time difficulty setting the user
+                // Updating the timer duration depending on which time difficulty setting the
+                // user
                 // has chosen out of E, M, H and Master
                 if ((double) newValue == 0) {
                   updateUserTimeDifficulty(DifficultyLevel.Time.E);
@@ -213,7 +215,8 @@ public class SettingsController {
               @Override
               public void changed(
                   ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                // Updating the confidence difficulty setting based on the new Value for each of the
+                // Updating the confidence difficulty setting based on the new Value for each of
+                // the
                 // four difficulty settings: E, M, H, and Master
                 if ((double) newValue == 0) {
                   updateUserConfidenceDifficulty(DifficultyLevel.Confidence.E);

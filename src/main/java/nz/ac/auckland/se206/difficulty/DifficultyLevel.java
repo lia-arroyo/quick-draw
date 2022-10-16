@@ -49,7 +49,8 @@ public class DifficultyLevel {
 
     int accuracyIndex;
 
-    // Assigning different accuracy indices depending on the current accuracy difficulty level of
+    // Assigning different accuracy indices depending on the current accuracy
+    // difficulty level of
     // the current user
     if (accuracyLevel == DifficultyLevel.Accuracy.E) {
       accuracyIndex = 5;
@@ -75,7 +76,8 @@ public class DifficultyLevel {
 
     int drawTime;
 
-    // Assigning drawing time durations depending on the chosen difficulty level setting of the
+    // Assigning drawing time durations depending on the chosen difficulty level
+    // setting of the
     // current user
     if (timeLevel == DifficultyLevel.Time.E) {
       drawTime = 60;
@@ -102,7 +104,8 @@ public class DifficultyLevel {
 
     int predictionConfidence;
 
-    // Updating prediction confidence depending on the difficulty level that the current user chose
+    // Updating prediction confidence depending on the difficulty level that the
+    // current user chose
     if (confidenceLevel == DifficultyLevel.Confidence.E) {
       predictionConfidence = 1;
     } else if (confidenceLevel == DifficultyLevel.Confidence.M) {
@@ -113,6 +116,7 @@ public class DifficultyLevel {
       predictionConfidence = 50;
     }
 
+    // Returning the prediction confidence
     return predictionConfidence;
   }
 

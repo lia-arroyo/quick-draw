@@ -5,6 +5,7 @@ import nz.ac.auckland.se206.difficulty.DifficultyLevel;
 import nz.ac.auckland.se206.games.Game;
 import nz.ac.auckland.se206.words.CategorySelector;
 
+/** This class is the object for storing user information and statistics */
 public class UserProfile {
 
   private String userName;
