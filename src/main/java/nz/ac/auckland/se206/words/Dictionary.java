@@ -33,7 +33,7 @@ public class Dictionary {
    * @throws URISyntaxException if the URI is incorrect
    */
   public Dictionary(String word) throws IOException, CsvException, URISyntaxException {
-
+    // Initialising the word and starting the call for its definition
     this.word = word;
     findDefinition();
   }
@@ -46,23 +46,25 @@ public class Dictionary {
    */
   private void findDefinition() throws IOException {
 
-    // Getting the response from the API
+    // Getting the response from the Dictionary API
     OkHttpClient client = new OkHttpClient();
     Request request = new Request.Builder().url(API_URL + word).build();
     Response response = client.newCall(request).execute();
     ResponseBody responseBody = response.body();
 
+    // The result from the Dictionary API which contains the definition
     String jsonString = responseBody.string();
 
     // Checking if the word does not have a definition
     if (jsonString.contains("No Definitions Found")) {
       definitionExists = false;
+
     } else {
       // If it does, then we extract the definition from the JSON response by
-      // following the JSON structure.
+      // following the JSON structure
       Object obj = JSONValue.parse(jsonString);
-      JSONArray jArray = (JSONArray) obj;
-      JSONObject jsonObj = (JSONObject) jArray.get(0);
+      JSONArray jsonArray = (JSONArray) obj;
+      JSONObject jsonObj = (JSONObject) jsonArray.get(0);
 
       JSONArray meaningArray = (JSONArray) jsonObj.get("meanings");
 

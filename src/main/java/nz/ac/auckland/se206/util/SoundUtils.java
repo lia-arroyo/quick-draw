@@ -6,6 +6,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 
+/** This class is for implementing the sounds in our app. */
 public class SoundUtils {
 
   private static MediaPlayer bgmPlayer;
@@ -13,7 +14,7 @@ public class SoundUtils {
 
   /** This method plays a 'click' sound when called to give a sound effect for buttons. */
   public void playButtonSound() {
-
+    // Linking to the button click sound
     String path = this.getClass().getResource("/sounds/button-click.mp3").toString();
     playSound(path);
   }
@@ -23,6 +24,7 @@ public class SoundUtils {
    * letter in the game.
    */
   public void playRevealSound() {
+    // Linking to the pop sound
     String path = this.getClass().getResource("/sounds/reveal-sound.mp3").toString();
     playSound(path);
   }
@@ -32,6 +34,7 @@ public class SoundUtils {
    * in the 'My badges' page.
    */
   public void playBadgeSound() {
+    // Linking to Click sound
     String path = this.getClass().getResource("/sounds/badge-sound.mp3").toString();
     playSound(path);
   }
@@ -61,7 +64,7 @@ public class SoundUtils {
             bgmPlayer.setVolume(0.4);
 
             // Whenever the music ends, the music starts from 0, which means the music is on
-            // a constant loop.
+            // a constant loop
             bgmPlayer.setOnEndOfMedia(
                 new Runnable() {
                   public void run() {
@@ -128,13 +131,14 @@ public class SoundUtils {
 
   /** This method stops the drawing music when called, and plays the background music again. */
   public void stopDrawingMusic() {
+    // Stopping game music so it doesn't overlap
     gameMusicPlayer.stop();
     bgmPlayer.play();
   }
 
   /**
    * This method plays the audio when given the path of the audio file. It only plays if the user
-   * has sound effects on. If there is no current user then the sound effects are played anyways.
+   * has sound effects on. If there is no current user then the sound effects are played anyway.
    *
    * @param path the path of the audio file
    */
@@ -142,13 +146,16 @@ public class SoundUtils {
 
     // Checking if there is no currently chosen profile
     if (UserProfileManager.currentProfile == null) {
-      // If there isn't, then we just play the sound effects
+
+      // If there isn't, then we just play the sound effects as normal
       Media sound = new Media(path);
       MediaPlayer mediaPlayer = new MediaPlayer(sound);
       mediaPlayer.play();
+
     } else {
-      // If there is, we check if the user has sound effects on
+      // If there is, we check if the user has enabled sound effects on
       if (UserProfileManager.currentProfile.isSoundOn()) {
+        // Playing sound effects as normal
         Media sound = new Media(path);
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();

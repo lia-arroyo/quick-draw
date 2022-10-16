@@ -42,12 +42,12 @@ public class CategorySelector {
   public CategorySelector() throws IOException, CsvException, URISyntaxException {
     difficultyToCategories = new HashMap<>();
 
-    // initialising each key,value pair for hashmap
+    // Initialising each (key,value) pair for hashmap
     for (Difficulty difficulty : Difficulty.values()) {
       difficultyToCategories.put(difficulty, new ArrayList<>());
     }
 
-    // reading the file and adding each word to the hashmap.
+    // Reading the file and adding each word to the hashmap, according to their difficulty
     for (String[] line : getLines()) {
       difficultyToCategories.get(Difficulty.valueOf(line[1])).add(line[0]);
     }
@@ -57,14 +57,14 @@ public class CategorySelector {
    * This method returns a random category (word) when called.
    *
    * @param difficulty the difficulty of the category (E, M or H)
-   * @return the chosen category
+   * @return the chosen category (word) to draw
    */
   public String getRandomCategory(Difficulty difficulty) {
 
-    // a clone of the word list
+    // Cloning of the word list so the original hashmap is not affected
     List<String> wordListCopy = difficultyToCategories.get(difficulty);
 
-    // removing all played words from the cloned list
+    // Removing all played words from the cloned list
     wordListCopy.removeAll(UserProfileManager.currentProfile.getWordHistory());
 
     // Returns a random word from the updated word list without played words
@@ -80,9 +80,11 @@ public class CategorySelector {
    * @throws URISyntaxException if a string cannot be used as a URI
    */
   protected List<String[]> getLines() throws IOException, CsvException, URISyntaxException {
+    // Getting the csv file with all the word information
     File fileName =
         new File(CategorySelector.class.getResource("/category_difficulty.csv").toURI());
 
+    // Trying to open the file and reading it
     try (FileReader fr = new FileReader(fileName, StandardCharsets.UTF_8);
         CSVReader reader = new CSVReader(fr)) {
       return reader.readAll();
@@ -92,9 +94,10 @@ public class CategorySelector {
   /**
    * This method sets a new chosen category and updates the static variable.
    *
-   * @param difficulty the difficultly of the category (E, M or H)
+   * @param difficulty the difficulty of the category (E, M or H)
    */
   public void setNewChosenWord(Difficulty difficulty) {
+    // Updating the static variables so that other pages can access this information
     CategorySelector.chosenWord = getRandomCategory(difficulty);
     CategorySelector.currentDifficulty = difficulty;
   }
@@ -129,7 +132,7 @@ public class CategorySelector {
 
       // Medium difficulty - easy + medium words
     } else if (wordsLevel == DifficultyLevel.Words.M) {
-      // easy or medium words
+      // Using weighted randomness to choose between easy or medium word
       double randomNumber = Math.random();
 
       // 30% easy, 70% medium word
@@ -141,7 +144,7 @@ public class CategorySelector {
 
       // Hard difficulty - easy + medium + hard words
     } else if (wordsLevel == DifficultyLevel.Words.H) {
-      // easy, medium or hard words
+      // Easy, medium or hard words
       double randomNumber = Math.random();
 
       // 10% easy, 30% medium, 60% hard word

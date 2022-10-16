@@ -61,6 +61,7 @@ public class AfterRoundController {
     // Initiate sound player
     soundPlayer = new SoundUtils();
 
+    // Turning off intense drawing music after normal and hidden game mode
     if (MainMenuController.gameMode != 2) {
       soundPlayer.stopDrawingMusic();
     }
@@ -78,6 +79,7 @@ public class AfterRoundController {
   private void onSaveImage(ActionEvent event) throws IOException {
     soundPlayer.playButtonSound();
 
+    // Getting current stage information
     Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     BufferedImage buffImage = SwingFXUtils.fromFXImage(image, null);
 
