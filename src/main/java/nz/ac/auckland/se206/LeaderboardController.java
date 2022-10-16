@@ -72,7 +72,7 @@ public class LeaderboardController {
 
   /**
    * This method loads the leaderboard of the stat user wins by default, or displays a message if
-   * there is no leaderboard to show
+   * there is no leaderboard to show.
    */
   public void initialize() {
     // Initiate the sound player
@@ -186,9 +186,9 @@ public class LeaderboardController {
 
   /**
    * This method sets the font style of the user name and stats to bold if the user if on the
-   * leaderboard
+   * leaderboard.
    *
-   * @param leaderboardIndex the leader position the user is at
+   * @param leaderboardIndex the leaderboard position the user is at
    */
   private void setPodiumBold(int leaderboardIndex) {
     // Only set the leaderboard position to bold if the user is in the podium

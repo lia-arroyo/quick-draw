@@ -201,9 +201,9 @@ public class CanvasController {
    * This method is called in the initialize method of the canvas controller to set up the screen
    * initially, depending to the game mode.
    *
-   * @throws URISyntaxException
-   * @throws CsvException
-   * @throws IOException
+   * @throws URISyntaxException if the URI is incorrect
+   * @throws CsvException if the csv file cannot be opened
+   * @throws IOException if the file cannot be opened
    */
   private void setupScreen() throws IOException, CsvException, URISyntaxException {
     // Setting the speech button icon to the speech image
