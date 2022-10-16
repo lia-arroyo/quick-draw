@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import nz.ac.auckland.se206.profiles.UserProfile;
 import nz.ac.auckland.se206.profiles.UserProfileManager;
 
+/** This class is to handle any actions on the Leaderboard page */
 public class LeaderboardController {
 
   private enum Statistic {
