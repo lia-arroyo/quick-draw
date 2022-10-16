@@ -664,11 +664,17 @@ public class CanvasController {
       UserProfileManager.currentProfile.incrementLossesCount();
       UserProfileManager.currentProfile.resetConsecutiveWins();
 
+      // check to see if this game qualifies for the last badge
+      BadgesManager.checkLastBadge();
+
     } else if (result == 1) {
       // This is when the user has won
       AfterRoundController.END_MESSAGE = "Congratulations! You won  :)";
       UserProfileManager.currentProfile.incrementWinsCount();
       UserProfileManager.currentProfile.incrementConsecutiveWins();
+
+      // check to see if this game qualifies for badges
+      BadgesManager.checkForBadges(gameTime, drawTime, gameConfidence);
     }
 
     // This is the amount of badges the user has after the game
@@ -678,9 +684,6 @@ public class CanvasController {
     if (badgesCountAfter > badgesCountBefore) {
       UserProfileManager.currentProfile.setHasNewBadge(true);
     }
-
-    // check to see if this game qualifies for badges
-    BadgesManager.checkForBadges(gameTime, drawTime, gameConfidence);
 
     // Saving game statistics
     UserProfileManager.currentProfile.addGameToHistory(
